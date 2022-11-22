@@ -5,20 +5,23 @@
 <template>
   <nav>
     <div class="left">
-      <img src="../../public/logo.svg">
-      <h1 class="title">
-        Fritter
-      </h1>
+
     </div>
     <div class="right">
       <router-link to="/">
-        Home
+        Home/City
+      </router-link>
+      <div>
+        Neighborhoods
+      </div>
+      <router-link to="/neighborhood/gianna">
+        My Neighborhood
       </router-link>
       <router-link
         v-if="$store.state.username"
-        to="/account"
+        to="/profile"
       >
-        Account
+        Profile
       </router-link>
       <router-link
         v-else
@@ -42,11 +45,13 @@
 <style scoped>
 nav {
     padding: 1vw 2vw;
-    background-color: #ccc;
+    background-color: rgb(170, 85, 64);
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
 }
 
 .title {
@@ -72,7 +77,10 @@ img {
 }
 
 .right a {
-    margin-left: 5px;
+    margin-left: 10px;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
 }
 
 .alerts {
