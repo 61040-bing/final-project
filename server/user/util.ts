@@ -39,7 +39,7 @@ const constructUserResponse = (user: HydratedDocument<User>): UserResponse => {
     ...userCopy,
     _id: userCopy._id.toString(),
     dateJoined: formatDate(user.dateJoined),
-    neighborhood: userCopy.neighborhood.name
+    neighborhood: userCopy.neighborhood.toString(),
   };
 };
 

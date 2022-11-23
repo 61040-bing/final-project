@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     //TODO: change this into neighborhood objects
     neighborhoods: [],
     userEmail: null,
+    userNeighborhood: null,
     alerts: {} 
   },
   mutations: {
@@ -24,12 +25,19 @@ const store = new Vuex.Store({
         Vue.delete(state.alerts, payload.message);
       }, 3000);
     },
-    setUsername(state, email) {
+    setEmail(state, email) {
       /**
-       * Update the stored username to the specified one.
-       * @param username - new username to set
+       * Update the stored email to the specified one.
+       * @param email - new email to set
        */
       state.userEmail = email;
+    },
+    setNeighborhood(state, neighborhood) {
+      /**
+       * Update the stored neighborhood to the specified one.
+       * @param neighborhood - new neighborhood to set
+       */
+      state.userNeighborhood = neighborhood;
     },
     updateNeighborhoods(state, neighborhoods) {
       /**
