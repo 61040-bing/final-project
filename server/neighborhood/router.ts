@@ -33,6 +33,25 @@ router.get(
 
 
 /**
+ * Get neighborhood object with ID
+ *
+ * @name GET /api/neighborhood/:neighborhoodId
+ *  @throws ?
+ * @return {NeighborhoodResponse} - The given neighborhood
+ *
+ */
+router.get(
+    '/:neighborhoodId',
+    [
+    ],
+    async (req: Request, res: Response) => {
+        const neighborhood = await NeighborhoodCollection.findOne(req.params.neighborhoodId);
+        const response = util.constructNeighborhoodResponse(neighborhood);
+        res.status(200).json(response);
+    }
+);
+
+/**
  * Create a new Neighborhood
  *
  * @name POST /api/neighborhood
