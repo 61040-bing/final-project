@@ -19,12 +19,12 @@ class UserCollection {
    * @param {string} password - The password of the user
    * @return {Promise<HydratedDocument<User>>} - The newly created user
    */
-  static async addOne(email: string, password: string, neighborhood:Types.ObjectId | string): Promise<HydratedDocument<User>> {
+  static async addOne(firstName:string, lastName:string, email: string, password: string, neighborhood:Types.ObjectId | string): Promise<HydratedDocument<User>> {
     const dateJoined = new Date();
     // TODO: Uncomment out the line below once neighborhood is implemented. 
-    //        Update line 26 accordingly
+    //        Update line 27 accordingly
     // const neighborhood = NeighborhoodCollection.findOne(neighborhood)
-    const user = new UserModel({email, password, dateJoined});
+    const user = new UserModel({firstName, lastName, email, password, dateJoined});
     await user.save(); // Saves user to MongoDB
     return user;
   }
@@ -70,7 +70,7 @@ class UserCollection {
    * @param {Object} userDetails - An object with the user's updated credentials
    * @return {Promise<HydratedDocument<User>>} - The updated user
    */
-  static async updateOne(userId: Types.ObjectId | string, userDetails: {password?: string; email?: string; neighborhood?:Types.ObjectId | string}): Promise<HydratedDocument<User>> {
+  static async updateOne(userId: Types.ObjectId | string, userDetails: {password?: string; email?: string; firstName?:string,lastName?:string, neighborhood?:Types.ObjectId | string}): Promise<HydratedDocument<User>> {
     const user = await UserModel.findOne({_id: userId});
     if (userDetails.password) {
       user.password = userDetails.password;
@@ -79,6 +79,14 @@ class UserCollection {
     if (userDetails.email) {
       user.email = userDetails.email;
     }
+    if (userDetails.firstName) {
+      user.firstName = userDetails.firstName;
+    }
+
+    if (userDetails.lastName) {
+      user.firstName = userDetails.lastName;
+    }
+
     if (userDetails.neighborhood){
       // TODO: Fix below once neighborhood model is implemented
       // neighborhood = await NeighborhoodCollection.findOne(userDetails.neighborhood)

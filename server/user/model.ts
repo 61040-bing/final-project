@@ -11,21 +11,32 @@ import type {Neighborhood} from '../neighborhood/model';
 export type User = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   // username: string;
-  email: string;
   firstName: string;
   lastName: string;
+  email: string;
   password: string;
   dateJoined: Date;
   neighborhood: Neighborhood;
 };
 
+// TODO: Once neighborhood is done, Add a PopulatedUser type
 
 // Mongoose schema definition for interfacing with a MongoDB table
 // Users stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB
 const UserSchema = new Schema({
-  // The user's username
-  username: {
+// The user's firstName
+  firstName: {
+    type: String,
+    required: true
+  }, 
+
+  lastName: {
+    type: String,
+    required: true
+  }, 
+  // The user's email
+  email: {
     type: String,
     required: true
   },
