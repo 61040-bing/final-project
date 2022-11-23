@@ -4,7 +4,6 @@ import {Schema, model} from 'mongoose';
 export type Neighborhood = {
     _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
     name: string;
-    username: string;
     dateCreated: Date;
     description: string;
   };
@@ -13,9 +12,29 @@ export type Neighborhood = {
 // Users stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB
 const NeighborhoodSchema = new Schema({
-// TODO
+
+    name: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+    },
+    dateCreated: {
+        type: Date,
+        required: true
+    },
+
   });
+
+export type PopulatedNeighborhood = {
+    _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
+    name: string;
+    description: string;
+    dateCreated: Date;
+};
+
   
-  const NeighborhoodModel = model<Neighborhood>('Neighborhood', NeighborhoodSchema);
-  export default NeighborhoodModel;
+const NeighborhoodModel = model<Neighborhood>('Neighborhood', NeighborhoodSchema);
+export default NeighborhoodModel;
   

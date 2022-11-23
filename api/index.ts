@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import * as userValidator from '../server/user/middleware';
 import MongoStore from 'connect-mongo';
-
+import {neighborhoodRouter} from '../server/neighborhood/router';
 // Load environmental variables
 dotenv.config({});
 
@@ -64,6 +64,9 @@ app.use(session({
 
 // This makes sure that if a user is logged in, they still exist in the database
 app.use(userValidator.isCurrentSessionUserExists);
+
+
+app.use('/api/neighborhood', neighborhoodRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {
