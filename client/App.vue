@@ -42,6 +42,10 @@ body {
   font-size: 1.2em;
 }
 
+header {
+  height: 75px;
+}
+
 main {
   padding: 0 5em 5em;
 }

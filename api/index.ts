@@ -66,7 +66,6 @@ app.use(session({
 // This makes sure that if a user is logged in, they still exist in the database
 app.use(userValidator.isCurrentSessionUserExists);
 
-
 app.use('/api/neighborhood', neighborhoodRouter);
 app.use('/api/users', userRouter);
 

@@ -11,17 +11,34 @@
       </h1>
     </div>
     <div class="right">
-      <router-link to="/">
-        Home/City
-      </router-link>
-      <div>
-        Neighborhoods
+      <div class="nav-item">
+        <span @click="navigateTo('/')">Home/City</span>
       </div>
-      <router-link to="/neighborhood/gianna">
-        My Neighborhoods
+      <div 
+        class="nav-item" 
+      >
+        <span @click="toggleMenu">Neighborhoods</span>
+
+        <div :class="['dropdown', displayNeighborhoodMenu ? 'toggle': '']">
+          <ul>
+            <li
+              v-for="neighborhood in $store.state.neighborhoods"
+              :key="neighborhood.id"
+              @click="navigateTo('/neighborhood/'+neighborhood.name)"
+            >
+              {{ neighborhood.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <router-link
+        v-if="$store.state.userEmail"
+        to="/neighborhood/gianna"
+      >
+        My Neighborhood
       </router-link>
       <router-link
-        v-if="$store.state.username"
+        v-if="$store.state.userEmail"
         to="/profile"
       >
         Profile
@@ -45,9 +62,37 @@
   </nav>
 </template>
 
+<script>
+  export default {
+    name: 'NavBar',
+    components: {},
+    props: {
+
+    },
+    data() {
+      return {
+        displayNeighborhoodMenu: false
+      }
+    },
+    mounted(){
+      this.$store.commit('refreshNeighborhoods');
+    },
+    methods: {
+      navigateTo(link) {
+        console.log(link);
+        this.displayNeighborhoodMenu = false;
+        this.$router.push(link);
+      },
+
+      toggleMenu() {
+        this.displayNeighborhoodMenu = !this.displayNeighborhoodMenu;
+      }
+    }
+  };
+  </script>
+
 <style scoped>
 nav {
-    padding: 1vw 2vw;
     background-color: rgb(170, 85, 64);
     display: flex;
     justify-content: space-between;
@@ -55,6 +100,7 @@ nav {
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
+    height: 100%;
 }
 
 .title {
@@ -69,24 +115,89 @@ img {
 .left {
 	display: flex;
 	align-items: center;
+  padding-left: 2vw;
 }
 
 .right {
     font-size: 20px;
-    display: grid;
-    gap: 16px;
-    grid-auto-flow: column;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
-.right a {
-    margin-left: 10px;
+.right a,
+.nav-item {
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.right a:hover,
+.nav-item:hover {
+  background: rgba(0,0,0,0.2);
 }
 
 .alerts {
     width: 25%;
 }
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: white;
+  color: black;
+  display: none;
+}
+
+.dropdown.toggle {
+  display: block;
+}
+
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding: 0.5em;
+}
+
+.dropdown ul li {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.dropdown ul li:hover {
+  background: rgba(0,0,0,0.2);
+}
+.dropdown-content {
+  width: 100%;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+/* .dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  color: #FFFFFF;
+  background-color: #00A4BD;
+} */
+
+
 </style>
