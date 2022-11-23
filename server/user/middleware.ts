@@ -57,7 +57,7 @@ const isCurrentSessionUserExists = async (req: Request, res: Response, next: Nex
  * Checks if an email in req.body is valid, that is, it matches the email regex
  */
 const isValidEmail = (req: Request, res: Response, next: NextFunction) => {
-  const emailRegex = /^\w+$/i;
+  const emailRegex = /^[\w+.\-]{0,25}@(\w+)(\.)(\w+)$/i;
   if (!emailRegex.test(req.body.email)) {
     res.status(400).json({
       error: 'Email must be a nonempty alphanumeric string.'
