@@ -10,8 +10,8 @@ import type {Neighborhood} from '../neighborhood/model';
 // Type definition for User on the backend
 export type User = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  username: string;
-  // email: string;
+  // username: string;
+  email: string;
   firstName: string;
   lastName: string;
   password: string;
