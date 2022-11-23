@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {path: '/', name: 'Home', component: NeighborhoodWrapper},
-  {path: '/neighborhood/:name', name: 'NeighborHood', component: NeighborhoodWrapper},
+  {path: '/neighborhood/:id', name: 'Neighborhood', component: NeighborhoodWrapper},
   {path: '*', name: 'Not Found', component: NotFound},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '/register', name: 'Register', component: RegisterPage},
