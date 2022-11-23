@@ -107,14 +107,12 @@ export default {
   },
   methods: {
     selectNeighborhood(neighborhood) {
-      console.log('AJAJAJ');
 
       if (this.selected == neighborhood._id) {
         this.selected = undefined;
       } else {
         this.selected = neighborhood._id;
       }
-      console.log(this.selected);
     }
   },
   data() {
@@ -125,7 +123,8 @@ export default {
       hasBody: true,
       neighborhoods: [],
       neighborhoodImgs: [],
-      setUsername: true,
+      setEmail: true,
+      setNeighborhood: true,
       selected: undefined,
       fields: [
         {id: 'firstName', label: 'First Name', value: ''},

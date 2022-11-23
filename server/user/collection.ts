@@ -1,5 +1,5 @@
 import type {HydratedDocument, Types} from 'mongoose';
-import NeighborhoodCollection from 'server/neighborhood/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
 import type {User} from './model';
 import UserModel from './model';
 
@@ -23,7 +23,7 @@ class UserCollection {
     const dateJoined = new Date();
     // TODO: Uncomment out the line below once neighborhood is implemented. 
     //        Update line 27 accordingly
-    // const neighborhood = NeighborhoodCollection.findOne(neighborhood)
+    // const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
     const user = new UserModel({firstName, lastName, email, password, dateJoined, neighborhood});
     await user.save(); // Saves user to MongoDB
     return user;

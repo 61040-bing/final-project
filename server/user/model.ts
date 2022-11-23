@@ -16,7 +16,7 @@ export type User = {
   email: string;
   password: string;
   dateJoined: Date;
-  neighborhood: Neighborhood;
+  neighborhood: Types.ObjectId;
 };
 
 // TODO: Once neighborhood is done, Add a PopulatedUser type
