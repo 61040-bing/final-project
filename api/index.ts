@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import * as userValidator from '../server/user/middleware';
 import MongoStore from 'connect-mongo';
 import {neighborhoodRouter} from '../server/neighborhood/router';
+import {userRouter} from '../server/user/router';
 // Load environmental variables
 dotenv.config({});
 
@@ -67,6 +68,7 @@ app.use(userValidator.isCurrentSessionUserExists);
 
 
 app.use('/api/neighborhood', neighborhoodRouter);
+app.use('/api/users', userRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {
