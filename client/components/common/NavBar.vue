@@ -16,6 +16,8 @@
       </div>
       <div 
         class="nav-item" 
+        tabindex="0"
+        @blur="hideMenu"
       >
         <span @click="toggleMenu">Neighborhoods</span>
 
@@ -24,7 +26,7 @@
             <li
               v-for="neighborhood in $store.state.neighborhoods"
               :key="neighborhood.id"
-              @click="navigateTo('/neighborhood/'+neighborhood.id)"
+              @click="navigateTo('/neighborhood/'+neighborhood._id)"
             >
               {{ neighborhood.name }}
             </li>
@@ -80,8 +82,6 @@
     },
     methods: {
       navigateTo(link) {
-        console.log(link);
-        this.displayNeighborhoodMenu = false;
         this.$router.push(link);
       },
 
