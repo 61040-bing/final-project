@@ -24,19 +24,20 @@
             <li
               v-for="neighborhood in $store.state.neighborhoods"
               :key="neighborhood.id"
-              @click="navigateTo('/neighborhood/'+neighborhood.name)"
+              @click="navigateTo('/neighborhood/'+neighborhood.id)"
             >
               {{ neighborhood.name }}
             </li>
           </ul>
         </div>
       </div>
-      <router-link
+      <div 
         v-if="$store.state.userEmail"
-        to="/neighborhood/gianna"
+        class="nav-item"
+        @click="navigateTo('/neighborhood/'+$store.state.userNeighborhood)"
       >
         My Neighborhood
-      </router-link>
+      </div>
       <router-link
         v-if="$store.state.userEmail"
         to="/profile"
@@ -82,6 +83,10 @@
         console.log(link);
         this.displayNeighborhoodMenu = false;
         this.$router.push(link);
+      },
+
+      hideMenu() {
+        this.displayNeighborhoodMenu = false;
       },
 
       toggleMenu() {
@@ -160,6 +165,8 @@ img {
   background: white;
   color: black;
   display: none;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  border-radius: 0.5rem;
 }
 
 .dropdown.toggle {
