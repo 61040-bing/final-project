@@ -1,5 +1,6 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
+import type {Neighborhood} from '../neighborhood/model';
 
 /**
  * This file defines the properties stored in a User
@@ -10,9 +11,14 @@ import {Schema, model} from 'mongoose';
 export type User = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   username: string;
+  // email: string;
+  firstName: string;
+  lastName: string;
   password: string;
   dateJoined: Date;
+  neighborhood: Neighborhood;
 };
+
 
 // Mongoose schema definition for interfacing with a MongoDB table
 // Users stored in this table will have these fields, with the
@@ -31,6 +37,10 @@ const UserSchema = new Schema({
   // The date the user joined
   dateJoined: {
     type: Date,
+    required: true
+  },
+  neighborhood:{
+    type: Schema.Types.ObjectId,
     required: true
   }
 });
