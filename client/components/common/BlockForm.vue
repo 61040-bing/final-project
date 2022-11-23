@@ -78,6 +78,7 @@ export default {
       if (this.hasBody) {
         options.body = JSON.stringify(Object.fromEntries(
           this.fields.map(field => {
+            console.log(field);
             const {id, value} = field;
             field.value = '';
             return [id, value];
@@ -96,11 +97,7 @@ export default {
         if (this.setUsername) {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
-          this.$store.commit('setUsername', res.user ? res.user.username : null);
-        }
-
-        if (this.refreshFreets) {
-          this.$store.commit('refreshFreets');
+          this.$store.commit('setUsername', res.user ? res.user.email : null);
         }
 
         if (this.callback) {

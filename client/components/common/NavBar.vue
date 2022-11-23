@@ -5,7 +5,10 @@
 <template>
   <nav>
     <div class="left">
-
+      <img src="../../public/participate.png">
+      <h1 class="title">
+        Participate
+      </h1>
     </div>
     <div class="right">
       <router-link to="/">
@@ -15,7 +18,7 @@
         Neighborhoods
       </div>
       <router-link to="/neighborhood/gianna">
-        My Neighborhood
+        My Neighborhoods
       </router-link>
       <router-link
         v-if="$store.state.username"
@@ -60,7 +63,7 @@ nav {
 }
 
 img {
-    height: 32px;
+    height: 50px;
 }
 
 .left {
