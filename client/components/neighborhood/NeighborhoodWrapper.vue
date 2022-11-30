@@ -1,5 +1,5 @@
 <template>
-  <NeighborhoodPage :key="$route.params.name" />
+  <NeighborhoodPage :key="$route.params.id" />
 </template>
 
 <script>
