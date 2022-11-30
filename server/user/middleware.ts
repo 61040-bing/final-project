@@ -1,5 +1,6 @@
 import type {Request, Response, NextFunction} from 'express';
 import UserCollection from '../user/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
 
 /**
  * Checks if the current session user (if any) still exists in the database, for instance,
@@ -23,7 +24,7 @@ const isCurrentSessionUserExists = async (req: Request, res: Response, next: Nex
 };
 
 /**
- * Checks if an email in req.body is valid, that is, it matches the email regex
+ * Checks if the first name in req.body is valid, that is, it matches the firstname regex
  */
  const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
   const firstNameRegex = /^\w+$/i;
@@ -38,7 +39,7 @@ const isCurrentSessionUserExists = async (req: Request, res: Response, next: Nex
 };
 
 /**
- * Checks if an email in req.body is valid, that is, it matches the email regex
+ * Checks if the lastname in req.body is valid, that is, it matches the lastname regex
  */
  const isValidLastName = (req: Request, res: Response, next: NextFunction) => {
   const lastNameRegex = /^\w+$/i;
@@ -103,6 +104,20 @@ const isAccountExists = async (req: Request, res: Response, next: NextFunction) 
   } else {
     res.status(401).json({error: 'Invalid user login credentials provided.'});
   }
+};
+
+/**
+ * Checks if a neighborhood in req.body exists
+ */
+const isNeighborhoodExists = async (req: Request, res: Response, next: NextFunction) => {
+  const neighborhood = await NeighborhoodCollection.findOne(req.body.neighborhood);
+  if (neighborhood === null){
+      res.status(400).json({
+          error: "Neighborhood not found"
+      });
+      return;
+  }
+  next();
 };
 
 /**
@@ -185,5 +200,6 @@ export {
   isValidEmail,
   isValidPassword,
   isValidFirstName,
-  isValidLastName
+  isValidLastName,
+  isNeighborhoodExists
 };

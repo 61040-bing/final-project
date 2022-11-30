@@ -1,6 +1,5 @@
 import type {Request, Response} from 'express';
 import express from 'express';
-// import FreetCollection from '../freet/collection';
 import NeighborhoodCollection from '../neighborhood/collection';
 import type { Neighborhood } from '../neighborhood/model';
 import UserCollection from './collection';
@@ -113,7 +112,7 @@ router.post(
     userValidator.isValidPassword,
     userValidator.isValidFirstName,
     userValidator.isValidLastName,
-     // neighborhoodValidator.isNeighborhoodExists
+    userValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
     const user = await UserCollection.addOne(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.neighborhood);
@@ -148,8 +147,7 @@ router.patch(
     userValidator.isValidPassword,
     userValidator.isValidFirstName,
     userValidator.isValidLastName,
-    // TODO: Uncomment out the line below once neighborhood model is implemented
-     // neighborhoodValidator.isNeighborhoodExists
+    userValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
@@ -177,7 +175,6 @@ router.delete(
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     await UserCollection.deleteOne(userId);
-    // await FreetCollection.deleteMany(userId);
     req.session.userId = undefined;
     res.status(200).json({
       message: 'Your account has been deleted successfully.'
