@@ -13,7 +13,7 @@ const router = express.Router();
 /**
  * Get all the RoundTables for neighborhood
  *
- * @name GET /api/RoundTables?neighborhoodId=id
+ * @name GET /api/roundtables?neighborhoodId=id
  *
  * @return {RoundTableResponse[]} - A list of all the RoundTables sorted in descending
  *                      order by date added
@@ -23,7 +23,7 @@ const router = express.Router();
 /**
  * Get roundTables by author.
  *
- * @name GET /api/roundTables?authorId=id
+ * @name GET /api/roundtables?authorId=id
  *
  * @return {RoundTableResponse[]} - An array of RoundTables created by user with id, authorId
  * @throws {400} - If authorId is not given
@@ -34,7 +34,7 @@ const router = express.Router();
 /**
  * Get RoundTables on petition.
  *
- * @name GET /api/roundTables?petitionId=id
+ * @name GET /api/roundtables?petitionId=id
  *
  * @return {Array<HydratedDocument<RoundTables>>} - RoundTables created on petition with id, petitionId
  * @throws {400} - If petitionId is not given
@@ -128,7 +128,7 @@ router.post(
 /**
  * Delete a RoundTable
  *
- * @name DELETE /api/roundtabless/:id
+ * @name DELETE /api/roundtables/:id
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in or is not the author of
