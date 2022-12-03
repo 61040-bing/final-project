@@ -1,7 +1,7 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import PetitionCollection from './collection';
-import SignatureCollection from '..signature/collection';
+import SignatureCollection from '../signature/collection';
 import * as userValidator from '../user/middleware';
 import * as petitionValidator from './middleware';
 import * as util from './util';
@@ -104,7 +104,7 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     await PetitionCollection.deleteOne(req.params.petitionId);
-    await SignatureCollection.deteteManyByPetitionId(req.params.petitionId);
+    await SignatureCollection.deleteManybyPetitionId(req.params.petitionId);
     res.status(200).json({
       message: 'Your petition was deleted successfully.'
     });
