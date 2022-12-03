@@ -15,18 +15,20 @@ class RoundTableCollection {
    *
    * @param {string} authorId - The id of the author of the roundTable
    * @param {string} petition - The id of the petition
+   * @param {string} zoomLink - The string of the ZoomLink
    * @param {string} neighborhood - The id of the neigborhood
    * @param {Date} startDate  - The start Date of the RoundTable
    * @param {Date} endDate  - The end Date of the RoundTable
    * @return {Promise<HydratedDocument<RoundTable>>} - The newly created roundtable
    */
   static async addOne(authorId: Types.ObjectId | string, petition: Types.ObjectId | string,
-    neighborhood: Types.ObjectId | string, startDate: Date, endDate: Date): Promise<HydratedDocument<RoundTable>> {
+    neighborhood: Types.ObjectId | string, roundTableName: string, startDate: Date, endDate: Date, zoomLink: string): Promise<HydratedDocument<RoundTable>> {
     const date = new Date();
     const roundTable = new RoundTableModel({
       authorId,
       petition,
       neighborhood,
+      roundTableName,
       startDate,
       endDate,
       dateCreated: date,

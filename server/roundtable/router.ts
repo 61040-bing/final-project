@@ -89,6 +89,7 @@ router.get(
  * @params {string} neighborhood - The id
  * @params  {date} start date
  * @params {date} end date
+ * @params {string} zoomlink
  * @return {RoundTableResponse} - The created roundtable
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the user had already added 3 RoundTables on the Petition
@@ -106,13 +107,16 @@ router.post(
     userValidator.isUserLoggedIn,
     roundTableValidator.isValidPetitionId,
     roundTableValidator.isValidRoundTableCreator,
+    roundTableValidator.isValidRoundTableName,
     roundTableValidator.isAlreadyMaxRoundTables,
     roundTableValidator.isValidStartEndDates,
+    roundTableValidator.isValidZoomlink
     
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const roundtable = await RoundTableCollection.addOne(userId, req.body.petitionId, req.body.neighborhood, req.body.startDate, req.body.endDate);
+    const roundtable = await RoundTableCollection.addOne(userId, req.body.petitionId, req.body.neighborhood,
+      req.body.roundTableName, req.body.startDate, req.body.endDate, req.body.zoomLink);
     res.status(201).json({
       message: 'Your RoundTable was created successfully.',
       roundtable: util.constructRoundTableResponse(roundtable)

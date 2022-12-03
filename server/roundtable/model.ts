@@ -15,8 +15,10 @@ export type RoundTable = {
   authorId: Types.ObjectId;
   petitionId: Types.ObjectId;
   neighborhoodId: Types.ObjectId;
+  roundTableName: string;
   startDate: Date;
   endDate: Date;
+  zoomLink: string;
   dateCreated: Date;
 
 };
@@ -26,8 +28,10 @@ export type PopulatedRoundTable = {
   authorId: User;
   petitionId: Petition;
   neighborhoodId: Neighborhood;
+  roundTableName: string;
   startDate: Date;
   endDate: Date;
+  zoomLink: string;
   dateCreated: Date;
 
 };
@@ -57,12 +61,20 @@ const RoundTableSchema = new Schema<RoundTable>({
     required: true,
     ref: 'Neighborhood'
   },
+  roundTableName: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
   },
   endDate: {
     type: Date,
+    required: true,
+  },
+  zoomLink: {
+    type: String,
     required: true,
   },
   dateCreated:{
