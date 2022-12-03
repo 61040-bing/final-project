@@ -69,7 +69,7 @@ router.post(
   [
     userValidator.isUserLoggedIn,
     petitionValidator.isValidPetitionTitle,
-    // petitionValidator.isValidPetitionContent
+    petitionValidator.isValidPetitionContent,
     petitionValidator.isValidPetitionTargetSignatures
 
   ],

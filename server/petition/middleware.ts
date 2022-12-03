@@ -71,7 +71,7 @@ const isValidPetitionTitle = (req: Request, res: Response, next: NextFunction) =
   const {title} = req.body.title as {title: string};
   if (!title.trim()) {
     res.status(400).json({
-      error: 'Petition content must be at least one character long.'
+      error: 'Petition title must be at least one character long.'
     });
     return;
   }
@@ -79,6 +79,22 @@ const isValidPetitionTitle = (req: Request, res: Response, next: NextFunction) =
   if (title.length > 140) {
     res.status(413).json({
       error: 'Petition title must be no more than 140 characters.'
+    });
+    return;
+  }
+
+  next();
+};
+
+/**
+ * Checks if the content of the petition in req.body is valid, i.e not a stream of empty
+ * spaces
+ */
+ const isValidPetitionContent = (req: Request, res: Response, next: NextFunction) => {
+  const {content} = req.body.content as {content: string};
+  if (!content.trim()) {
+    res.status(400).json({
+      error: 'Petition content must be at least one character long.'
     });
     return;
   }
@@ -130,5 +146,6 @@ export {
   isValidPetitionModifier,
   isPetitionQueryExists,
   isValidPetitionTargetSignatures,
-  isNeighborhoodExists
+  isNeighborhoodExists,
+  isValidPetitionContent
 };
