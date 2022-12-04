@@ -5,7 +5,9 @@
     <section class="container">
       <div class="user-bio">
         <div class="author">
-          <div class="username">{{ forum.author.firstName + " " + forum.author.lastName }}</div>
+          <div class="username">
+            {{ forum.author.firstName + " " + forum.author.lastName }}
+          </div>
         </div>
       </div>
 
@@ -18,23 +20,39 @@
     </section>
 
 
-    <div class="content"
-    >
+    <div class="content">
       {{ forum.content }}
     </div>
 
     <section style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 12px">
-      <router-link    style="text-decoration: none; color: inherit; width: inherit;"   v-if="($route.name === 'Neighborhood')"
-                 :to="path">
-        <font-awesome-icon icon="fa-regular fa-comment-dots" size="lg" /> replies
+      <router-link
+        v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
+        style="text-decoration: none; color: inherit; width: inherit;"
+        :to="path"
+      >
+        <font-awesome-icon
+          icon="fa-regular fa-comment-dots"
+          size="lg"
+        /> replies
       </router-link>
       <div>
-        <div v-if="!liked"  class = "upvote-button">
-          <img src="../../public/upvoteTriangle.svg" style="width: 20px; height: 20px" @click="likeRequest"/> Upvote
-        </div>
-        <div v-if="liked"
+        <div
+          v-if="!liked"
+          class="upvote-button"
         >
-          <img src="../../public/triangleFilled.png" style="width: 20px; height: 20px"  @click="removeLikeRequest"  class = "upvote-button"/>
+          <img
+            src="../../public/upvoteTriangle.svg"
+            style="width: 20px; height: 20px"
+            @click="likeRequest"
+          > Upvote
+        </div>
+        <div v-if="liked">
+          <img
+            src="../../public/triangleFilled.png"
+            style="width: 20px; height: 20px"
+            class="upvote-button"
+            @click="removeLikeRequest"
+          >
           Remove Upvote
         </div>
       </div>
@@ -55,7 +73,7 @@
         </span>
       </section>
 
-      {{response.content}}
+      {{ response.content }}
     </section>
     <section class="alerts">
       <article
