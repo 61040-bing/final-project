@@ -8,9 +8,13 @@
           <span class="username">{{ forum.author.firstName + " " + forum.author.lastName }}</span>
         </h3>
       </header>
+
       <span class="date">
         {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
       </span>
+      <h3 v-if="forum.qna">
+        Q&A
+      </h3>
     </section>
 
     <router-link
@@ -86,6 +90,9 @@
         return moment(this.forum.dateCreated, 'MMMM Do YYYY, h:mm:ss a').toDate();
       },
       liked() {
+        if (this.forum.likes !== undefined){
+          return this.forum.likes.includes(this.$store.state.userEmail);
+        }
       return this.likers.includes(this.$store.state.userEmail);
      },
     },
@@ -102,7 +109,11 @@
       async likeRequest() {
         try {
           const r = await  fetch(`/api/likes/${this.forum._id}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
-          this.fetchLikers()
+          if (this.forum.likes !== undefined){
+            this.$store.commit('refreshForumPostComments', this.forum.parentId._id);
+          } else{
+            this.fetchLikers()
+          }
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
@@ -114,8 +125,12 @@
       },
       async removeLikeRequest() { 
         try {
-          const r = await fetch(`/api/likes/${ this.forum._id}`, {method: 'DELETE'})
-          this.fetchLikers()
+          const r = await fetch(`/api/likes/${this.forum._id}`, {method: 'DELETE'})
+          if (this.forum.likes !== undefined){
+            this.$store.commit('refreshForumPostComments', this.forum.parentId._id);
+          } else{
+            this.fetchLikers()
+          }
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);

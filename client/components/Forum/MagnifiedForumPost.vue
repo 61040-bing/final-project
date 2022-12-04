@@ -60,9 +60,6 @@
         comments(){
           if (!this.forumPost) return [];
           const comms = this.$store.state.forumPostComments;
-          // comms.sort((commentOne, commentTwo)=>{
-          //   return c
-          // })
           return comms;
         }
        },
