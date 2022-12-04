@@ -87,7 +87,7 @@
 
        async fetchNeighborhood(){
         const url = `/api/neighborhood/${this.$route.params.id}`;
-      const res = await fetch(url).then(async r => r.json());
+        const res = await fetch(url).then(async r => r.json());
       console.log(res);
       this.neighborhood = res;
       this.loaded=true;
