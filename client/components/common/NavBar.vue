@@ -64,19 +64,28 @@
     </section>
   </nav>
   <nav v-else>
-    <div class="left">
+    <div
+      v-if="$store.state.userEmail === 'admin@admin.com'"
+      class="left"
+    >
       <h1 class="title">
         Administrator Account
       </h1>
     </div>
-    <div class="right">
+    <div
+      v-if="$store.state.userEmail === 'admin@admin.com'"
+      class="right"
+    >
       <div class="nav-item">
         <span @click="navigateTo('/admin')">Home</span>
       </div>
-      <div class="nav-item">
+      <div
+        class="nav-item"
+        @click="logout"
+      >
         Logout
       </div>   
-    </div>
+    </div>   
   </nav>
 </template>
 
@@ -98,6 +107,14 @@
     methods: {
       navigateTo(link) {
         this.$router.push(link);
+      },
+      async logout(){
+        await  fetch(`/api/users/session`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+        this.$store.commit('setEmail', null);
+        this.$store.commit('setNeighborhood', null);
+        this.$router.push({name: 'Home'}); // Goes to Home page after signing out
+        this.$store.commit('alert', {
+          message: 'You are now signed out!', status: 'success'});
       },
 
       hideMenu() {

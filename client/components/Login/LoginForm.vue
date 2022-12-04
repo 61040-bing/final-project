@@ -19,7 +19,11 @@ export default {
       ],
       title: 'Sign in',
       callback: () => {
-        this.$router.push({name: 'Home'});
+        if( this.$store.state.userEmail === 'admin@admin.com'){
+          this.$router.push('/admin');
+        } else {
+          this.$router.push({name: 'Home'});
+        }
         this.$store.commit('alert', {
           message: 'You are now signed in!', status: 'success'
         });

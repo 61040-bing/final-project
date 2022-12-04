@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="$store.state.userEmail === 'admin@admin.com'">
     <div
       v-if="clicked"
       class="add"
@@ -43,6 +43,9 @@
         :neighborhood="neighborhood"
       />
     </div>
+  </section>
+  <section v-else>
+    Forbidden Access
   </section>
 </template>
       

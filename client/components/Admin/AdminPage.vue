@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="$store.state.userEmail === 'admin@admin.com'">
     <div class="container">
       <button class="button">View Submitted Petitions</button>
       <router-link to="/admin/editneighborhood">
@@ -7,6 +7,9 @@
       </router-link>
     </div>
   </section>
+  <section v-else>
+    Forbidden Access
+    </section>
 </template>
     
   <script>
