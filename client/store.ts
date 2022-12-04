@@ -16,6 +16,8 @@ const store = new Vuex.Store({
     userNeighborhood: null,
     alerts: {},
     neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
+    forumPosts: [],
+    forumPostComments: []
   },
   mutations: {
     alert(state, payload) {
@@ -65,6 +67,34 @@ const store = new Vuex.Store({
         const res = await fetch(url).then(async r => r.json());
         state.neighborhoodRoundTables = res;
       }
+    },
+    async refreshForumPosts(state, neighborhoodId) {
+      /**
+       * Request the server for the currently available freets.
+       */
+
+      if (neighborhoodId !== undefined){
+        const url = `/api/forum?neighborhoodId=${neighborhoodId}`;
+        const res = await fetch(url).then(async r => r.json());
+        state.forumPosts = res;
+      }
+    },
+    async refreshForumPostComments(state, parentId) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = `/api/comments/${parentId}`;
+      const res = await fetch(url).then(async r => r.json());
+      for (const comment of res){
+        const url = `/api/likes/${comment._id}`;
+        const response = await fetch(url).then(async r => r.json());
+        comment.likes = response.map(liker => liker.author.email);
+      }
+      res.sort((commentOne, commentTwo) => {
+        return commentTwo.likes.length - commentOne.likes.length;
+      });
+      console.log(res);
+      state.forumPostComments = res;
     },
   },
   // Store data across page refreshes, only discard on browser close

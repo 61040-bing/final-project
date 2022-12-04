@@ -61,9 +61,10 @@ export default {
       hasBody: false, // Whether or not form request has a body
       setEmail: false, // Whether or not stored email should be updated after form submission
       setNeighborhood: false, // Whether or not stored neighborhood should be updated after form submission
-      refreshFreets: false, // Whether or not stored freets should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
-      callback: null // Function to run after successful form submission
+      callback: null, // Function to run after successful form submission,
+      neighborhoodId: null,
+      refreshComments: false
     };
   },
   methods: {
@@ -77,8 +78,12 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
+        const req_fields = [...this.fields];
+        if (this.neighborhoodId) {
+          req_fields.push({id: 'neighborhoodId', value: this.neighborhoodId });
+        }
         options.body = JSON.stringify(Object.fromEntries(
-          this.fields.map(field => {
+          req_fields.map(field => {
             const {id, value} = field;
             field.value = '';
             return [id, value];
@@ -106,9 +111,12 @@ export default {
         if (this.setNeighborhood) {
           console.log('here');
           const res = text ? JSON.parse(text) : {user: null};
-          //console.log(res.user);
           this.$store.commit('setNeighborhood', res.user ? res.user.neighborhood : null);
           console.log(this.$store.state.userNeighborhood);
+        }
+
+        if (this.refreshComments) {
+          this.$store.commit('refreshForumPostComments', this.$route.params.postId);
         }
 
         if (this.callback) {

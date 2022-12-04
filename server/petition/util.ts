@@ -2,7 +2,7 @@ import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Petition, PopulatedPetition} from './model';
 
-// Update this if you add a property to the Freet type!
+// Update this if you add a property to the forum type!
 type PetitionResponse = {
   _id: string;
   author: string;
