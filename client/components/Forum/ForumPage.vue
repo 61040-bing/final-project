@@ -2,7 +2,9 @@
   <section
     class="buffer"
   >
-    <CreateForumForm />
+    <CreateForumForm 
+      v-if="$store.state.userNeighborhood === $route.params.id || ($route.params.id === undefined && $store.state.userEmail !== undefined)"
+    />
     <section>
       <header class="left">
         <h2>
