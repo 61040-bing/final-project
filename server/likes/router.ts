@@ -36,19 +36,18 @@ router.get(
  *
  */
 router.post(
-    '/:itemId',
-    [
-        userValidator.isUserLoggedIn,
-        likeValidator.isLikeNotExists,
-    ],
-    async (req: Request, res: Response) => {
-        const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-        await LikeCollection.addOne(userId, req.params.itemId);
-        const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
-        const response = allLikes.map(util.constructLikeResponse);
-        res.status(200).json(response);
-
-    }
+  '/:itemId',
+  [
+    userValidator.isUserLoggedIn,
+    likeValidator.isLikeNotExists
+  ],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    await LikeCollection.addOne(userId, req.params.itemId);
+    const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
+    const response = allLikes.map(util.constructLikeResponse);
+    res.status(200).json(response);
+  }
 );
 
 /**
@@ -62,18 +61,18 @@ router.post(
  * @throws {404} - If the likeId is not valid
  */
 router.delete(
-    '/:itemId?',
-    [
-        userValidator.isUserLoggedIn,
-        likeValidator.isLikeExists,
-    ],
-    async (req: Request, res: Response) => {
-        await LikeCollection.deleteOne(req.session.userId as string, req.params.itemId);
+  '/:itemId?',
+  [
+    userValidator.isUserLoggedIn,
+    likeValidator.isLikeExists
+  ],
+  async (req: Request, res: Response) => {
+    await LikeCollection.deleteOne(req.session.userId as string, req.params.itemId);
 
-        const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
-        const response = allLikes.map(util.constructLikeResponse);
-        res.status(200).json(response);
-    }
+    const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
+    const response = allLikes.map(util.constructLikeResponse);
+    res.status(200).json(response);
+  }
 );
 
 export {router as likeRouter};

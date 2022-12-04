@@ -23,8 +23,17 @@
     <div v-else>
       {{ forum.content }}
     </div>
-    <button>
+    <button
+      v-if="!liked"
+      @click="likeRequest"
+    >
       Upvote
+    </button>
+    <button
+      v-if="liked"
+      @click="removeLikeRequest"
+    >
+      Remove Upvote
     </button>
     <section
       v-if="false"
@@ -68,18 +77,32 @@
     data() {
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
-        path: `/forum/${this.forum._id}`
+        path: `/forum/${this.forum._id}`,
+        likers: []
       };
     },
     computed: {
       date(){
         return moment(this.forum.dateCreated, 'MMMM Do YYYY, h:mm:ss a').toDate();
-      }
+      },
+      liked() {
+      return this.likers.includes(this.$store.state.userEmail);
+     },
+    },
+    mounted(){
+      this.fetchLikers();
     },
     methods: {
+      async fetchLikers(){
+        const url = `/api/likes/${this.forum._id}`;
+        const res = await fetch(url).then(async r => r.json());
+        this.likers = res.map(liker => liker.author.email);
+        console.log(res);
+      },
       async likeRequest() {
         try {
           const r = await  fetch(`/api/likes/${this.forum._id}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
+          this.fetchLikers()
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
@@ -92,6 +115,7 @@
       async removeLikeRequest() { 
         try {
           const r = await fetch(`/api/likes/${ this.forum._id}`, {method: 'DELETE'})
+          this.fetchLikers()
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
@@ -101,7 +125,8 @@
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
       }
-    }
+    },
+    
   };
   </script>
   
