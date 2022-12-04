@@ -19,7 +19,15 @@ export type User = {
   neighborhood: Types.ObjectId;
 };
 
-// TODO: Once neighborhood is done, Add a PopulatedUser type
+export type PopulatedUser = {
+  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  dateJoined: Date;
+  neighborhoodId: Neighborhood;
+};
 
 // Mongoose schema definition for interfacing with a MongoDB table
 // Users stored in this table will have these fields, with the

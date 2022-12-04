@@ -16,7 +16,8 @@ const store = new Vuex.Store({
     alerts: {},
     neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
     forumPosts: [],
-    forumPostComments: []
+    forumPostComments: [],
+    userObject: null,
   },
   mutations: {
     alert(state, payload) {
@@ -34,6 +35,9 @@ const store = new Vuex.Store({
        * @param email - new email to set
        */
       state.userEmail = email;
+    },
+    setUserObject(state, user){
+      state.userObject = user
     },
     setNeighborhood(state, neighborhood) {
       /**

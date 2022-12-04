@@ -29,8 +29,8 @@ const router = express.Router();
 router.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
-    // Check if author query parameter was supplied
-    if (req.query.author !== undefined) {
+    // Check if neighborhood query parameter was supplied
+    if (req.query.neighborhood !== undefined) {
       next();
       return;
     }
@@ -40,7 +40,6 @@ router.get(
     res.status(200).json(response);
   },
   [
-    userValidator.isAuthorExists,
     petitionValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {

@@ -31,6 +31,7 @@ class RoundTableCollection {
       roundTableName,
       startDate,
       endDate,
+      zoomLink,
       dateCreated: date,
 
     });
