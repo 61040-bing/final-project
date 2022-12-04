@@ -12,6 +12,7 @@ type ForumResponse = {
   content: string;
   dateModified: string;
   neighborhood: Neighborhood;
+  qna: boolean;
 };
 
 /**

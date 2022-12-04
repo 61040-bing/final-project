@@ -35,7 +35,6 @@ router.get(
       next();
       return;
     }
-
     const allPosts = await ForumCollection.findAll();
     const response = allPosts.map(util.constructForumResponse);
     res.status(200).json(response);
@@ -57,6 +56,7 @@ router.get(
  *
  * @param {string} content - The content of the Forum post
  *  @param {string} neighborhoodId - The ID of the neighborhood
+ *  @param {boolean} qna - whether to create qna or not
  * @return {ForumResponse} - The created Forum
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the Forum content is empty or a stream of empty spaces
@@ -71,7 +71,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const post = await ForumCollection.addOne(userId, req.body.content, req.body.neighborhoodId);
+    const post = await ForumCollection.addOne(userId, req.body.content, req.body.neighborhoodId, req.body.qna);
 
     res.status(201).json({
       message: 'Your Forum was created successfully.',

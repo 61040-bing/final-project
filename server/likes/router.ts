@@ -10,7 +10,7 @@ const router = express.Router();
 
 /**
  *
- * @name GET /api/likes/postId
+ * @name GET /api/likes/itemId
  *
  * @return {LikeResponse[]} - An array of likes created by user with id, authorId
  * @throws {400} - If authorId is not given
@@ -18,12 +18,11 @@ const router = express.Router();
  *
  */
 router.get(
-    '/:postId',
+    '/:itemId',
     [
-        forumValidator.isForumPostExists,
     ],
     async (req: Request, res: Response) => {
-        const allLikes = await LikeCollection.findAllByPostId(req.params.postId);
+        const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
         const response = allLikes.map(util.constructLikeResponse);
         res.status(200).json(response);
     }
@@ -32,21 +31,20 @@ router.get(
 /**
  * Create a new like
  *
- * @name POST /api/likes/postId
- * returns an array of likes on specific post including added like
+ * @name item /api/likes/itemId
+ * returns an array of likes on specific item including added like
  *
  */
 router.post(
-    '/:postId',
+    '/:itemId',
     [
         userValidator.isUserLoggedIn,
-        forumValidator.isForumPostExists,
         likeValidator.isLikeNotExists,
     ],
     async (req: Request, res: Response) => {
         const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-        await LikeCollection.addOne(userId, req.params.postId);
-        const allLikes = await LikeCollection.findAllByPostId(req.params.postId);
+        await LikeCollection.addOne(userId, req.params.itemId);
+        const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
         const response = allLikes.map(util.constructLikeResponse);
         res.status(200).json(response);
 
@@ -56,7 +54,7 @@ router.post(
 /**
  * Delete a like
  *
- * @name DELETE /api/likes/:postId
+ * @name DELETE /api/likes/:itemId
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in or is not the author of
@@ -64,16 +62,15 @@ router.post(
  * @throws {404} - If the likeId is not valid
  */
 router.delete(
-    '/:postId?',
+    '/:itemId?',
     [
         userValidator.isUserLoggedIn,
-        forumValidator.isForumPostExists,
         likeValidator.isLikeExists,
     ],
     async (req: Request, res: Response) => {
-        await LikeCollection.deleteOne(req.session.userId as string, req.params.postId);
+        await LikeCollection.deleteOne(req.session.userId as string, req.params.itemId);
 
-        const allLikes = await LikeCollection.findAllByPostId(req.params.postId);
+        const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
         const response = allLikes.map(util.constructLikeResponse);
         res.status(200).json(response);
     }

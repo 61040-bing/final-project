@@ -17,6 +17,7 @@ export type Forum = {
   dateModified: Date;
   expiryDate: Date;
   neighborhoodId: Neighborhood;
+  qna: boolean;
 };
 
 export type PopulatedForum = {
@@ -27,6 +28,7 @@ export type PopulatedForum = {
   dateModified: Date;
   expiryDate: Date;
   neighborhoodId: Neighborhood;
+  qna: boolean;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -55,14 +57,16 @@ const ForumSchema = new Schema<Forum>({
     type: Date,
     required: true
   },
-  expiryDate: {
-    type: Date,
-    required: false
-  },
   neighborhoodId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Neighborhood'
+  },
+  qna: {
+    type: Boolean,
+    default: false,
+    required: true
+
   }
 });
 

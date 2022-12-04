@@ -8,7 +8,7 @@ import {User} from "../user/model";
 type LikeResponse = {
   _id: string;
   author: User;
-  parentPost: Forum;
+  itemId: string;
 };
 
 
@@ -25,15 +25,12 @@ const constructLikeResponse = (like: HydratedDocument<Like>): LikeResponse => {
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  const parent  = likeCopy.postId;
-  delete likeCopy.postId;
   const author = likeCopy.authorId;
   delete  likeCopy.authorId;
 
   return {
     ...likeCopy,
     _id: likeCopy._id.toString(),
-    parentPost: parent,
     author
   };
 };

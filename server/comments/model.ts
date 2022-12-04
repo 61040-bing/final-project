@@ -16,6 +16,7 @@ export type Comment = {
   content: string;
   dateModified: Date;
   parentId: Types.ObjectId;// ID of parent Forum Post
+  parentCommentId: Types.ObjectId;// ID of parent Forum Post
 };
 
 export type PopulatedComment = {
@@ -25,6 +26,7 @@ export type PopulatedComment = {
   content: string;
   dateModified: Date;
   parentId: Forum;// ID of parent Forum Post
+  parentCommentId: Comment;// ID of parent Forum Post
 };
 
 
@@ -55,6 +57,11 @@ const CommentSchema = new Schema<Comment>({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Forum'
+  },
+  parentCommentId: {
+    type: Schema.Types.ObjectId,
+    required: false,
+    ref: 'Comment'
   }
 });
 

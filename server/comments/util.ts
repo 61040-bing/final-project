@@ -13,6 +13,7 @@ type CommentResponse = {
   content: string;
   dateModified: string;
   parentId: Forum;
+  parentCommentId: Comment;
 
 };
 

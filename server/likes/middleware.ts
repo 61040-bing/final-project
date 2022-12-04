@@ -12,7 +12,7 @@ const isLikeExists = async (req: Request, res: Response, next: NextFunction) => 
   const like= await LikeCollection.findOne(req.session.userId, req.params.likeId);
   if (like === null){
     res.status(400).json({
-      error: "Post was not liked by user"
+      error: "Item was not liked by user"
     });
     return;
   }
@@ -23,10 +23,10 @@ const isLikeExists = async (req: Request, res: Response, next: NextFunction) => 
  * Checks if the current user does not like current like
  */
 const isLikeNotExists = async (req: Request, res: Response, next: NextFunction) => {
-  const like= await LikeCollection.findOne(req.session.userId, req.params.postId);
+  const like= await LikeCollection.findOne(req.session.userId, req.params.itemId);
   if (like !== null){
     res.status(400).json({
-      error: "Post was already liked by user"
+      error: "Item was already liked by user"
     });
     return;
   }

@@ -18,9 +18,10 @@ class ForumCollection {
    * @param {string} authorId - The id of the author of the forum
    * @param {string} content - The id of the content of the forum
    * @param neighborhoodId
+   * @param qna
    * @return {Promise<HydratedDocument<Forum>>} - The newly created forum
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string, neighborhoodId : Types.ObjectId | string): Promise<HydratedDocument<Forum>> {
+  static async addOne(authorId: Types.ObjectId | string, content: string, neighborhoodId : Types.ObjectId | string, qna: boolean): Promise<HydratedDocument<Forum>> {
     const date = new Date();
     const forum = new ForumModel({
       authorId,
@@ -28,6 +29,7 @@ class ForumCollection {
       content,
       dateModified: date,
       neighborhoodId: neighborhoodId,
+      qna
     });
     await forum.save(); // Saves forum to MongoDB
     return forum.populate('authorId');

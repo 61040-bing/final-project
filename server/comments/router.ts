@@ -3,6 +3,7 @@ import express from 'express';
 import CommentCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as commentValidator from '../comments/middleware';
+import * as forumValidator from "../forum/middleware"
 import {isForumPostExists} from '../forum/middleware';
 import * as util from './util';
 
@@ -26,10 +27,37 @@ router.get(
   async (req: Request, res: Response) => {
     const parentId = req.params.postId;
     const commentsForPost = await CommentCollection.findCommentsByForumPost(parentId);
-    const response = commentsForPost.map(util.constructCommentResponse);
+    let response = commentsForPost.map(util.constructCommentResponse);
+    response = response.filter(comment => comment.parentCommentId === undefined);
     res.status(200).json(response);
   }
 );
+
+
+/**
+ * Get responses to specific comment
+ *
+ * @name GET /api/comments/subcomments/:commentId
+ *
+ * @return {CommentResponse[]} - An array of comments on post
+ * @throws {400} - If postId is not given
+ * @throws {404} - If no post has given postId
+ *
+ */
+router.get(
+    '/subcomments/:commentId',
+    [
+        commentValidator.isCommentExists,
+    ],
+    async (req: Request, res: Response) => {
+        const commentId = req.params.commentId;
+        const commentsForPost = await CommentCollection.findCommentsByParentCommentId(commentId);
+        const response = commentsForPost.map(util.constructCommentResponse);
+        res.status(200).json(response);
+    }
+);
+
+
 
 /**
  * Create a new comment.
@@ -46,13 +74,13 @@ router.post(
   '/:postId?',
   [
     userValidator.isUserLoggedIn,
-    isForumPostExists,
+    forumValidator.isForumPostExists,
     commentValidator.isValidCommentContent,
   ],
   async (req: Request, res: Response) => {
     const parentId = req.params.postId;
     let userId = (req.session.userId as string) ?? '';
-    const comment = await CommentCollection.addOne(userId, parentId, req.body.content);
+    const comment = await CommentCollection.addOne(userId, parentId, req.body.content, req.body.parentCommentId);
     await comment.populate('parentId');
     await comment.populate('authorId');
     res.status(201).json({

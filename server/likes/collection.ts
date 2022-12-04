@@ -16,32 +16,30 @@ class LikeCollection {
    * Add a like to the collection
    *
    * @param {string} authorId - The id of the author of the like
-   * @param postId
+   * @param itemId
    * @return {Promise<HydratedDocument<like>>} - The newly created like
    */
-  static async addOne(authorId: Types.ObjectId | string, postId: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
+  static async addOne(authorId: Types.ObjectId | string, itemId: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
     const like = new LikeModel({
       authorId,
-      postId
+      itemId
     });
     await like.save(); //
-    await like.populate("postId");
     return like.populate('authorId');
   }
 
   /**
-   * Find a like with given authorId and postId.
+   * Find a like with given authorId and itemId.
    *
    * @param authorId
-   * @param {string} likeId
+   * @param itemId
    */
-  static async findOne(authorId: Types.ObjectId | string, likeId: Types.ObjectId | string): Promise<Array<HydratedDocument<Like>>> {
-    const like = await LikeModel.findOne({authorId: authorId, likeId: likeId});
+  static async findOne(authorId: Types.ObjectId | string, itemId: Types.ObjectId | string): Promise<Array<HydratedDocument<Like>>> {
+    const like = await LikeModel.findOne({authorId: authorId, itemId: itemId});
     if (like === null){
       return null;
     }
     await like.populate("authorId");
-    return like.populate("postId");
   }
 
   /**
@@ -55,26 +53,26 @@ class LikeCollection {
   }
 
   /**
-   * Get all the likes by given post
+   * Get all the likes by given item
    * @return {Promise<HydratedDocument<Likes>[]>} - An array of all of the likes
-   * @param postId
+   * @param itemId
    */
-  static async findAllByPostId(postId: string): Promise<Array<HydratedDocument<Like>>> {
+  static async findAllByItemId(itemId: string): Promise<Array<HydratedDocument<Like>>> {
 
-    return LikeModel.find({postId: postId}).populate(['authorId', 'postId']);
+    return LikeModel.find({itemId: itemId}).populate('authorId');
   }
 
 
   /**
-   * Delete a like with given author_id and post_id.
+   * Delete a like with given author_id and item_id.
    *
    * @param authorId
-   * @param {string} postId - The postId of post to delete
-   * @return {Promise<Boolean>} - true if the post has been deleted, false otherwise
+   * @param itemId
+   * @return {Promise<Boolean>} - true if the item has been deleted, false otherwise
    */
-  static async deleteOne(authorId: Types.ObjectId | string, postId: Types.ObjectId | string): Promise<boolean> {
-    const post = await LikeModel.deleteOne({authorId: authorId, postId: postId});
-    return post !== null;
+  static async deleteOne(authorId: Types.ObjectId | string, itemId: Types.ObjectId | string): Promise<boolean> {
+    const item = await LikeModel.deleteOne({authorId: authorId, itemId: itemId});
+    return item !== null;
   }
 }
 

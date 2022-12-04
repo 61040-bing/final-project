@@ -18,9 +18,10 @@ class CommentCollection {
    * @param {string} authorId - The id of the author of the comment
    * @param {string} parentId - The id of the Forum the comment is attached to
    * @param {string} content - The id of the content of the comment
+   * @param parentCommentId
    * @return {Promise<HydratedDocument<Forum>>} - The newly created comment
    */
-  static async addOne(authorId: Types.ObjectId | string, parentId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Comment>> {
+  static async addOne(authorId: Types.ObjectId | string, parentId: Types.ObjectId | string, content: string, parentCommentId: string): Promise<HydratedDocument<Comment>> {
     const date = new Date();
     const comment = new CommentModel({
       authorId,
@@ -28,6 +29,7 @@ class CommentCollection {
       content,
       dateModified: date,
       parentId,
+      parentCommentId,
     });
     await comment.save(); // Saves Forum to MongoDB
     await comment.populate("parentId");
@@ -62,6 +64,17 @@ class CommentCollection {
   static async findCommentsByForumPost(parentId: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
     // Retrieves Forums and sorts them from most to least recent
     return CommentModel.find({parentId: parentId }).sort({dateModified: -1}).populate('authorId').populate("parentId");
+  }
+
+
+  /**
+   * Get all the comments in the database with parent comment commentId
+   *
+   * @return {Promise<HydratedDocument<Forum>[]>} - An array of all of the Comments
+   */
+  static async findCommentsByParentCommentId(commentId: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
+    // Retrieves Forums and sorts them from most to least recent
+    return CommentModel.find({parentCommentId: commentId }).sort({dateModified: -1}).populate('authorId').populate("parentCommentId");
   }
 
   /**

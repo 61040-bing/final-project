@@ -6,14 +6,14 @@ import type {Forum} from '../forum/model';
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: Types.ObjectId;
-  postId : Types.ObjectId;
+  itemId : Types.ObjectId;
 };
 
 export type PopulatedLike = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: User;
   dateCreated: Date;
-  postId: Forum;
+  itemId: string;
 };
 
 
@@ -25,12 +25,12 @@ const LikeSchema = new Schema<Like>({
     required: true,
     ref: 'User'
   },
-  postId: {
+  itemId: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Forum'
   },
+
 });
 
 const LikeModel = model<Like>('Like', LikeSchema);
