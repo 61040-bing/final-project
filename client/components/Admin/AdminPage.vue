@@ -1,15 +1,28 @@
 <template>
   <section v-if="$store.state.userEmail === 'admin@admin.com'">
     <div class="container">
-      <button class="button">View Submitted Petitions</button>
+      <button class="button">
+        View Submitted Petitions
+      </button>
       <router-link to="/admin/editneighborhood">
-        <button class="button">Edit Neighborhoods</button>
+        <button class="button">
+          Edit Neighborhoods
+        </button>
       </router-link>
     </div>
+    <section class="alerts">
+      <article
+        v-for="(status, alert, index) in alerts"
+        :key="index"
+        :class="status"
+      >
+        <p>{{ alert }}</p>
+      </article>
+    </section>
   </section>
   <section v-else>
     Forbidden Access
-    </section>
+  </section>
 </template>
     
   <script>
@@ -19,6 +32,11 @@
       components: {},
       props: {
   
+      },
+      data(){
+        return {
+          alerts: {}, // Displays success/error messages encountered during freet modification,
+        }
       }
     };
     </script>

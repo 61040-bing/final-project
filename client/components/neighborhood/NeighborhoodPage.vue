@@ -45,7 +45,7 @@
         <ForumPage />
       </section>
       <section v-if="viewingTab === 'petition'">
-        <PetitionsPage/>
+        <PetitionsPage />
       </section>
       <section v-if="viewingTab === 'roundtable'">
         <section
@@ -57,12 +57,21 @@
             :roundtable="roundtable"
           />
         </section>
-              <article
-        v-else
-      >
-        <h3>No RoundTables found.</h3>
-      </article>
+        <article
+          v-else
+        >
+          <h3>No RoundTables found.</h3>
+        </article>
       </section>
+    </section>
+    <section class="alerts">
+      <article
+        v-for="(status, alert, index) in alerts"
+        :key="index"
+        :class="status"
+      >
+        <p>{{ alert }}</p>
+      </article>
     </section>
   </section>
 </template>
@@ -80,6 +89,7 @@
     },
     data() {
     return {
+      alerts: {}, // Displays success/error messages encountered during freet modification,
       viewingTab : "forum",
       neighborhood: {},
       loaded: false,
@@ -104,12 +114,21 @@
        } ,
 
        async fetchNeighborhood(){
-        const neighborhoodId = this.$route.params.id === undefined ? this.cityId : this.$route.params.id;
-        const url = `/api/neighborhood/${neighborhoodId}`;
-        const res = await fetch(url).then(async r => r.json());
-      console.log(res);
-      this.neighborhood = res;
-      this.loaded=true;
+        try{
+          const neighborhoodId = this.$route.params.id === undefined ? this.cityId : this.$route.params.id;
+          const url = `/api/neighborhood/${neighborhoodId}`;
+          const res = await fetch(url).then(async r => r.json());
+          if (!res.ok) {
+                throw new Error(res.error);
+          }
+          this.neighborhood = res;
+          this.loaded = true;
+        }
+        catch (e) {
+            this.$set(this.alerts, e, 'e');
+            setTimeout(() => this.$delete(this.alerts, e), 3000);
+          }
+        
        }
     }
   };
