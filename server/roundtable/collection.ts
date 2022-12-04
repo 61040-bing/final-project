@@ -46,7 +46,7 @@ class RoundTableCollection {
    * @return {Promise<HydratedDocument<RoundTable>> | Promise<null> } - The RoundTable with the given roundTableId, if any
    */
   static async findOne(roundTableId: Types.ObjectId | string): Promise<HydratedDocument<RoundTable>> {
-    return RoundTableModel.findOne({_id: roundTableId}).populate('authorId');
+    return RoundTableModel.findOne({_id: roundTableId}).populate('authorId').populate('petitionId');
 
   }
 
@@ -57,7 +57,7 @@ class RoundTableCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<RoundTable>>> {
     // Retrieves RoundTables and sorts them from most to least recent
-    return RoundTableModel.find({}).sort({dateCreated: -1}).populate('authorId');
+    return RoundTableModel.find({}).sort({dateCreated: -1}).populate('authorId').populate('petitionId');
 
   }
 
@@ -69,7 +69,7 @@ class RoundTableCollection {
    */
   static async findAllByEmail(email: string): Promise<Array<HydratedDocument<RoundTable>>> {
     const author = await UserCollection.findOneByEmail(email);
-    return RoundTableModel.find({authorId: author._id}).populate('authorId');
+    return RoundTableModel.find({authorId: author._id}).populate('authorId').populate('petitionId');
 
   }
 
@@ -81,7 +81,7 @@ class RoundTableCollection {
    */
  static async findAllByUserId(userId: Types.ObjectId |string): Promise<Array<HydratedDocument<RoundTable>>> {
   const author = await UserCollection.findOneByUserId(userId);
-  return RoundTableModel.find({authorId: author._id}).populate('authorId');
+  return RoundTableModel.find({authorId: author._id}).populate('authorId').populate('petitionId');
 
 }
 
@@ -93,7 +93,7 @@ class RoundTableCollection {
    */
   static async findAllbyPetitionId(petitionId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
     const petition = await NeighborhoodCollection.findOne(petitionId);
-    return RoundTableModel.find({petitionId: petition._id}).populate('_id');
+    return RoundTableModel.find({petitionId: petition._id}).populate('_id').populate('petitionId').sort('startDate');
   }
 
 /**
@@ -104,7 +104,7 @@ class RoundTableCollection {
    */
  static async findAllbyNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id');
+  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate');
 }
 
   /**

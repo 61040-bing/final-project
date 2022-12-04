@@ -129,7 +129,6 @@ router.delete(
   '/:petitionId?',
   [
     userValidator.isUserLoggedIn,
-    signatureValidator.isSignatureExists,
     petitionValidator.isPetitionExists,
     signatureValidator.isValidSignatureModifier
     // cannot delete is submitted - delete option is hidden for creator in frontend
