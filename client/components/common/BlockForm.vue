@@ -65,7 +65,8 @@ export default {
       callback: null, // Function to run after successful form submission,
       neighborhoodId: null,
       refreshComments: false,
-      refreshPosts: false
+      refreshPosts: false,
+      setUser: false
     };
   },
   methods: {
@@ -127,6 +128,11 @@ export default {
 
         if (this.callback) {
           this.callback();
+        }
+        if (this.setUser){
+          const res = text ? JSON.parse(text) : {user: null};
+          this.$store.commit('setUserObject', res.user ? res.user : null);
+          console.log("setting user: ", this.$store.state.userObject);
         }
       } catch (e) {
         this.$set(this.alerts, e, 'error');

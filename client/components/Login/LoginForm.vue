@@ -13,6 +13,7 @@ export default {
       hasBody: true,
       setEmail: true,
       setNeighborhood: true,
+      setUser: true,
       fields: [
         {id: 'email', label: 'Email', value: ''},
         {id: 'password', label: 'Password', value: ''}
