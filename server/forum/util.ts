@@ -11,6 +11,7 @@ type ForumResponse = {
   dateCreated: string;
   content: string;
   dateModified: string;
+  expiryDate: string;
   neighborhood: Neighborhood;
   qna: boolean;
 };
@@ -46,7 +47,8 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
     author,
     neighborhood,
     dateCreated: formatDate(Forum.dateCreated),
-    dateModified: formatDate(Forum.dateModified)
+    dateModified: formatDate(Forum.dateModified),
+    expiryDate: formatDate(Forum.expiryDate)
   };
 };
 
