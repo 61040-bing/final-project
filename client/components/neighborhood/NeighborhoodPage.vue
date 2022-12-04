@@ -45,7 +45,7 @@
         <ForumPage />
       </section>
       <section v-if="viewingTab === 'petition'">
-        Petition
+        <PetitionsPage/>
       </section>
       <section v-if="viewingTab === 'roundtable'">
         <section
@@ -68,11 +68,13 @@
 </template>
 
 <script>
-
+  import RoundTableComponent from '../roundtable/RoundTableComponent.vue';
   import ForumPage from '../Forum/ForumPage.vue';
+  import PetitionsPage from '@/components/Petition/PetitionsPage.vue'; 
+
   export default {
     name: 'NeighborhoodPage',
-    components: {ForumPage},
+    components: {ForumPage, RoundTableComponent, PetitionsPage},
     props: {
 
     },

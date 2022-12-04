@@ -17,11 +17,11 @@ class SignatureCollection {
    * @param {string} petition - The id of the petition
    * @return {Promise<HydratedDocument<Signature>>} - The newly created signature
    */
-  static async addOne(authorId: Types.ObjectId | string, petition: Types.ObjectId | string): Promise<HydratedDocument<Signature>> {
+  static async addOne(authorId: Types.ObjectId | string, petitionId: Types.ObjectId | string): Promise<HydratedDocument<Signature>> {
     const date = new Date();
     const signature = new SignatureModel({
       authorId,
-      petition,
+      petitionId,
       dateCreated: date,
 
     });

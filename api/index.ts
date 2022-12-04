@@ -14,7 +14,7 @@ import{likeRouter} from "../server/likes/router";
 import {commentRouter} from "../server/comments/router";
 import {forumRouter} from "../server/forum/router";
 import {petitionRouter} from '../server/petition/router';
-import { signatureRouter } from '../server/signature/router';
+import {signatureRouter} from '../server/signature/router';
 import {roundTableRouter} from '../server/roundtable/router';
 
 // Load environmental variables

@@ -64,6 +64,7 @@ export default {
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission,
       neighborhoodId: null,
+      petitionId: null,
       refreshComments: false,
       refreshPosts: false,
       setUser: false
@@ -80,10 +81,39 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
+
+        // if (this.setDate) {
+        //   const req_fields = [];
+
+        //   for (const field of this.fields) {
+        //     if (field.id !== 'startDate' && field.id !== 'endDate' && field.id !== 'startTime' && field.id !== 'endTime') {
+        //       req_fields.push(field);
+        //     }
+        //   }
+        //   const startDate = this.fields.startDate.value + "-" + this.fields.startTime.value;
+        //   req_fields.push({id: 'startDate', value: startDate });
+
+        //   const endDate = this.fields.endDate.value + "-" + this.fields.endTime.value;
+        //   req_fields.push({id: 'endDate', endDate });
+        // } 
+        // else {
+        //   const req_fields = [...this.fields];
+        // }
+
         const req_fields = [...this.fields];
+
         if (this.neighborhoodId) {
+          console.log(this.neighborhoodId);
           req_fields.push({id: 'neighborhoodId', value: this.neighborhoodId });
         }
+
+        console.og
+
+        if (this.petitionId) {
+          console.log(this.petitionId);
+          req_fields.push({id: 'petitionId', value: this.petitionId });
+        }
+
         options.body = JSON.stringify(Object.fromEntries(
           req_fields.map(field => {
             const {id, value} = field;
@@ -94,6 +124,7 @@ export default {
       }
 
       try {
+
         const r = await fetch(this.url, options);
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
@@ -111,7 +142,6 @@ export default {
         }
 
         if (this.setNeighborhood) {
-          console.log('here');
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setNeighborhood', res.user ? res.user.neighborhood : null);
           console.log(this.$store.state.userNeighborhood);

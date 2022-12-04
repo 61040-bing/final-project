@@ -90,8 +90,7 @@ router.get(
  * @return {SignatureResponse} - The created signature
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the user had already added a Signature on the Petition
- * @throws{404} - If the petitionId does not exist.
- * @throws {403} - If the user tries to sign a petition in a neighborhood that is not theirs
+ * @throws {404} - If the petitionId does not exist.
  */
 router.post(
   '/:petitionId',
@@ -104,6 +103,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    console.log(req.params.petitionId);
     const signature = await SignatureCollection.addOne(userId, req.params.petitionId);
     await SignatureCollection.submitPetitionIfTargetReached(req.params.petitionId);
     res.status(201).json({

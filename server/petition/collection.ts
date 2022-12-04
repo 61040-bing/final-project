@@ -78,7 +78,7 @@ class PetitionCollection {
    * @param {string} neighborhoodId - The neighborhoodId
    * @return {Promise<HydratedDocument<Petition>[]>} - An array of all of the petitions for the neighborhood
    */
- static async findAllByNeighborhood(neighborhoodId: string): Promise<Array<HydratedDocument<Petition>>> {
+ static async findAllByNeighborhood(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<Petition>>> {
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
   return PetitionModel.find({neighborhoodId: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhoodId');
 }

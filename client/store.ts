@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     forumPosts: [],
     forumPostComments: [],
     userObject: null,
+    petitions: [],
   },
   mutations: {
     alert(state, payload) {
@@ -102,6 +103,21 @@ const store = new Vuex.Store({
         return commentTwo.likes.length - commentOne.likes.length;
       });
       state.forumPostComments = res;
+    },
+    async updatePetitions(state, petitions) {
+      /**
+       * Update the stored petitions to the provided petitions.
+       * @param petitions - petitions to store
+       */
+      state.petitions = petitions;
+    },
+    async refreshPetitions(state, neighborhood) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = neighborhood ? `/api/petitions?neighborhood=${this.$route.params.id}` : '/api/petitions';
+      const res = await fetch(url).then(async r => r.json());
+      state.petitions = res;
     },
   },
   // Store data across page refreshes, only discard on browser close
