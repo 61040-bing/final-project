@@ -88,9 +88,8 @@ class UserCollection {
     }
 
     if (userDetails.neighborhood){
-      // TODO: Fix below once neighborhood model is implemented
-      // neighborhood = await NeighborhoodCollection.findOne(userDetails.neighborhood)
-      // user.neighborhood = neighborhood
+      const neighborhood = await NeighborhoodCollection.findOne(userDetails.neighborhood)
+      user.neighborhood = neighborhood? neighborhood._id: user.neighborhood
     }
 
     await user.save();
