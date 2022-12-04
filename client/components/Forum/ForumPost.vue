@@ -39,19 +39,21 @@
         <div
           v-if="!liked"
           class="upvote-button"
+          @click="likeRequest"
         >
           <img
             src="../../public/upvoteTriangle.svg"
             style="width: 20px; height: 20px"
-            @click="likeRequest"
           > Upvote
         </div>
-        <div v-if="liked">
+        <div
+          v-if="liked"
+          @click="removeLikeRequest"
+        >
           <img
             src="../../public/triangleFilled.png"
             style="width: 20px; height: 20px"
             class="upvote-button"
-            @click="removeLikeRequest"
           >
           Remove Upvote
         </div>
@@ -101,7 +103,6 @@
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
         path: `/forum/${this.forum._id}`,
-        likers: [],
         response: null
       };
     },
@@ -116,14 +117,10 @@
         return Date();
       },
       liked() {
-        if (this.forum.likes !== undefined){
-          return this.forum.likes.includes(this.$store.state.userEmail);
-        }
-      return this.likers.includes(this.$store.state.userEmail);
+        return this.forum.likes.includes(this.$store.state.userEmail);
      },
     },
     mounted(){
-      this.fetchLikers();
       this.fetchResponse();
     },
     methods: {
@@ -134,20 +131,10 @@
           this.response = res[0]
         }
       },
-      async fetchLikers(){
-        const url = `/api/likes/${this.forum._id}`;
-        const res = await fetch(url).then(async r => r.json());
-        this.likers = res.map(liker => liker.author.email);
-        console.log(res);
-      },
       async likeRequest() {
         try {
           const r = await  fetch(`/api/likes/${this.forum._id}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
-          if (this.forum.likes !== undefined){
-            this.$store.commit('refreshForumPostComments', this.forum.parentId._id);
-          } else{
-            this.fetchLikers()
-          }
+          this.$emit('refresh');
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
@@ -160,11 +147,7 @@
       async removeLikeRequest() {
         try {
           const r = await fetch(`/api/likes/${this.forum._id}`, {method: 'DELETE'})
-          if (this.forum.likes !== undefined){
-            this.$store.commit('refreshForumPostComments', this.forum.parentId._id);
-          } else{
-            this.fetchLikers()
-          }
+          this.$emit('refresh');
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
@@ -244,9 +227,6 @@
   .response {
     background-color: #b0c4ca;
     border-radius: 5px;
-  }
-  .upvote-button{
-
   }
   .upvote-button:hover{
     cursor: pointer;

@@ -15,6 +15,7 @@
         v-for="post in $store.state.forumPosts"
         :key="post.id"
         :forum="post"
+        @refresh="$store.commit('refreshForumPosts', $route.params.id === undefined ? cityId : $route.params.id);"
       />
     </section>
   </section>

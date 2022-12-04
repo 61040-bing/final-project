@@ -27,7 +27,7 @@
       </section>
       <section class="comment">
         <CreateForumCommentForm 
-        v-if="$store.state.userNeighborhood === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userEmail !== undefined)"
+          v-if="$store.state.userNeighborhood === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userEmail !== undefined)"
           :key="forumPost.id"
         />
       </section>
@@ -39,6 +39,7 @@
           v-for="comment in comments"
           :key="comment.id"
           :forum="comment"
+          @refresh="$store.commit('refreshForumPostComments', $route.params.postId);"
         />
       </section>
     </article>
@@ -76,6 +77,8 @@
               if (!r.ok) {
                 throw new Error(res.error);
               }
+            const response = await fetch(`/api/likes/${this.$route.params.postId}`).then(async r => r.json());
+              res.forum.likes = response.map(liker => liker.author.email);
               this.forumPost = res.forum;
               this.$store.commit('refreshForumPostComments', this.$route.params.postId);
             } catch (e) {

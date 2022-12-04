@@ -57,7 +57,6 @@ const isValidPetitionId = async (req: Request, res: Response, next: NextFunction
  * Checks if the current user is the author of the signature whose petitionId is in req.params
  */
 const isValidSignatureModifier = async (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.params.petitionId);;
   
   const signature = await SignatureCollection.findOneByPetitionId(req.params.petitionId, req.session.userId)
   const userId = signature.authorId._id;
