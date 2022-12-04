@@ -13,7 +13,9 @@ const store = new Vuex.Store({
     neighborhoods: [],
     userEmail: null,
     userNeighborhood: null,
-    alerts: {} 
+    alerts: {} ,
+    forumPosts: [],
+    forumPostComments: []
   },
   mutations: {
     alert(state, payload) {
@@ -53,6 +55,25 @@ const store = new Vuex.Store({
       const url = `/api/neighborhood`;
       const res = await fetch(url).then(async r => r.json());
       state.neighborhoods = res;
+    },
+    async refreshForumPosts(state, neighborhoodId) {
+      /**
+       * Request the server for the currently available freets.
+       */
+
+      if (neighborhoodId !== undefined){
+        const url = `/api/forum?neighborhoodId=${neighborhoodId}`;
+        const res = await fetch(url).then(async r => r.json());
+        state.forumPosts = res;
+      }
+    },
+    async refreshForumPostComments(state, parentId) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = `/api/comments/${parentId}`;
+      const res = await fetch(url).then(async r => r.json());
+      state.forumPostComments = res;
     },
   },
   // Store data across page refreshes, only discard on browser close

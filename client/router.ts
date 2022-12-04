@@ -7,6 +7,7 @@ import RegisterPage from './components/Login/RegisterPage.vue';
 import ProfilePage from './components/Account/ProfilePage.vue';
 import AdminPage from './components/Admin/AdminPage.vue';
 import EditNeighborhood from './components/Admin/EditNeighborhood.vue';
+import MagnifiedForumPost from './components/Forum/MagnifiedForumPost.vue';
 
 
 Vue.use(VueRouter);
@@ -19,7 +20,8 @@ const routes = [
   {path: '/register', name: 'Register', component: RegisterPage},
   {path: '/profile', name: 'Profile', component: ProfilePage},
   {path: '/admin', name: 'Admin', component: AdminPage},
-  {path: '/admin/editneighborhood', name: 'Edit Neighborhood', component: EditNeighborhood}
+  {path: '/admin/editneighborhood', name: 'Edit Neighborhood', component: EditNeighborhood},
+  {path: '/forum/:postId', name: 'Forum Post', component: MagnifiedForumPost} 
 
 ];
 

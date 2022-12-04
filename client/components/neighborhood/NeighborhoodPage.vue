@@ -39,7 +39,7 @@
       <section
         v-if="viewingTab === 'forum'"
       >
-        Forum
+      <ForumPage />
       </section>
       <section v-if="viewingTab === 'petition'">
         Petition
@@ -53,9 +53,10 @@
   
 <script>
 
+  import ForumPage from '../Forum/ForumPage.vue';
   export default {
     name: 'NeighborhoodPage',
-    components: {},
+    components: {ForumPage},
     props: {
 
     },
@@ -74,7 +75,7 @@
     mounted(){
       if (this.$route.params.id !== undefined){
         this.fetchNeighborhood()
-      }
+  }
     },
     methods : {
       setViewingTab(tab){
