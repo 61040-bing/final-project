@@ -13,6 +13,7 @@ export default {
       ],
       title: 'Create a forum post',
       neighborhoodId: this.$route.params.id,
+      refreshPosts: true,
       callback: () => {
         const message = 'Successfully created a forum post!';
         this.$set(this.alerts, message, 'success');

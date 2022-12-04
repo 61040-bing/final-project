@@ -64,7 +64,8 @@ export default {
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission,
       neighborhoodId: null,
-      refreshComments: false
+      refreshComments: false,
+      refreshPosts: false
     };
   },
   methods: {
@@ -117,6 +118,10 @@ export default {
 
         if (this.refreshComments) {
           this.$store.commit('refreshForumPostComments', this.$route.params.postId);
+        }
+
+        if(this.refreshPosts){
+          this.$store.commit('refreshForumPosts', this.$route.params.id);
         }
 
         if (this.callback) {

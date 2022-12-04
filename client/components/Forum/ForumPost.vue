@@ -40,7 +40,7 @@
       Remove Upvote
     </button>
     <section
-      v-if="false"
+      v-if="response"
       class="response"
     >
       <section class="container">
@@ -49,12 +49,12 @@
             <span class="username">{{ "City Council" }}</span>
           </h3>
         </header>
-        <span class="date">
-          {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
+        <span>
+          {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][responseDate.getMonth()] }} {{ responseDate.getDate() }}, {{ responseDate.getFullYear() }}
         </span>
       </section>
 
-      Yes Gianna!
+      {{response.content}}
     </section>
     <section class="alerts">
       <article
@@ -82,12 +82,19 @@
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
         path: `/forum/${this.forum._id}`,
-        likers: []
+        likers: [],
+        response: null
       };
     },
     computed: {
       date(){
         return moment(this.forum.dateCreated, 'MMMM Do YYYY, h:mm:ss a').toDate();
+      },
+      responseDate(){
+        if(this.response){
+          return moment(this.response.dateCreated, 'MMMM Do YYYY, h:mm:ss a').toDate()
+        }
+        return Date();
       },
       liked() {
         if (this.forum.likes !== undefined){
@@ -98,8 +105,16 @@
     },
     mounted(){
       this.fetchLikers();
+      this.fetchResponse();
     },
     methods: {
+      async fetchResponse(){
+        if (this.forum.parentId){
+          const url = `/api/comments/subcomments/${this.forum._id}`;
+          const res = await fetch(url).then(async r => r.json());
+          this.response = res[0]
+        } 
+      },
       async fetchLikers(){
         const url = `/api/likes/${this.forum._id}`;
         const res = await fetch(url).then(async r => r.json());
