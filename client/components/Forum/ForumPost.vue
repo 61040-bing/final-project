@@ -14,13 +14,35 @@
     </section>
 
     <router-link
+      v-if="($route.name === 'Neighborhood')"
       :to="path"
       style="text-decoration: none; color: inherit;"
     >
       {{ forum.content }}
     </router-link>
-    
-  
+    <div v-else>
+      {{ forum.content }}
+    </div>
+    <button>
+      Upvote
+    </button>
+    <section
+      v-if="false"
+      class="response"
+    >
+      <section class="container">
+        <header class="user-bio">
+          <h3 class="author">
+            <span class="username">{{ "City Council" }}</span>
+          </h3>
+        </header>
+        <span class="date">
+          {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
+        </span>
+      </section>
+
+      Yes Gianna!
+    </section>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -55,7 +77,30 @@
       }
     },
     methods: {
-    
+      async likeRequest() {
+        try {
+          const r = await  fetch(`/api/likes/${this.forum._id}`, {method: 'POST', headers: {'Content-Type': 'application/json'}});
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+      },
+      async removeLikeRequest() { 
+        try {
+          const r = await fetch(`/api/likes/${ this.forum._id}`, {method: 'DELETE'})
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+      }
     }
   };
   </script>
@@ -64,6 +109,13 @@
   .container {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin-bottom: 0px;
+  }
+
+  .containerT {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 0px;
   }
@@ -112,13 +164,17 @@
     margin-left: 20px;
   }
   button {
-    background-color: #24b2e1;
-    color: white;
-    border: 2px solid #24b2e1; 
+    color: black;
     border-radius: 5px;
     padding-left:5px;
     padding-right:5px;
     box-shadow: 0px 1px 2px rgb(141, 156, 160);
     font-size: 15px;
+  }
+
+  .response {
+    background-color: #b0c4ca;
+    border-radius: 5px;
+    margin: 50px;
   }
   </style>

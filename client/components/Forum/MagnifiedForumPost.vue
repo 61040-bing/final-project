@@ -59,7 +59,11 @@
       computed: {
         comments(){
           if (!this.forumPost) return [];
-          return this.$store.state.forumPostComments;
+          const comms = this.$store.state.forumPostComments;
+          // comms.sort((commentOne, commentTwo)=>{
+          //   return c
+          // })
+          return comms;
         }
        },
       mounted() {
