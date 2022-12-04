@@ -1,27 +1,41 @@
 <template>
   <section>
     <div
-      class="container"
+      v-if="clicked"
+      class="add"
       style="gap:20px"
     >
-      <h3>Add Neighborhood</h3>
+      Add Neighborhood
       <input
         v-model="name"
         placeholder="Neighborhood Name"
         type="text"
       >
       <textarea
+        v-model="description"
         placeholder="Neighborhood Description"
         type="text"
-        v-model="description"
       />
       <button @click="submitNeighborhood">
         Add
       </button>
     </div>
+    <div
+      v-else
+      class="button"
+      @click="clickAdd"
+    >
+      <span style="margin-left: 90px">Add Neighborhood</span>
+      <img
+        class=""
+        src="../../public/plus.png"
+      >
+    </div>
     
     
-    <h3>Edit/Delete Neighborhood</h3>
+    <h3 class="header">
+      Modify Neighborhoods
+    </h3>
     <div class="container">
       <NeighborhoodContainer
         v-for="neighborhood in $store.state.neighborhoods"
@@ -40,10 +54,14 @@
         data() {
             return {
                 name: '',
-                description: ''
+                description: '',
+                clicked: false
             }
         },
         methods: {
+          clickAdd(){
+            this.clicked = true
+          },
             async submitNeighborhood(){
                 try {
                     const fields = {name: this.name, description: this.description};
@@ -64,27 +82,89 @@
       };
       </script>
       
-    <style scoped>
-    .container {
+<style scoped>
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 50px;
+    gap: 5px;
     align-items: center;
   }
 
+  .add {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(170, 85, 64);
+    border-radius: 10px;
+    margin-top: 50px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    padding: 10px;
+  }
+
   input, textarea {
-    width: 300px;
-    font-family: Arial, Helvetica, sans-serif
+    width: 370px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+  }
+
+  input {
+
+    font-size: 15px;;
+  }
+
+  textarea {
+    height: 70px;
+    font-size: 15px;;
   }
 
   button {
-    width: 200px;
+    padding: 5px;
+    color: rgb(170, 85, 64);
+    background-color: #fff;
+    border: none;
+    width: 50px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  .button {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 400px;
+    border-radius: 3px;
+    align-items: center;
+    padding: 10px;
+    margin-top: 50px;
+    border-radius: 5px;
+    gap: 20px;
+    background-color: rgb(170, 85, 64);
+    color: #fff
+  }
+
+  .button:hover {
+    cursor: pointer;
   }
 
   h3 {
-    margin-bottom: 0px;
     font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .header {
+    margin-top: 70px;
+    text-align: center
+  }
+
+  img {
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
   }
 
 
