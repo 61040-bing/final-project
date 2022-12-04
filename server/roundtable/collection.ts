@@ -93,7 +93,7 @@ class RoundTableCollection {
    */
   static async findAllbyPetitionId(petitionId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
     const petition = await NeighborhoodCollection.findOne(petitionId);
-    return RoundTableModel.find({petitionId: petition._id}).populate('_id').populate('petitionId');
+    return RoundTableModel.find({petitionId: petition._id}).populate('_id').populate('petitionId').sort('startDate');
   }
 
 /**
@@ -104,7 +104,7 @@ class RoundTableCollection {
    */
  static async findAllbyNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId');
+  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate');
 }
 
   /**

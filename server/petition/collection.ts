@@ -58,7 +58,7 @@ class PetitionCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Petition>>> {
     // Retrieves petitions and sorts them from most to least recent
-    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId');
+    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId').sort({dateCreated: -1});
   }
 
   /**
@@ -69,7 +69,7 @@ class PetitionCollection {
    */
   static async findAllByEmail(email: string): Promise<Array<HydratedDocument<Petition>>> {
     const author = await UserCollection.findOneByEmail(email);
-    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId');
+    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId').sort({dateCreated: -1});
   }
 
 /**
@@ -80,7 +80,7 @@ class PetitionCollection {
    */
  static async findAllByNeighborhood(neighborhoodId: string): Promise<Array<HydratedDocument<Petition>>> {
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return PetitionModel.find({neighborhood: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhoodId');
+  return PetitionModel.find({neighborhood: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhoodId').sort({dateCreated: -1});
 }
   /**
    * Delete a petition with given petitionId.
