@@ -24,8 +24,13 @@
   export default {
     name: 'ForumPage',
     components: {ForumPost, CreateForumForm},
+    data(){
+      return {
+        cityId: '638ce78e88e91521eb0338c0'
+      }
+    },
     mounted(){
-      this.$store.commit('refreshForumPosts', this.$route.params.id);
+      this.$store.commit('refreshForumPosts', this.$route.params.id === undefined ? this.cityId : this.$route.params.id);
     }
   };
   </script>
