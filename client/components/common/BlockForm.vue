@@ -63,7 +63,8 @@ export default {
       setNeighborhood: false, // Whether or not stored neighborhood should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission,
-      neighborhoodId: null
+      neighborhoodId: null,
+      refreshComments: false
     };
   },
   methods: {
@@ -112,6 +113,10 @@ export default {
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setNeighborhood', res.user ? res.user.neighborhood : null);
           console.log(this.$store.state.userNeighborhood);
+        }
+
+        if (this.refreshComments) {
+          this.$store.commit('refreshForumPostComments', this.$route.params.postId);
         }
 
         if (this.callback) {

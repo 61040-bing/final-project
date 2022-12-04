@@ -50,6 +50,18 @@ router.get(
   }
 );
 
+router.get(
+  '/:id',
+  async (req: Request, res: Response) => {
+    const post = await ForumCollection.findOne(req.params.id);
+    res.status(200).json({
+      message: 'Your post was retrieved successfully.',
+      forum: util.constructForumResponse(post)
+    });
+  }
+);
+
+
 /**
  * Create a new Forum.
  *

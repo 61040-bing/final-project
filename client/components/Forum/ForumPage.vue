@@ -22,7 +22,7 @@
   import ForumPost from '@/components/Forum/ForumPost.vue';
   import CreateForumForm from '@/components/Forum/CreateForumForm.vue';
   export default {
-    name: 'FreetPage',
+    name: 'ForumPage',
     components: {ForumPost, CreateForumForm},
     mounted(){
       this.$store.commit('refreshForumPosts', this.$route.params.id);

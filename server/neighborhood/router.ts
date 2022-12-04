@@ -1,15 +1,11 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import NeighborhoodCollection from './collection';
-import * as neighborhoodValidator from "./middleware";
-import type { Neighborhood } from './model';
+import * as neighborhoodValidator from './middleware';
+import type {Neighborhood} from './model';
 import * as util from './util';
 
-
-
 const router = express.Router();
-
-
 
 /**
  * Get all the Neighborhoods
@@ -20,17 +16,15 @@ const router = express.Router();
  *
  */
 router.get(
-    '/',
-    [
-    ],
-    async (req: Request, res: Response) => {
-        const neighborhoods = await NeighborhoodCollection.findAll();
-        const response = neighborhoods.map(util.constructNeighborhoodResponse);
-        res.status(200).json(response);
-    }
+  '/',
+  [
+  ],
+  async (req: Request, res: Response) => {
+    const neighborhoods = await NeighborhoodCollection.findAll();
+    const response = neighborhoods.map(util.constructNeighborhoodResponse);
+    res.status(200).json(response);
+  }
 );
-
-
 
 /**
  * Get neighborhood object with ID
@@ -41,14 +35,14 @@ router.get(
  *
  */
 router.get(
-    '/:neighborhoodId',
-    [
-    ],
-    async (req: Request, res: Response) => {
-        const neighborhood = await NeighborhoodCollection.findOne(req.params.neighborhoodId);
-        const response = util.constructNeighborhoodResponse(neighborhood);
-        res.status(200).json(response);
-    }
+  '/:neighborhoodId',
+  [
+  ],
+  async (req: Request, res: Response) => {
+    const neighborhood = await NeighborhoodCollection.findOne(req.params.neighborhoodId);
+    const response = util.constructNeighborhoodResponse(neighborhood);
+    res.status(200).json(response);
+  }
 );
 
 /**
@@ -64,16 +58,16 @@ router.get(
  * @throws {401} - If the user is not authorized to modify neighborhoods
  */
 router.post(
-    '/',
-    [
-        //TODO: Function to check if user is valid modifier
-        neighborhoodValidator.isNeighborhoodNameNotExists
-    ],
-    async (req: Request, res: Response) => {
-        const neighborhood = await NeighborhoodCollection.addOne(req.body.name, req.body.description);
-        const response = util.constructNeighborhoodResponse(neighborhood);
-        res.status(200).json(response);
-    }
+  '/',
+  [
+    // TODO: Function to check if user is valid modifier
+    neighborhoodValidator.isNeighborhoodNameNotExists
+  ],
+  async (req: Request, res: Response) => {
+    const neighborhood = await NeighborhoodCollection.addOne(req.body.name, req.body.description);
+    const response = util.constructNeighborhoodResponse(neighborhood);
+    res.status(200).json(response);
+  }
 );
 
 /**
@@ -86,17 +80,17 @@ router.post(
  * @throws {404} - If the neighborhoodId is not valid
  */
 router.delete(
-    '/:neighborhoodId?',
-    [
-        //TODO: Function to check if user is valid modifier
-        neighborhoodValidator.isNeighborhoodExists
-    ],
-    async (req: Request, res: Response) => {
-        await NeighborhoodCollection.deleteOne(req.params.neighborhoodId);
-        res.status(200).json({
-            message: 'Your neighborhood was deleted successfully.'
-        });
-    }
+  '/:neighborhoodId?',
+  [
+    // TODO: Function to check if user is valid modifier
+    neighborhoodValidator.isNeighborhoodExists
+  ],
+  async (req: Request, res: Response) => {
+    await NeighborhoodCollection.deleteOne(req.params.neighborhoodId);
+    res.status(200).json({
+      message: 'Your neighborhood was deleted successfully.'
+    });
+  }
 );
 
 /**
@@ -109,23 +103,25 @@ router.delete(
  * @throws {400} - If neighborhood name already exists
  */
 router.put(
-    '/:neighborhoodId?',
-    [
-        neighborhoodValidator.isNeighborhoodExists
-    ],
-    async (req: Request, res: Response) => {
-        let neighborhood;
-        if (req.body.name !== null){
-            neighborhood = await NeighborhoodCollection.updateName(req.params.neighborhoodId,req.body.name);
-        }
-        if (req.body.description !== null){
-            neighborhood = await NeighborhoodCollection.updateDescription(req.params.neighborhoodId,req.body.description);
-        }
-        res.status(200).json({
-            message: 'Your neighborhood was updated successfully.',
-            neighborhood: util.constructNeighborhoodResponse(neighborhood)
-        });
+  '/:neighborhoodId?',
+  [
+    neighborhoodValidator.isNeighborhoodExists
+  ],
+  async (req: Request, res: Response) => {
+    let neighborhood;
+    if (req.body.name !== null) {
+      neighborhood = await NeighborhoodCollection.updateName(req.params.neighborhoodId, req.body.name);
     }
+
+    if (req.body.description !== null) {
+      neighborhood = await NeighborhoodCollection.updateDescription(req.params.neighborhoodId, req.body.description);
+    }
+
+    res.status(200).json({
+      message: 'Your neighborhood was updated successfully.',
+      neighborhood: util.constructNeighborhoodResponse(neighborhood)
+    });
+  }
 );
 
 /**
@@ -135,16 +131,15 @@ router.put(
  * @return {NeighborhoodResponse} - the Neighborhood on wall of honor
  */
 router.get(
-    '/honor',
-    [
-    ],
-    async (req: Request, res: Response) => {
-        const neighborhoods = await NeighborhoodCollection.findAll();
-        const response =util.constructNeighborhoodResponse(neighborhoods[0]);
-        //TODO calculations for wall of honor
-        res.status(200).json(response);
-    }
+  '/honor',
+  [
+  ],
+  async (req: Request, res: Response) => {
+    const neighborhoods = await NeighborhoodCollection.findAll();
+    const response = util.constructNeighborhoodResponse(neighborhoods[0]);
+    // TODO calculations for wall of honor
+    res.status(200).json(response);
+  }
 );
-
 
 export {router as neighborhoodRouter};

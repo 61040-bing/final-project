@@ -75,7 +75,7 @@
     mounted(){
       if (this.$route.params.id !== undefined){
         this.fetchNeighborhood()
-      }
+  }
     },
     methods : {
       setViewingTab(tab){

@@ -13,7 +13,13 @@
       </span>
     </section>
 
-    {{ forum.content }}
+    <router-link
+      :to="path"
+      style="text-decoration: none; color: inherit;"
+    >
+      {{ forum.content }}
+    </router-link>
+    
   
     <section class="alerts">
       <article
@@ -39,7 +45,8 @@
     },
     data() {
       return {
-        alerts: {}, // Displays success/error messages encountered during freet modification
+        alerts: {}, // Displays success/error messages encountered during freet modification,
+        path: `/forum/${this.forum._id}`
       };
     },
     computed: {
@@ -48,21 +55,7 @@
       }
     },
     methods: {
-      async hideFreet(){
-        try {
-          const fields = {freetId: this.freet._id};
-          const r = await  fetch('/api/hiddenfreets', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
-          if (!r.ok) {
-            const res = await r.json();
-            throw new Error(res.error);
-          }
-          this.$emit('refresh');
-      }
-      catch (e) {
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
-        }
-    }
+    
     }
   };
   </script>
