@@ -3,42 +3,61 @@
     class="freet"
   >
     <section class="container">
-      <header class="user-bio">
-        <h3 class="author">
-          <span class="username">{{ forum.author.firstName + " " + forum.author.lastName }}</span>
-        </h3>
-      </header>
+      <div class="user-bio">
+        <div class="author">
+          <div class="username">
+            {{ forum.author.firstName + " " + forum.author.lastName }}
+          </div>
+        </div>
+      </div>
 
-      <span class="date">
-        {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
-      </span>
+      <div class="date">
+        Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
+      </div>
       <h3 v-if="forum.qna">
         Q&A
       </h3>
     </section>
 
-    <router-link
-      v-if="($route.name === 'Neighborhood')"
-      :to="path"
-      style="text-decoration: none; color: inherit;"
-    >
-      {{ forum.content }}
-    </router-link>
-    <div v-else>
+
+    <div class="content">
       {{ forum.content }}
     </div>
-    <button
-      v-if="!liked"
-      @click="likeRequest"
-    >
-      Upvote
-    </button>
-    <button
-      v-if="liked"
-      @click="removeLikeRequest"
-    >
-      Remove Upvote
-    </button>
+
+    <section style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 12px">
+      <router-link
+        v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
+        style="text-decoration: none; color: inherit; width: inherit;"
+        :to="path"
+      >
+        <font-awesome-icon
+          icon="fa-regular fa-comment-dots"
+          size="lg"
+        /> replies
+      </router-link>
+      <div>
+        <div
+          v-if="!liked"
+          class="upvote-button"
+        >
+          <img
+            src="../../public/upvoteTriangle.svg"
+            style="width: 20px; height: 20px"
+            @click="likeRequest"
+          > Upvote
+        </div>
+        <div v-if="liked">
+          <img
+            src="../../public/triangleFilled.png"
+            style="width: 20px; height: 20px"
+            class="upvote-button"
+            @click="removeLikeRequest"
+          >
+          Remove Upvote
+        </div>
+      </div>
+    </section>
+
     <section
       v-if="response"
       class="response"
@@ -54,7 +73,7 @@
         </span>
       </section>
 
-      {{response.content}}
+      {{ response.content }}
     </section>
     <section class="alerts">
       <article
@@ -67,7 +86,7 @@
     </section>
   </article>
 </template>
-  
+
   <script>
   import moment from 'moment';
   export default {
@@ -113,7 +132,7 @@
           const url = `/api/comments/subcomments/${this.forum._id}`;
           const res = await fetch(url).then(async r => r.json());
           this.response = res[0]
-        } 
+        }
       },
       async fetchLikers(){
         const url = `/api/likes/${this.forum._id}`;
@@ -138,7 +157,7 @@
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
       },
-      async removeLikeRequest() { 
+      async removeLikeRequest() {
         try {
           const r = await fetch(`/api/likes/${this.forum._id}`, {method: 'DELETE'})
           if (this.forum.likes !== undefined){
@@ -156,22 +175,22 @@
         }
       }
     },
-    
+
   };
   </script>
-  
+
   <style scoped>
-  .container {
+  .containerT {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 0px;
   }
 
-  .containerT {
+  .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 0px;
   }
   .toxicity {
@@ -187,6 +206,7 @@
   }
   .freet {
       box-shadow: 0px 2px 5px rgb(141, 156, 160);
+      padding: 24px;
   }
   .actions button {
     margin-top: 10px;
@@ -196,14 +216,9 @@
     color: #24b2e1;
     font-family: Arial, Helvetica, sans-serif;
   }
-  .content {
-    color: #898b8c;
-    font-family: Arial, Helvetica, sans-serif;
-  }
   .username {
     font-size: 25px;
     color: rgb(0, 0, 0);
-    padding-left: 5px;
   }
   .user-bio {
     margin-bottom: 8px;
@@ -216,7 +231,6 @@
     font-size: 15px;
     color: rgb(190, 186, 186);
     font-family: Arial, Helvetica, sans-serif;
-    margin-left: 20px;
   }
   button {
     color: black;
@@ -230,6 +244,18 @@
   .response {
     background-color: #b0c4ca;
     border-radius: 5px;
-    margin: 50px;
+  }
+  .upvote-button{
+
+  }
+  .upvote-button:hover{
+    cursor: pointer;
+  }
+  .content{
+    margin-top: 32px;
+    margin-bottom: 32px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
   }
   </style>

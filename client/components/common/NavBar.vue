@@ -73,7 +73,9 @@
       <div class="nav-item">
         <span @click="navigateTo('/admin')">Home</span>
       </div>
-      Logout
+      <div class="nav-item">
+        Logout
+      </div>   
     </div>
   </nav>
 </template>

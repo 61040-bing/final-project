@@ -20,19 +20,19 @@
     </div>
     <nav class="navbar">
       <div
-        :class="{selected: viewingTab ==='forum'}"
+        :class="{selected: viewingTab ==='forum', hoverPointer: true}"
         @click="setViewingTab('forum')"
       >
         Forum
       </div>
       <div
-        :class="{selected: viewingTab ==='petition'}"
+        :class="{selected: viewingTab ==='petition', hoverPointer: true}"
         @click="setViewingTab('petition')"
       >
         Petitions
       </div>
       <div
-        :class="{selected: viewingTab ==='roundtable'}"
+        :class="{selected: viewingTab ==='roundtable', hoverPointer: true}"
         @click="setViewingTab('roundtable')"
       >
         RoundTables
@@ -66,7 +66,7 @@
     </section>
   </section>
 </template>
-  
+
 <script>
 
   import ForumPage from '../Forum/ForumPage.vue';
@@ -112,7 +112,7 @@
     }
   };
   </script>
-  
+
 <style scoped>
 
 .example {
@@ -204,5 +204,13 @@
 .selected {
   color: rgb(170, 85, 64);
   font-weight: bolder;
+}
+
+.hoverPointer{
+
+}
+.hoverPointer:hover{
+  cursor: pointer;
+  color: rgb(170, 85, 64);
 }
 </style>
