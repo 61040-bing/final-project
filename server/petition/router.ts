@@ -71,6 +71,7 @@ router.post(
     petitionValidator.isValidPetitionTitle,
     petitionValidator.isValidPetitionContent,
     petitionValidator.isValidPetitionTargetSignatures
+    //only create if neighborhood = cuser's neighborhood/city
 
   ],
   async (req: Request, res: Response) => {

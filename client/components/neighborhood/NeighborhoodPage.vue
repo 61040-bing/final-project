@@ -45,7 +45,15 @@
         Petition
       </section>
       <section v-if="viewingTab === 'roundtable'">
-        RoundTable
+      <section
+        v-if="$store.state.neighborhoodRoundTables.length"
+      >
+        <RoundTableComponent
+          v-for="roundtable in $store.state.neighborhoodRoundTables"
+          :key="roundtable.id"
+          :roundtable="roundtable"
+        />
+      </section>
       </section>
     </section>
   </section>
@@ -75,7 +83,8 @@
     mounted(){
       if (this.$route.params.id !== undefined){
         this.fetchNeighborhood()
-  }
+      };
+      this.store.commit('refreshNeighborhoodRoundTables');
     },
     methods : {
       setViewingTab(tab){

@@ -1,3 +1,4 @@
+import { STATES } from 'mongoose';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     neighborhoods: [],
     userEmail: null,
     userNeighborhood: null,
-    alerts: {} ,
+    alerts: {},
+    neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
     forumPosts: [],
     forumPostComments: []
   },
@@ -55,6 +57,16 @@ const store = new Vuex.Store({
       const url = `/api/neighborhood`;
       const res = await fetch(url).then(async r => r.json());
       state.neighborhoods = res;
+    },
+    async refreshNeighborhoodRoundTables(state) {
+      /**
+       * Request the server for the currently available roundtables in the user's neighborhood.
+       */
+      if (state.userNeighborhood !== null){
+        const url = `/api/roundtables?neighborhood=${state.userNeighborhood}`;
+        const res = await fetch(url).then(async r => r.json());
+        state.neighborhoodRoundTables = res;
+      }
     },
     async refreshForumPosts(state, neighborhoodId) {
       /**

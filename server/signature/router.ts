@@ -98,6 +98,8 @@ router.post(
     userValidator.isUserLoggedIn,
     petitionValidator.isPetitionExists,
     signatureValidator.isUserAlreadySigning,
+    // cannot sign a submitted petition
+    // only sign if neighborhood ,atch
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
@@ -129,6 +131,7 @@ router.delete(
     signatureValidator.isSignatureExists,
     petitionValidator.isPetitionExists,
     signatureValidator.isValidSignatureModifier
+    // cannot delete is submitted
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? '';
