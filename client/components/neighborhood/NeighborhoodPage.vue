@@ -57,6 +57,11 @@
             :roundtable="roundtable"
           />
         </section>
+              <article
+        v-else
+      >
+        <h3>No RoundTables found.</h3>
+      </article>
       </section>
     </section>
   </section>

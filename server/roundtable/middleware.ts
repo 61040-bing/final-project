@@ -59,7 +59,7 @@ const isValidPetitionId = async (req: Request, res: Response, next: NextFunction
  */
 const isValidRoundTableModifier = async (req: Request, res: Response, next: NextFunction) => {
   const roundTable = await RoundTableCollection.findOne(req.params.petitionId)
-  const userId = roundTable.authorId;
+  const userId = roundTable.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' roundtables that you did not create.'

@@ -7,10 +7,10 @@
   >
     <header>
       <h3 class="author">
-        @{{ freet.author }}
+        @{{ roundtable.author }}
       </h3>
       <div
-        v-if="$store.state.username === freet.author"
+        v-if="$store.state.username === roundtable.author"
         class="actions"
       >
         <button @click="deleteRoundTable">
@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      alerts: {} // Displays success/error messages encountered during freet modification
+      alerts: {} // Displays success/error messages encountered during roundtable modification
     };
   },
   methods: {
@@ -89,7 +89,7 @@ export default {
     },
     async request(params) {
       /**
-       * Submits a request to the freet's endpoint
+       * Submits a request to the roundtable's endpoint
        * @param params - Options for the request
        * @param params.body - Body for the request, if it exists
        * @param params.callback - Function to run if the the request succeeds
