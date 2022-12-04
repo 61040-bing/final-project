@@ -75,7 +75,7 @@ const isValidRoundTableModifier = async (req: Request, res: Response, next: Next
  */
  const isValidRoundTableCreator = async (req: Request, res: Response, next: NextFunction) => {
   const petition = await PetitionCollection.findOne(req.body.petitionId)
-  const userId = petition.authorId;
+  const userId = petition.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
       error: 'Cannot create a roundtable for a petition that you did not create.'
@@ -216,7 +216,7 @@ const isValidZoomlink = async(req: Request, res: Response, next: NextFunction) =
  * spaces
  */
  const isValidRoundTableName = (req: Request, res: Response, next: NextFunction) => {
-  const {roundTableName} = req.body.roundTableName as {roundTableName: string};
+  const {roundTableName} = req.body as {roundTableName: string};
   if (!roundTableName.trim()) {
     res.status(400).json({
       error: 'Petition title must be at least one character long.'

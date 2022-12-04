@@ -33,8 +33,8 @@ class RoundTableCollection {
       endDate,
       zoomLink,
       dateCreated: date,
-
     });
+    
     await roundTable.save(); // Saves roundtable to MongoDB
     return roundTable.populate('authorId');
   }

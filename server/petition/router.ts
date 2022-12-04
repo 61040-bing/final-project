@@ -34,7 +34,6 @@ router.get(
       next();
       return;
     }
-
     const allPetitions = await PetitionCollection.findAll();
     const response = allPetitions.map(util.constructPetitionResponse);
     res.status(200).json(response);
