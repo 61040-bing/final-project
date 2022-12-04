@@ -3,7 +3,7 @@
 <!-- This navbar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
-  <nav v-if="$route.name !== 'Admin'">
+  <nav v-if="$route.name !== 'Admin' && $route.name !== 'Edit Neighborhood'">
     <div class="left">
       <img src="../../public/participate.png">
       <h1 class="title">
