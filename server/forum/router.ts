@@ -2,8 +2,10 @@ import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import ForumCollection from './collection';
 import * as userValidator from '../user/middleware';
-import * as ForumValidator from '../Forum/middleware';
+import * as ForumValidator from '../forum/middleware';
 import * as util from './util';
+import * as neighborhoodValidator from "../neighborhood/middleware"
+
 
 const router = express.Router();
 
@@ -16,20 +18,20 @@ const router = express.Router();
  *                      order by date modified
  */
 /**
- * Get forum by author.
+ * Get forum by neighborhood
  *
- * @name GET /api/forum?authorId=userId
+ * @name GET /api/forum?neighborhoodId=neighborhoodId
  *
  * @return {ForumResponse[]} - An array of forum posts created by user with authorId, author
- * @throws {400} - If author is not given
- * @throws {404} - If no user has given author
+ * @throws {400} - If neighborhood is not given
+ * @throws {404} - If no neighborhood has given Id
  *
  */
 router.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
     // Check if author query parameter was supplied
-    if (req.query.authorId !== undefined) {
+    if (req.query.neighborhoodId !== undefined) {
       next();
       return;
     }
@@ -39,10 +41,10 @@ router.get(
     res.status(200).json(response);
   },
   [
-    userValidator.isAuthorExists
+      neighborhoodValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
-    const authorPosts = await ForumCollection.findAllByAuthorId(req.query.authorId as string);
+    const authorPosts = await ForumCollection.findAllByNeighborhoodId(req.query.neighborhoodId as string);
     const response = authorPosts.map(util.constructForumResponse);
     res.status(200).json(response);
   }
@@ -53,7 +55,8 @@ router.get(
  *
  * @name POST /api/forum
  *
- * @param {string} content - The content of the Forum
+ * @param {string} content - The content of the Forum post
+ *  @param {string} neighborhoodId - The ID of the neighborhood
  * @return {ForumResponse} - The created Forum
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the Forum content is empty or a stream of empty spaces
@@ -63,11 +66,12 @@ router.post(
   '/',
   [
     userValidator.isUserLoggedIn,
-    ForumValidator.isValidForumPostContent
+    ForumValidator.isValidForumPostContent,
+      neighborhoodValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const post = await ForumCollection.addOne(userId, req.body.content);
+    const post = await ForumCollection.addOne(userId, req.body.content, req.body.neighborhoodId);
 
     res.status(201).json({
       message: 'Your Forum was created successfully.',
@@ -112,7 +116,6 @@ router.delete(
  *                 of the Forum
  * @throws {404} - If the ForumId is not valid
  * @throws {400} - If the Forum content is empty or a stream of empty spaces
- * @throws {413} - If the Forum content is more than 140 characters long
  */
 router.patch(
   '/:postId?',

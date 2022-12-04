@@ -17,15 +17,17 @@ class ForumCollection {
    *
    * @param {string} authorId - The id of the author of the forum
    * @param {string} content - The id of the content of the forum
+   * @param neighborhoodId
    * @return {Promise<HydratedDocument<Forum>>} - The newly created forum
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Forum>> {
+  static async addOne(authorId: Types.ObjectId | string, content: string, neighborhoodId : Types.ObjectId | string): Promise<HydratedDocument<Forum>> {
     const date = new Date();
     const forum = new ForumModel({
       authorId,
       dateCreated: date,
       content,
-      dateModified: date
+      dateModified: date,
+      neighborhoodId: neighborhoodId,
     });
     await forum.save(); // Saves forum to MongoDB
     return forum.populate('authorId');
@@ -63,13 +65,23 @@ class ForumCollection {
   }
 
   /**
-   * Get all the forums in by given author
+   * Get all the forum posts in by given author
    *
    * @return {Promise<HydratedDocument<Forum>[]>} - An array of all of the forums
-   * @param email
+   * @param authorId
    */
   static async findAllByAuthorId(authorId: string): Promise<Array<HydratedDocument<Forum>>> {
     return ForumModel.find({authorId: authorId}).sort({dateModified: -1}).populate('authorId');
+  }
+
+  /**
+   * Get all the forum posts in given neighborhood
+   *
+   * @return {Promise<HydratedDocument<Forum>[]>} - An array of all of the forums
+   * @param neighborhoodId
+   */
+  static async findAllByNeighborhoodId(neighborhoodId: string): Promise<Array<HydratedDocument<Forum>>> {
+    return ForumModel.find({neighborhoodId}).sort({dateModified: -1}).populate('authorId');
   }
 
 

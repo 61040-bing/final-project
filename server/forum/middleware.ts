@@ -1,16 +1,17 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
-import ForumCollection from '../Forum/collection';
+import ForumCollection from '../forum/collection';
 
 /**
  * Checks if a ForumPost with ForumPostId is req.params exists
  */
 const isForumPostExists = async (req: Request, res: Response, next: NextFunction) => {
-  const validFormat = Types.ObjectId.isValid(req.params.ForumPostId);
-  const ForumPost = validFormat ? await ForumCollection.findOne(req.params.ForumPostId) : '';
+
+  const validFormat = Types.ObjectId.isValid(req.params.postId);
+  const ForumPost = validFormat ? await ForumCollection.findOne(req.params.postId) : '';
   if (!ForumPost) {
     res.status(404).json({
-      error: `ForumPost with ForumPost ID ${req.params.ForumPostId} does not exist.`
+      error: `ForumPost with ForumPost ID ${req.params.postId} does not exist.`
     });
     return;
   }
@@ -37,8 +38,8 @@ const isValidForumPostContent = (req: Request, res: Response, next: NextFunction
  * Checks if the current user is the author of the ForumPost whose ForumPostId is in req.params
  */
 const isValidForumPostModifier = async (req: Request, res: Response, next: NextFunction) => {
-  const ForumPost = await ForumCollection.findOne(req.params.ForumPostId);
-  const userId = ForumPost.authorId._id;
+  const forumPost = await ForumCollection.findOne(req.params.postId);
+  const userId = forumPost.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' ForumPosts.'

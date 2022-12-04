@@ -40,7 +40,6 @@ router.get(
  * @return {CommentResponse} - The created comment
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the comment content is empty or a stream of empty spaces
- * @throws {413} - If the comment content is more than 140 characters long
  */
 
 router.post(

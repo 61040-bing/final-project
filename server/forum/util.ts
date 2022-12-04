@@ -1,62 +1,54 @@
-import type {Types, PopulatedDoc, Document} from 'mongoose';
-import {Schema, model} from 'mongoose';
-import type {User} from '../user/model';
+import type {HydratedDocument} from 'mongoose';
+import moment from 'moment';
+import type {Forum, PopulatedForum} from './model';
+import {User} from "../user/model";
+import {Neighborhood} from "../neighborhood/model";
+
+// Update this if you add a property to the Forum type!
+type ForumResponse = {
+  _id: string;
+  author: User;
+  dateCreated: string;
+  content: string;
+  dateModified: string;
+  neighborhood: Neighborhood;
+};
 
 /**
- * This file defines the properties stored in a Freet
- * DO NOT implement operations here ---> use collection file
+ * Encode a date as an unambiguous string
+ *
+ * @param {Date} date - A date object
+ * @returns {string} - formatted date as string
  */
+const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:mm:ss a');
 
-// Type definition for Freet on the backend
-export type Freet = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  authorId: Types.ObjectId;
-  dateCreated: Date;
-  content: string;
-  dateModified: Date;
-  expiryDate: Date;
+/**
+ * Transform a raw Forum object from the database into an object
+ * with all the information needed by the frontend
+ *
+ * @param {HydratedDocument<Forum>} Forum - A Forum
+ * @returns {ForumResponse} - The Forum object formatted for the frontend
+ */
+const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse => {
+  const ForumCopy: PopulatedForum = {
+    ...Forum.toObject({
+      versionKey: false // Cosmetics; prevents returning of __v property
+    })
+  };
+  const author = ForumCopy.authorId;
+  delete ForumCopy.authorId;
+  const neighborhood = ForumCopy.neighborhoodId;
+  delete ForumCopy.neighborhoodId;
+  return {
+    ...ForumCopy,
+    _id: ForumCopy._id.toString(),
+    author,
+    neighborhood,
+    dateCreated: formatDate(Forum.dateCreated),
+    dateModified: formatDate(Forum.dateModified)
+  };
 };
 
-export type PopulatedFreet = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  authorId: User;
-  dateCreated: Date;
-  content: string;
-  dateModified: Date;
-  expiryDate: Date;
+export {
+  constructForumResponse
 };
-
-// Mongoose schema definition for interfacing with a MongoDB table
-// Freets stored in this table will have these fields, with the
-// type given by the type property, inside MongoDB
-const FreetSchema = new Schema<Freet>({
-  // The author userId
-  authorId: {
-    // Use Types.ObjectId outside of the schema
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'User'
-  },
-  // The date the freet was created
-  dateCreated: {
-    type: Date,
-    required: true
-  },
-  // The content of the freet
-  content: {
-    type: String,
-    required: true
-  },
-  // The date the freet was modified
-  dateModified: {
-    type: Date,
-    required: true
-  },
-  expiryDate: {
-    type: Date,
-    required: false
-  }
-});
-FreetSchema.index( { "expiryDate": 1 }, { expireAfterSeconds: 0 } )
-const FreetModel = model<Freet>('Freet', FreetSchema);
-export default FreetModel;
