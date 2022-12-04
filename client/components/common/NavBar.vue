@@ -3,7 +3,7 @@
 <!-- This navbar takes advantage of both flex and grid layouts for positioning elements; feel free to redesign as you see fit! -->
 
 <template>
-  <nav>
+  <nav v-if="$route.name !== 'Admin'">
     <div class="left">
       <img src="../../public/participate.png">
       <h1 class="title">
@@ -62,6 +62,19 @@
         <p>{{ alert }}</p>
       </article>
     </section>
+  </nav>
+  <nav v-else>
+    <div class="left">
+      <h1 class="title">
+        Administrator Account
+      </h1>
+    </div>
+    <div class="right">
+      <div class="nav-item">
+        <span @click="navigateTo('/admin')">Home</span>
+      </div>
+      Logout
+    </div>
   </nav>
 </template>
 
