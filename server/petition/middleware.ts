@@ -68,7 +68,7 @@ const isPetitionQueryExists = async (req: Request, res: Response, next: NextFunc
  * spaces and not more than 140 characters
  */
 const isValidPetitionTitle = (req: Request, res: Response, next: NextFunction) => {
-  const {title} = req.body.title as {title: string};
+  const {title} = req.body as {title: string};
   if (!title.trim()) {
     res.status(400).json({
       error: 'Petition title must be at least one character long.'
@@ -91,7 +91,7 @@ const isValidPetitionTitle = (req: Request, res: Response, next: NextFunction) =
  * spaces
  */
  const isValidPetitionContent = (req: Request, res: Response, next: NextFunction) => {
-  const {content} = req.body.content as {content: string};
+  const {content} = req.body as {content: string};
   if (!content.trim()) {
     res.status(400).json({
       error: 'Petition content must be at least one character long.'
@@ -106,7 +106,7 @@ const isValidPetitionTitle = (req: Request, res: Response, next: NextFunction) =
  * checks if the target number of signatures in req.params.targetSignatures is valid
  */
 const isValidPetitionTargetSignatures = (req: Request, res: Response, next: NextFunction) => {
-  const {targetSignatures} = req.body.targetSignatures as {targetSignatures: string};
+  const {targetSignatures} = req.body as {targetSignatures: string};
   if (!targetSignatures.trim()) {
     res.status(400).json({
       error: 'targetSignatures must be at least one character long.'

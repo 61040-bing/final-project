@@ -60,7 +60,7 @@ const isValidSignatureModifier = async (req: Request, res: Response, next: NextF
   console.log(req.params.petitionId);;
   
   const signature = await SignatureCollection.findOneByPetitionId(req.params.petitionId, req.session.userId)
-  const userId = signature.authorId;
+  const userId = signature.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' signatures.'
