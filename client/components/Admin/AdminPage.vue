@@ -2,7 +2,9 @@
   <section>
     <div class="container">
       <button class="button">View Submitted Petitions</button>
-      <button class="button">Edit Neighborhoods</button>
+      <router-link to="/admin/editneighborhood">
+        <button class="button">Edit Neighborhoods</button>
+      </router-link>
     </div>
   </section>
 </template>

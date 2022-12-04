@@ -11,7 +11,10 @@
         <br>
         <span class="winner">⭐ West Cambridge</span>
       </div>
-      <div v-if="loaded || $route.params.id === undefined" class="name-overlay">
+      <div
+        v-if="loaded || $route.params.id === undefined"
+        class="name-overlay"
+      >
         {{ pageName }}
       </div>
     </div>
@@ -39,21 +42,21 @@
       <section
         v-if="viewingTab === 'forum'"
       >
-      <ForumPage />
+        <ForumPage />
       </section>
       <section v-if="viewingTab === 'petition'">
         Petition
       </section>
       <section v-if="viewingTab === 'roundtable'">
-      <section
-        v-if="$store.state.neighborhoodRoundTables.length"
-      >
-        <RoundTableComponent
-          v-for="roundtable in $store.state.neighborhoodRoundTables"
-          :key="roundtable.id"
-          :roundtable="roundtable"
-        />
-      </section>
+        <section
+          v-if="$store.state.neighborhoodRoundTables.length"
+        >
+          <RoundTableComponent
+            v-for="roundtable in $store.state.neighborhoodRoundTables"
+            :key="roundtable.id"
+            :roundtable="roundtable"
+          />
+        </section>
       </section>
     </section>
   </section>
@@ -72,7 +75,8 @@
     return {
       viewingTab : "forum",
       neighborhood: {},
-      loaded: false
+      loaded: false,
+      cityId: '638ce78e88e91521eb0338c0'
     }
   },
   computed: {
@@ -81,10 +85,8 @@
     }
   },
     mounted(){
-      if (this.$route.params.id !== undefined){
-        this.fetchNeighborhood()
-      };
-      this.store.commit('refreshNeighborhoodRoundTables');
+      this.fetchNeighborhood()
+      // this.$store.commit('refreshNeighborhoodRoundTables');
     },
     methods : {
       setViewingTab(tab){
@@ -95,7 +97,8 @@
        } ,
 
        async fetchNeighborhood(){
-        const url = `/api/neighborhood/${this.$route.params.id}`;
+        const neighborhoodId = this.$route.params.id === undefined ? this.cityId : this.$route.params.id;
+        const url = `/api/neighborhood/${neighborhoodId}`;
         const res = await fetch(url).then(async r => r.json());
       console.log(res);
       this.neighborhood = res;

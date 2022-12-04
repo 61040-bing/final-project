@@ -55,7 +55,7 @@ const store = new Vuex.Store({
        */
       const url = `/api/neighborhood`;
       const res = await fetch(url).then(async r => r.json());
-      state.neighborhoods = res;
+      state.neighborhoods = res.filter(neighborhood => neighborhood.name !== 'city');
     },
     async refreshNeighborhoodRoundTables(state) {
       /**

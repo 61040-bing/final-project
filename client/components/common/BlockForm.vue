@@ -121,7 +121,8 @@ export default {
         }
 
         if(this.refreshPosts){
-          this.$store.commit('refreshForumPosts', this.$route.params.id);
+          this.$store.commit('refreshForumPosts', this.neighborhoodId);
+
         }
 
         if (this.callback) {

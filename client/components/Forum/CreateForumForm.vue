@@ -12,7 +12,7 @@ export default {
         {id: 'content', label: 'Content', value: ''}
       ],
       title: 'Create a forum post',
-      neighborhoodId: this.$route.params.id,
+      neighborhoodId: this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id,
       refreshPosts: true,
       callback: () => {
         const message = 'Successfully created a forum post!';
