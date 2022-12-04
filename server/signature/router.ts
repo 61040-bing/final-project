@@ -102,7 +102,7 @@ router.post(
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const signature = await SignatureCollection.addOne(userId, req.params.petitionId);
-    // TODO: CHECK NUMBER OF SIGNATURES RECEIVED SO FAR. IF TARGET NUMBER REACHED, SUBMIT THE PETITION
+    await SignatureCollection.submitPetitionIfTargetReached(req.params.petitionId);
     res.status(201).json({
       message: 'Your Signature was created successfully.',
       signature: util.constructSignatureResponse(signature)

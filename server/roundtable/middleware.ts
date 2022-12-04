@@ -3,7 +3,7 @@ import {Types} from 'mongoose';
 import RoundTableCollection from './collection';
 import PetitionCollection from '../petition/collection';
 import UserCollection from '../user/collection';
-import NeighborhoodCollection from 'server/neighborhood/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
 import moment from 'moment';
 
 /**
@@ -200,6 +200,33 @@ const isValidStartEndDates = async (req: Request, res: Response, next: NextFunct
   next();
 };
 
+const isValidZoomlink = async(req: Request, res: Response, next: NextFunction) => {
+
+  if (!req.body.zoomlink){
+    res.status(400).json({
+      error: "empty zoomLink is not allowed"
+    })
+  }
+  // POTENTIALLY ADD MORE VALIDATION FOR ZOOM LINK
+  next();
+};
+
+/**
+ * Checks if the roundtable name in req.body is valid, i.e not a stream of empty
+ * spaces
+ */
+ const isValidRoundTableName = (req: Request, res: Response, next: NextFunction) => {
+  const {roundTableName} = req.body.roundTableName as {roundTableName: string};
+  if (!roundTableName.trim()) {
+    res.status(400).json({
+      error: 'Petition title must be at least one character long.'
+    });
+    return;
+  }
+
+  next();
+};
+
 export {
   isValidPetitionId,
   isRoundTableExists,
@@ -208,5 +235,7 @@ export {
   isAuthorExists,
   isNeighborhoodExists,
   isValidStartEndDates,
-  isValidRoundTableCreator
+  isValidRoundTableCreator,
+  isValidZoomlink,
+  isValidRoundTableName
 };

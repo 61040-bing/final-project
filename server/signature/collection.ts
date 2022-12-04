@@ -29,6 +29,17 @@ class SignatureCollection {
     return signature.populate('authorId');
   }
 
+  /**
+   * 
+   * Submit a petition if target number of signatures is achieved
+   */
+  static async submitPetitionIfTargetReached(petitionId: Types.ObjectId | string){
+    const petition = await PetitionCollection.findOne(petitionId);
+    const signatuesOnPetitition = await SignatureCollection.findAllbyPetitionId(petitionId);
+    if (signatuesOnPetitition.length === petition.targetSignatures){
+      petition.submitted = true;
+    }
+  }
 
   /**
    * Find a signature by signatureId

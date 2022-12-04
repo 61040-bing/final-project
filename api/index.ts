@@ -10,9 +10,13 @@ import * as userValidator from '../server/user/middleware';
 import MongoStore from 'connect-mongo';
 import {neighborhoodRouter} from '../server/neighborhood/router';
 import {userRouter} from '../server/user/router';
-import {likeRouter} from "../server/likes/router";
+import{likeRouter} from "../server/likes/router";
 import {commentRouter} from "../server/comments/router";
 import {forumRouter} from "../server/forum/router";
+import {petitionRouter} from '../server/petition/router';
+import { signatureRouter } from '../server/signature/router';
+import {roundTableRouter} from '../server/roundtable/router';
+
 // Load environmental variables
 dotenv.config({});
 
@@ -74,6 +78,10 @@ app.use('/api/users', userRouter);
 app.use('/api/forum', forumRouter);
 app.use('/api/likes', likeRouter);
 app.use('/api/comments', commentRouter);
+app.use('/api/petitions', petitionRouter);
+app.use('/api/signatures', signatureRouter);
+app.use('/api/roundtables', roundTableRouter);
+
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

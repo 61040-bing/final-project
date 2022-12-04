@@ -13,7 +13,7 @@ const router = express.Router();
 /**
  * Get all the RoundTables for neighborhood
  *
- * @name GET /api/RoundTables?neighborhoodId=id
+ * @name GET /api/roundtables?neighborhoodId=id
  *
  * @return {RoundTableResponse[]} - A list of all the RoundTables sorted in descending
  *                      order by date added
@@ -23,7 +23,7 @@ const router = express.Router();
 /**
  * Get roundTables by author.
  *
- * @name GET /api/roundTables?authorId=id
+ * @name GET /api/roundtables?authorId=id
  *
  * @return {RoundTableResponse[]} - An array of RoundTables created by user with id, authorId
  * @throws {400} - If authorId is not given
@@ -34,7 +34,7 @@ const router = express.Router();
 /**
  * Get RoundTables on petition.
  *
- * @name GET /api/roundTables?petitionId=id
+ * @name GET /api/roundtables?petitionId=id
  *
  * @return {Array<HydratedDocument<RoundTables>>} - RoundTables created on petition with id, petitionId
  * @throws {400} - If petitionId is not given
@@ -89,6 +89,7 @@ router.get(
  * @params {string} neighborhood - The id
  * @params  {date} start date
  * @params {date} end date
+ * @params {string} zoomlink
  * @return {RoundTableResponse} - The created roundtable
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the user had already added 3 RoundTables on the Petition
@@ -106,13 +107,16 @@ router.post(
     userValidator.isUserLoggedIn,
     roundTableValidator.isValidPetitionId,
     roundTableValidator.isValidRoundTableCreator,
+    roundTableValidator.isValidRoundTableName,
     roundTableValidator.isAlreadyMaxRoundTables,
     roundTableValidator.isValidStartEndDates,
+    roundTableValidator.isValidZoomlink
     
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const roundtable = await RoundTableCollection.addOne(userId, req.body.petitionId, req.body.neighborhood, req.body.startDate, req.body.endDate);
+    const roundtable = await RoundTableCollection.addOne(userId, req.body.petitionId, req.body.neighborhood,
+      req.body.roundTableName, req.body.startDate, req.body.endDate, req.body.zoomLink);
     res.status(201).json({
       message: 'Your RoundTable was created successfully.',
       roundtable: util.constructRoundTableResponse(roundtable)
@@ -124,7 +128,7 @@ router.post(
 /**
  * Delete a RoundTable
  *
- * @name DELETE /api/roundtabless/:id
+ * @name DELETE /api/roundtables/:id
  *
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in or is not the author of

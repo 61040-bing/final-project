@@ -5,6 +5,8 @@ import NeighborhoodWrapper from './components/neighborhood/NeighborhoodWrapper.v
 import LoginPage from './components/Login/LoginPage.vue';
 import RegisterPage from './components/Login/RegisterPage.vue';
 import ProfilePage from './components/Account/ProfilePage.vue';
+import AdminPage from './components/Admin/AdminPage.vue';
+import EditNeighborhood from './components/Admin/EditNeighborhood.vue';
 
 
 Vue.use(VueRouter);
@@ -15,7 +17,10 @@ const routes = [
   {path: '*', name: 'Not Found', component: NotFound},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '/register', name: 'Register', component: RegisterPage},
-  {path: '/profile', name: 'Profile', component: ProfilePage}
+  {path: '/profile', name: 'Profile', component: ProfilePage},
+  {path: '/admin', name: 'Admin', component: AdminPage},
+  {path: '/admin/editneighborhood', name: 'Edit Neighborhood', component: EditNeighborhood}
+
 ];
 
 const router = new VueRouter({routes});

@@ -8,8 +8,10 @@ type RoundTableResponse = {
   author: string;
   petition: string;
   neighborhood: string;
+  roundTableName: string;
   startDate: string;
   endDate: string;
+  zoomLink: string;
   dateCreated: string;
 };
 
