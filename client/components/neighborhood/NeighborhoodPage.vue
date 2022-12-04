@@ -68,11 +68,11 @@
 </template>
 
 <script>
-
+  import RoundTableComponent from '../roundtable/RoundTableComponent.vue';
   import ForumPage from '../Forum/ForumPage.vue';
   export default {
     name: 'NeighborhoodPage',
-    components: {ForumPage},
+    components: {ForumPage, RoundTableComponent},
     props: {
 
     },
