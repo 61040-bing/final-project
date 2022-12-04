@@ -3,7 +3,7 @@ import {Types} from 'mongoose';
 import RoundTableCollection from './collection';
 import PetitionCollection from '../petition/collection';
 import UserCollection from '../user/collection';
-import NeighborhoodCollection from 'server/neighborhood/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
 import moment from 'moment';
 
 /**
