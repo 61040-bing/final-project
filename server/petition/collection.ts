@@ -58,7 +58,7 @@ class PetitionCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Petition>>> {
     // Retrieves petitions and sorts them from most to least recent
-    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId').sort({dateCreated: -1});
+    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId');
   }
 
   /**
@@ -69,7 +69,7 @@ class PetitionCollection {
    */
   static async findAllByEmail(email: string): Promise<Array<HydratedDocument<Petition>>> {
     const author = await UserCollection.findOneByEmail(email);
-    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId').sort({dateCreated: -1});
+    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId');
   }
 
 /**
