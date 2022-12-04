@@ -3,6 +3,7 @@ import {Types} from 'mongoose';
 import SignatureCollection from './collection';
 import PetitionCollection from '../petition/collection';
 import UserCollection from '../user/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
 
 /**
  * Checks if a signature with signatureId is req.params exists
@@ -97,10 +98,26 @@ const isValidSignatureModifier = async (req: Request, res: Response, next: NextF
 
   next();
 };
+const isPetitionInUserNeighborhood = async (req: Request, res: Response, next: NextFunction) => {
+  const petition = await PetitionCollection.findOne(req.params.petitionId)
+  const petitionNeighborhood = await NeighborhoodCollection.findOne(petition.neighborhoodId)
+  const user = await UserCollection.findOneByUserId(req.session.userId)
+  const userNeighborhood = user.neighborhood._id
+  if ((userNeighborhood.toString() !== petition.neighborhoodId._id.toString() )||
+  petitionNeighborhood.name !== "city") {
+    res.status(403).json({
+      error: 'User Cannot sign a petition in a neighborhood that they are not part of.'
+    });
+    return;
+  }
+
+  next();
+};
 export {
   isValidPetitionId,
   isSignatureExists,
   isValidSignatureModifier,
   isUserAlreadySigning,
   isAuthorExists,
+  isPetitionInUserNeighborhood
 };

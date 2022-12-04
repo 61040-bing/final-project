@@ -91,6 +91,7 @@ router.get(
  * @throws {403} - If the user is not logged in
  * @throws {400} - If the user had already added a Signature on the Petition
  * @throws{404} - If the petitionId does not exist.
+ * @throws {403} - If the user tries to sign a petition in a neighborhood that is not theirs
  */
 router.post(
   '/:petitionId',
@@ -98,8 +99,8 @@ router.post(
     userValidator.isUserLoggedIn,
     petitionValidator.isPetitionExists,
     signatureValidator.isUserAlreadySigning,
-    // cannot sign a submitted petition
-    // only sign if neighborhood ,atch
+    // cannot sign a submitted petition - handled in front end by removing option
+    signatureValidator.isPetitionInUserNeighborhood,
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
@@ -131,7 +132,7 @@ router.delete(
     signatureValidator.isSignatureExists,
     petitionValidator.isPetitionExists,
     signatureValidator.isValidSignatureModifier
-    // cannot delete is submitted
+    // cannot delete is submitted - delete option is hidden for creator in frontend
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? '';
