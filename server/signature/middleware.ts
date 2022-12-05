@@ -102,8 +102,7 @@ const isPetitionInUserNeighborhood = async (req: Request, res: Response, next: N
   const petitionNeighborhood = await NeighborhoodCollection.findOne(petition.neighborhoodId)
   const user = await UserCollection.findOneByUserId(req.session.userId)
   const userNeighborhood = user.neighborhood._id
-  if ((userNeighborhood.toString() !== petition.neighborhoodId._id.toString() )||
-  petitionNeighborhood.name !== "city") {
+  if ((userNeighborhood.toString() !== petition.neighborhoodId._id.toString() ) && petitionNeighborhood.name !== "city") {
     res.status(403).json({
       error: 'User Cannot sign a petition in a neighborhood that they are not part of.'
     });
