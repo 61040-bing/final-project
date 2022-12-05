@@ -94,7 +94,7 @@ export default {
       neighborhoodId: this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id,
       petitionId: this.petition._id,
       setDate: true,
-      title: 'Create a petition',
+      title: 'Schedule RoundTable',
       callback: () => {
         this.$store.commit('refreshNeighborhoodRoundTables',this.$route.params.id);
         const message = 'Successfully created a petition!';

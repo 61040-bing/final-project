@@ -26,7 +26,7 @@
           Schedule RoundTable
         </button>
 
-      <ScheduleRoundTableForm v-if="schedulingRoundTable"
+      <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
 
@@ -48,7 +48,7 @@
           ❤️ Sign
       </button>
 
-      Signatures
+      {{signatures.length}} signatures
     </p>
     <section class="alerts">
       <article
@@ -83,9 +83,13 @@ export default {
       required: true
     }
   },
+  async mounted() {
+    await this.getSignatures();
+  },
   data() {
     return {
       signed: false,
+      signatures: [],
       schedulingRoundTable: false,
       alerts: {} // Displays success/error messages encountered during freet modification
     };
@@ -175,6 +179,31 @@ export default {
         setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
     },
+    async getSignatures() {
+      /**
+       * Submits a request to the freet's endpoint
+       * @param params - Options for the request
+       * @param params.body - Body for the request, if it exists
+       * @param params.callback - Function to run if the the request succeeds
+       */
+        const options = {
+          method: 'GET',
+        };
+
+        try {
+        const r = await fetch(`/api/signatures?petition=${this.petition._id}`);
+        const res = await r.json();
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+          }
+          console.log(res.length);
+          this.signatures = res;
+        } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+    },
     async signRequest(params) {
       /**
        * Submits a request to the freet's endpoint
@@ -257,36 +286,8 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 4;
+.scheduleTab{
+  z-index: 1;
+  background-color: white;
 }
-
-.expand:link {
-  color:deepskyblue;
-  text-decoration: none;
-}
-
-.expand:visited{
-  color:deepskyblue;
-  text-decoration: none;
-}
-
-.authorLink:link {
-  color:black;
-  text-decoration: none;
-}
-
-.authorLink:visited{
-  color:black;
-  text-decoration: none;
-}
-
-
 </style>
