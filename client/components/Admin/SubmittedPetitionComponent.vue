@@ -24,7 +24,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info">
+    <!-- <p class="info">
 
       <button @click="unsignPetition">
         ❌ Deny
@@ -35,7 +35,7 @@
         ✅ Accept
       </button>
 
-    </p>
+    </p> -->
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
