@@ -35,7 +35,7 @@
         ✅ Accept
       </button>
 
-    </p> -->
+    </p>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
