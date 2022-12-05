@@ -53,7 +53,11 @@ router.get(
       next();
       return;
     }
-    const neighborhoodRoundTables = await RoundTableCollection.findAllbyNeighborhoodId(req.query.neigborhood as string);
+    console.log("before collection in router", req.query.neighborhood)
+    const {neighborhood} = req.query as {neighborhood:string}
+    console.log("unpacked var in router", neighborhood)
+    const neighborhoodRoundTables = await RoundTableCollection.findAllbyNeighborhoodId(neighborhood);
+    console.log("fetches roundtables in collection", neighborhoodRoundTables)
     const response = neighborhoodRoundTables.map(util.constructRoundTableResponse);
     res.status(200).json(response);
   },

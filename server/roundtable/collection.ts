@@ -2,7 +2,8 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {RoundTable} from './model';
 import RoundTableModel from './model';
 import UserCollection from '../user/collection';
-import NeighborhoodCollection from '../petition/collection';
+import NeighborhoodCollection from '../neighborhood/collection';
+import PetitionCollection from '../petition/collection';
 
 /**
  * This files contains a class that has the functionality to explore RoundTables
@@ -92,7 +93,7 @@ class RoundTableCollection {
    * @returns Promise<Array<HydratedDocument<Petition>>> - An array of all the Petitions
    */
   static async findAllbyPetitionId(petitionId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
-    const petition = await NeighborhoodCollection.findOne(petitionId);
+    const petition = await PetitionCollection.findOne(petitionId);
     return RoundTableModel.find({petitionId: petition._id}).populate('_id').populate('petitionId').sort('startDate');
   }
 
@@ -103,8 +104,11 @@ class RoundTableCollection {
    * @returns Promise<Array<HydratedDocument<RoundTable>>> - An array of all the RoundTables
    */
  static async findAllbyNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
+  console.log("neighborhoodid param in findallbyid", neighborhoodId)
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return RoundTableModel.find({neighborhoodId: neighborhood}).populate('_id').populate('petitionId').sort('startDate');
+  console.log("neighborhood found", neighborhood)
+
+  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate');
 }
 
   /**

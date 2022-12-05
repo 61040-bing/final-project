@@ -107,7 +107,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-        this.$store.commit('refreshNeighborhoodRoundTables');
+        this.$store.commit('refreshNeighborhoodRoundTables', this.$store.state.neighborhoodRoundTableFilter);
 
         params.callback();
       } catch (e) {

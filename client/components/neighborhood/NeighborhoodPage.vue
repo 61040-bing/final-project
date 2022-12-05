@@ -64,15 +64,6 @@
         </article>
       </section>
     </section>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
   </section>
 </template>
 
@@ -103,14 +94,14 @@
   },
     mounted(){
       this.fetchNeighborhood();
-
       if (this.$route.params.id === undefined ) {
-
-        console.log('here');
+        
         console.log(this.$store.state.neighborhoodRoundTables);
         this.$store.commit('updateRoundTableFilter', this.cityId);
+        console.log('here', this.$store.state.neighborhoodRoundTableFilter );
         this.$store.commit('refreshNeighborhoodRoundTables', this.cityId);
-
+        console.log(this.$store.state.neighborhoodRoundTables)
+        //this.$store.commit('refreshNeighborhoodRoundTables', "638ce78e88e91521eb0338c0");
       } else {
         this.$store.commit('updateRoundTableFilter', this.$route.params.id);
         this.$store.commit('refreshNeighborhoodRoundTables', this.$route.params.id );
@@ -129,10 +120,11 @@
         try{
           const neighborhoodId = this.$route.params.id === undefined ? this.cityId : this.$route.params.id;
           const url = `/api/neighborhood/${neighborhoodId}`;
-          const res = await fetch(url).then(async r => r.json());
-          if (!res.ok) {
-                throw new Error(res.error);
+          const r = await fetch(url);
+          if (!r.ok) {
+            throw new Error(res.error);
           }
+          const res = await r.json();
           this.neighborhood = res;
           this.loaded = true;
         }
