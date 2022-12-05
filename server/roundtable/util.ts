@@ -41,7 +41,7 @@ const constructRoundTableResponse = (roundTable: HydratedDocument<RoundTable>): 
     })
   };
   // const {email} = roundTableCopy.authorId;
-  delete roundTableCopy.authorId;
+  // delete roundTableCopy.authorId;
   return {
     ...roundTableCopy,
     _id: roundTableCopy._id.toString(),
