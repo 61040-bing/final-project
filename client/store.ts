@@ -124,6 +124,19 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       state.petitions = res;
     },
+    async refreshUser(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+      const url = `/api/users/session`;
+      console.log("refreshing user");
+      const r = await fetch(url);
+      let res = await r.json();
+      state.userObject = res.user;
+      console.log("user obj", state.userObject)
+    },
+
+
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
