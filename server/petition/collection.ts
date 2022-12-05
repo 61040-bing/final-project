@@ -80,7 +80,7 @@ class PetitionCollection {
    */
  static async findAllByNeighborhood(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<Petition>>> {
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return PetitionModel.find({neighborhoodId: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhoodId');
+  return PetitionModel.find({neighborhoodId: neighborhood._id}).sort({dateCreated: -1}).populate('authorId').populate('neighborhoodId');
 }
   /**
    * Delete a petition with given petitionId.

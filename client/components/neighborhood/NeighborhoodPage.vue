@@ -92,8 +92,18 @@
     }
   },
     mounted(){
-      this.fetchNeighborhood()
-      // this.$store.commit('refreshNeighborhoodRoundTables');
+      this.fetchNeighborhood();
+
+      if (this.$route.params.id === undefined ) {
+
+        console.log('here');
+        console.log(this.$store.state.neighborhoodRoundTables);
+        //this.$store.commit('refreshNeighborhoodRoundTables', "638ce78e88e91521eb0338c0");
+
+      } else {
+        //this.$store.commit('refreshNeighborhoodRoundTables', this.$route.params.id );
+
+      }
     },
     methods : {
       setViewingTab(tab){

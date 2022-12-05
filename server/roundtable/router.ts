@@ -114,12 +114,6 @@ router.post(
     
   ],
   async (req: Request, res: Response) => {
-    console.log(req.body.petitionId);
-    console.log(req.body.neighborhoodId);
-
-    console.log(req.body.startDate);
-    console.log(req.body.endDate);
-
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const roundtable = await RoundTableCollection.addOne(userId, req.body.petitionId, req.body.neighborhoodId,
       req.body.roundTableName, req.body.startDate, req.body.endDate, req.body.zoomLink);
@@ -128,7 +122,6 @@ router.post(
       message: 'Your RoundTable was created successfully.',
       roundtable: util.constructRoundTableResponse(roundtable)
     });
-    
   }
 );
 

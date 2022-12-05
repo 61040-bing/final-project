@@ -21,20 +21,19 @@ class RoundTableCollection {
    * @param {Date} endDate  - The end Date of the RoundTable
    * @return {Promise<HydratedDocument<RoundTable>>} - The newly created roundtable
    */
-  static async addOne(authorId: Types.ObjectId | string, petition: Types.ObjectId | string,
-    neighborhood: Types.ObjectId | string, roundTableName: string, startDate: Date, endDate: Date, zoomLink: string): Promise<HydratedDocument<RoundTable>> {
+  static async addOne(authorId: Types.ObjectId | string, petitionId: Types.ObjectId | string,
+    neighborhoodId: Types.ObjectId | string, roundTableName: string, startDate: Date, endDate: Date, zoomLink: string): Promise<HydratedDocument<RoundTable>> {
     const date = new Date();
     const roundTable = new RoundTableModel({
       authorId,
-      petition,
-      neighborhood,
+      petitionId,
+      neighborhoodId,
       roundTableName,
       startDate,
       endDate,
       zoomLink,
       dateCreated: date,
     });
-    
     await roundTable.save(); // Saves roundtable to MongoDB
     return roundTable.populate('authorId');
   }
@@ -105,7 +104,7 @@ class RoundTableCollection {
    */
  static async findAllbyNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate');
+  return RoundTableModel.find({neighborhoodId: neighborhood}).populate('_id').populate('petitionId').sort('startDate');
 }
 
   /**

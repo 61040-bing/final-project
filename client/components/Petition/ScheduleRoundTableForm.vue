@@ -91,11 +91,12 @@ export default {
         {id: 'endDate', label: 'End Date', value: ''},
         {id: 'endTime', label: 'End Time', value: ''},
       ],
-      neighborhoodId: this.$route.params.id,
+      neighborhoodId: this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id,
       petitionId: this.petition._id,
       setDate: true,
       title: 'Create a petition',
       callback: () => {
+        this.$store.commit('refreshNeighborhoodRoundTables',this.$route.params.id);
         const message = 'Successfully created a petition!';
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);

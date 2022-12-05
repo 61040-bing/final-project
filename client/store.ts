@@ -62,15 +62,20 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       state.neighborhoods = res.filter(neighborhood => neighborhood.name !== 'city');
     },
-    async refreshNeighborhoodRoundTables(state) {
+    updateNeighborhoodRoundtables(state, roundTables) {
+      /**
+       * Update the stored roundTables to the provided roundTables.
+       * @param roundTables - roundTables to store
+       */
+      state.neighborhoodRoundTables = roundTables;
+    },
+    async refreshNeighborhoodRoundTables(state, neighborhood) {
       /**
        * Request the server for the currently available roundtables in the user's neighborhood.
        */
-      if (state.userNeighborhood !== null){
-        const url = `/api/roundtables?neighborhood=${state.userNeighborhood}`;
+        const url = `/api/roundtables?neighborhood=${neighborhood}`;
         const res = await fetch(url).then(async r => r.json());
         state.neighborhoodRoundTables = res;
-      }
     },
     async refreshForumPosts(state, neighborhoodId) {
       /**
@@ -115,7 +120,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = neighborhood ? `/api/petitions?neighborhood=${this.$route.params.id}` : '/api/petitions';
+      const url = neighborhood ? `/api/petitions?neighborhood=${neighborhood}` : '/api/petitions';
       const res = await fetch(url).then(async r => r.json());
       state.petitions = res;
     },

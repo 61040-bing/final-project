@@ -27,7 +27,6 @@
           @input="field.value = $event.target.value"
         >
 
-
       </div>
     </article>
     <article v-else>
@@ -67,9 +66,10 @@ export default {
         {id: 'content', label: 'Description', value: ''},
         {id: 'targetSignatures', label: 'Number of Signatures', value: ''},
       ],
-      neighborhoodId: this.$route.params.id,
+      neighborhoodId: this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id,
       title: 'Create a petition',
       callback: () => {
+        this.$store.commit('refreshPetitions',this.$route.params.id);
         const message = 'Successfully created a petition!';
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
