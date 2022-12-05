@@ -7,10 +7,10 @@
   >
     <header>
       <h3 class="author">
-        @{{ roundtable.author }}
+        @{{ roundtable.author.firstName + " " + roundtable.author.lastName }}
       </h3>
       <div
-        v-if="$store.state.username === roundtable.author"
+        v-if="$store.state. userObject === roundtable.author"
         class="actions"
       >
         <button @click="deleteRoundTable">
