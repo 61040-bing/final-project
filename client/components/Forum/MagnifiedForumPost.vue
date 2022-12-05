@@ -1,5 +1,5 @@
 <template>
-  <div class="ha">
+  <div class="ha"  v-if="$store.state.userNeighborhood">
     <article
       v-if="forumPost"
       class="freet"
@@ -43,6 +43,9 @@
         />
       </section>
     </article>
+  </div>
+  <div v-else>
+    Log in to view!
   </div>
 </template>
     
