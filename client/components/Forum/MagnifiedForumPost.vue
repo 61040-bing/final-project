@@ -12,7 +12,6 @@
           <ForumPost
             :key="forumPost._id"
             :forum="forumPost"
-            :comment="commentNumber"
             @refresh="fetchForumPost"
           />
         </article>
@@ -62,9 +61,6 @@
         };
       },
       computed: {
-        commentNumber(){
-          return this.$store.state.forumPostComments.length;
-        },
         comments(){
           if (!this.forumPost) return [];
           const comms = this.$store.state.forumPostComments;
