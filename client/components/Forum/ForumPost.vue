@@ -78,6 +78,11 @@
 
       {{ response.content }}
     </section>
+    <section v-if="forum.petitionId">
+      <router-link to="/">
+        Linked Petition
+      </router-link> 
+    </section>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"

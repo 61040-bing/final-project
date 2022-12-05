@@ -14,6 +14,7 @@ type ForumResponse = {
   expiryDate: string;
   neighborhood: Neighborhood;
   qna: boolean;
+  petitionId: string;
 };
 
 /**
@@ -41,6 +42,7 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
   delete ForumCopy.authorId;
   const neighborhood = ForumCopy.neighborhoodId;
   delete ForumCopy.neighborhoodId;
+  console.log(Forum);
   return {
     ...ForumCopy,
     _id: ForumCopy._id.toString(),
@@ -48,7 +50,8 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
     neighborhood,
     dateCreated: formatDate(Forum.dateCreated),
     dateModified: formatDate(Forum.dateModified),
-    expiryDate: formatDate(Forum.expiryDate)
+    expiryDate: formatDate(Forum.expiryDate),
+    petitionId: Forum.linkedPetition ? Forum.linkedPetition.toString() : ""
   };
 };
 

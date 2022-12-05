@@ -21,7 +21,7 @@ class ForumCollection {
    * @param qna
    * @return {Promise<HydratedDocument<Forum>>} - The newly created forum
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string, neighborhoodId : Types.ObjectId | string, qna: boolean): Promise<HydratedDocument<Forum>> {
+  static async addOne(authorId: Types.ObjectId | string, content: string, neighborhoodId: Types.ObjectId | string, qna: boolean, petitionId: Types.ObjectId | string): Promise<HydratedDocument<Forum>> {
     const date = new Date();
     const forum = new ForumModel({
       authorId,
@@ -29,6 +29,7 @@ class ForumCollection {
       content,
       dateModified: date,
       neighborhoodId: neighborhoodId,
+      linkedPetition: petitionId,
       qna
     });
     await forum.save(); // Saves forum to MongoDB
@@ -85,7 +86,6 @@ class ForumCollection {
   static async findAllByNeighborhoodId(neighborhoodId: string): Promise<Array<HydratedDocument<Forum>>> {
     return ForumModel.find({neighborhoodId}).sort({dateModified: -1}).populate('authorId');
   }
-
 
   /**
    * Update a forum with the new content

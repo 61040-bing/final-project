@@ -27,9 +27,30 @@
         >
       </div>
     </article>
+
     <article v-else>
       <p>{{ content }}</p>
     </article>
+    <section v-if="petition">
+      <div @click="toggleMenu">
+        Select Petition
+      </div>
+      <div >
+        {{ petition.title }}
+      </div>
+      <div :class="['dropdown', displayMenu ? 'toggle': '']">
+        <ul>
+          <li
+            v-for="pet in $store.state.petitions"
+            :key="pet._id"
+            @click="selectPetition(pet)"
+          >
+            {{ pet.title }}
+          </li>
+        </ul>
+      </div>
+    </section>
+   
     <button
       type="submit"
     >
@@ -65,12 +86,44 @@ export default {
       callback: null, // Function to run after successful form submission,
       neighborhoodId: null,
       petitionId: null,
+      fetchPetition: false,
       refreshComments: false,
       refreshPosts: false,
-      setUser: false
+      setUser: false,
+      displayMenu: false,
+      petition: null
     };
   },
+  mounted(){
+    if (this.fetchPetition){
+      this.fetchPetitions();
+    }
+  },
   methods: {
+    selectPetition(selectedPetition){
+      this.petition = selectedPetition;
+      this.hideMenu();
+    },
+    hideMenu() {
+        this.displayMenu = false;
+      },
+      toggleMenu() {
+        this.displayMenu = !this.displayMenu;
+      },
+    async fetchPetitions(){
+      const url = this.$route.params.id ? `/api/petitions?neighborhood=${this.$route.params.id}` : `/api/petitions?neighborhood=${'638ce78e88e91521eb0338c0'}`;
+      try {
+        const r = await fetch(url);
+        const res = await r.json();
+        if (!r.ok) {
+          throw new Error(res.error);
+        }
+        this.$store.commit('updatePetitions', res);
+      } catch (e) {
+        this.$set(this.alerts, e, 'error');
+        setTimeout(() => this.$delete(this.alerts, e), 3000);
+      }
+    },
     async submit() {
       /**
         * Submits a form with the specified options from data().
@@ -82,24 +135,6 @@ export default {
       };
       if (this.hasBody) {
 
-        // if (this.setDate) {
-        //   const req_fields = [];
-
-        //   for (const field of this.fields) {
-        //     if (field.id !== 'startDate' && field.id !== 'endDate' && field.id !== 'startTime' && field.id !== 'endTime') {
-        //       req_fields.push(field);
-        //     }
-        //   }
-        //   const startDate = this.fields.startDate.value + "-" + this.fields.startTime.value;
-        //   req_fields.push({id: 'startDate', value: startDate });
-
-        //   const endDate = this.fields.endDate.value + "-" + this.fields.endTime.value;
-        //   req_fields.push({id: 'endDate', endDate });
-        // } 
-        // else {
-        //   const req_fields = [...this.fields];
-        // }
-
         const req_fields = [...this.fields];
 
         if (this.neighborhoodId) {
@@ -110,6 +145,10 @@ export default {
         if (this.petitionId) {
           console.log(this.petitionId);
           req_fields.push({id: 'petitionId', value: this.petitionId });
+        }
+
+        if (this.petition) {
+          req_fields.push({id: 'petitionId', value: this.petition._id });
         }
 
         options.body = JSON.stringify(Object.fromEntries(
@@ -203,5 +242,42 @@ form h3 {
 textarea {
    font-family: inherit;
    font-size: inherit;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: white;
+  color: black;
+  display: none;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  border-radius: 0.5rem;
+}
+
+.dropdown.toggle {
+  display: block;
+}
+
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding: 0.5em;
+}
+
+.dropdown ul li {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.dropdown ul li:hover {
+  background: rgba(0,0,0,0.2);
+}
+.dropdown-content {
+  width: 100%;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
 }
 </style>

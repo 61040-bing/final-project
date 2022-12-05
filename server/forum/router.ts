@@ -83,7 +83,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const post = await ForumCollection.addOne(userId, req.body.content, req.body.neighborhoodId, req.body.qna);
+    const post = await ForumCollection.addOne(userId, req.body.content, req.body.neighborhoodId, req.body.qna, req.body.petitionId);
 
     res.status(201).json({
       message: 'Your Forum was created successfully.',

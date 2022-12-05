@@ -17,6 +17,7 @@ export type Forum = {
   dateModified: Date;
   expiryDate: Date;
   neighborhoodId: Neighborhood;
+  linkedPetition: Types.ObjectId;
   qna: boolean;
 };
 
@@ -66,7 +67,10 @@ const ForumSchema = new Schema<Forum>({
     type: Boolean,
     default: false,
     required: true
-
+  },
+  linkedPetition: {
+    type: Schema.Types.ObjectId,
+    required: false
   }
 });
 

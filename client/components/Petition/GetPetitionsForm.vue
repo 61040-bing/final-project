@@ -9,7 +9,7 @@ export default {
   name: 'GetPetitionsForm',
   methods: {
     async submit() {
-      const url = this.$route.params.id ? `/api/petitions?neighborhood=${this.$route.params.id}` : '/api/petitions';
+      const url = this.$route.params.id ? `/api/petitions?neighborhood=${this.$route.params.id}` : `/api/petitions?neighborhood=${'638ce78e88e91521eb0338c0'}`;
       console.log(url);
       try {
         const r = await fetch(url);
