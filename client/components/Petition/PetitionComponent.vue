@@ -38,7 +38,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood === petition.neighborhoodId">
+    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood._id === petition.neighborhoodId">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -85,6 +85,14 @@ export default {
   },
   async mounted() {
     await this.getSignatures();
+    console.log(this.signatures);
+
+    for (const signature of this.signatures) {
+      console.log(signature.authorId.toString());
+      if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
+        this.signed = true;
+      }
+    }
   },
   data() {
     return {
@@ -218,24 +226,7 @@ export default {
           method: params.method
         };
         try {
-          const rSign = await fetch(`/api/signatures?petitionId=${this.petition._id}`);
-          const resSign = await rSign.json();
-
-          if (!rSign.ok) {
-            throw new Error(resSign.error);
-          }
-
-          console.log(resSign);
-
-          let signatureId;
-          for (const signed of resSign) {
-            if (signed.author === this.$store.state.userEmail) {
-              signatureId = signed._id;
-            }
-          }
-
-          console.log(signatureId);
-          const r = await fetch(`/api/signatures/${signatureId}`, options);
+          const r = await fetch(`/api/signatures/${this.petition._id}`, options);
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
