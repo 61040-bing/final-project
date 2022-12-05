@@ -38,7 +38,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood === petition.neighborhoodId">
+    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood._id === petition.neighborhoodId">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -85,6 +85,7 @@ export default {
   },
   async mounted() {
     await this.getSignatures();
+    console.log(this.signatures);
   },
   data() {
     return {
@@ -218,6 +219,7 @@ export default {
           method: params.method
         };
         try {
+          
           const rSign = await fetch(`/api/signatures?petitionId=${this.petition._id}`);
           const resSign = await rSign.json();
 
@@ -235,7 +237,7 @@ export default {
           }
 
           console.log(signatureId);
-          const r = await fetch(`/api/signatures/${signatureId}`, options);
+          const r = await fetch(`/api/signatures/${this.petition._id}`, options);
           if (!r.ok) {
             const res = await r.json();
             throw new Error(res.error);
