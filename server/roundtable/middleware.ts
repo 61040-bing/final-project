@@ -202,10 +202,11 @@ const isValidStartEndDates = async (req: Request, res: Response, next: NextFunct
 
 const isValidZoomlink = async(req: Request, res: Response, next: NextFunction) => {
 
-  if (!req.body.zoomlink){
+  if (!req.body.zoomLink){
     res.status(400).json({
       error: "empty zoomLink is not allowed"
     })
+    return;
   }
   // POTENTIALLY ADD MORE VALIDATION FOR ZOOM LINK
   next();

@@ -8,7 +8,7 @@
     <header class="freetHeader">
       <div class="mainInfo">
       <p class="author">
-        {{ petition.author }}
+        {{( petition.author.firstName + " " +  petition.author.lastName)}}
       </p>
 
       <p class="date">
@@ -16,7 +16,7 @@
       </p>
     </div>
 
-      <div v-if="$store.state.userEmail === petition.author"
+      <div v-if="($store.state.userEmail === petition.author.email)"
         class="actions">
         <button @click="deletePetition">
           🗑️ Delete

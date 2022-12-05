@@ -107,8 +107,6 @@ export default {
           req_fields.push({id: 'neighborhoodId', value: this.neighborhoodId });
         }
 
-        console.og
-
         if (this.petitionId) {
           console.log(this.petitionId);
           req_fields.push({id: 'petitionId', value: this.petitionId });
