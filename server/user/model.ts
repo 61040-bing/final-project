@@ -26,7 +26,7 @@ export type PopulatedUser = {
   email: string;
   password: string;
   dateJoined: Date;
-  neighborhoodId: Neighborhood;
+  neighborhood: Neighborhood;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -37,12 +37,11 @@ const UserSchema = new Schema({
   firstName: {
     type: String,
     required: true
-  }, 
-
+  },
   lastName: {
     type: String,
     required: true
-  }, 
+  },
   // The user's email
   email: {
     type: String,
@@ -60,7 +59,8 @@ const UserSchema = new Schema({
   },
   neighborhood:{
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'Neighborhood'
   }
 });
 
