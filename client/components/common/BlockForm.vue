@@ -31,11 +31,11 @@
     <article v-else>
       <p>{{ content }}</p>
     </article>
-    <section v-if="petition">
+    <section v-if="fetchPetition">
       <div @click="toggleMenu">
         Select Petition
       </div>
-      <div >
+      <div  v-if="petition">
         {{ petition.title }}
       </div>
       <div :class="['dropdown', displayMenu ? 'toggle': '']">
