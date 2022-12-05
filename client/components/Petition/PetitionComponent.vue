@@ -38,7 +38,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info">
+    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood === petition.neighborhoodId">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -241,6 +241,7 @@ export default {
             throw new Error(res.error);
           }
           this.$store.commit('refreshPetitions');
+          await this.getSignatures();
 
           params.callback();
         } catch (e) {
@@ -262,6 +263,7 @@ export default {
           throw new Error(res.error);
           }
           this.$store.commit('refreshPetitions');
+          await this.getSignatures();
 
           params.callback();
         } catch (e) {
