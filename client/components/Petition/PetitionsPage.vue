@@ -2,12 +2,11 @@
 
 <template>
   <main>
-    <div class="freetButton">
+    <div v-if="$store.state.userEmail" class="freetButton">
     <button class="freetPost" @click="posting = true"> Create a New Petition </button>
   </div>
 
   <main class="page">
-    <section v-if="$store.state.username">
       <div class="modal-backdrop" v-if="posting">
         <div class="entire">
           
@@ -20,7 +19,6 @@
         </div>
       </div>
       
-    </section>
     <section>
       <header>
         <div class="left">

@@ -1,6 +1,7 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
-import type {User} from './model';
+import type {PopulatedUser, User} from './model';
+import {Neighborhood} from "../neighborhood/model";
 
 // Update this if you add a property to the User type!
 type UserResponse = {
@@ -9,7 +10,7 @@ type UserResponse = {
   lastName:string;
   email: string;
   dateJoined: string;
-  neighborhood: string;
+  neighborhood: Neighborhood;
 };
 
 /**
@@ -29,17 +30,20 @@ const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:
  * @returns {UserResponse} - The user object without the password
  */
 const constructUserResponse = (user: HydratedDocument<User>): UserResponse => {
-  const userCopy: User = {
+  const userCopy: PopulatedUser = {
     ...user.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
   delete userCopy.password;
+  userCopy.neighborhood;
+
   return {
     ...userCopy,
     _id: userCopy._id.toString(),
     dateJoined: formatDate(user.dateJoined),
-    neighborhood: userCopy.neighborhood.toString(),
+
+
   };
 };
 

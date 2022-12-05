@@ -21,12 +21,12 @@ class UserCollection {
    */
   static async addOne(firstName:string, lastName:string, email: string, password: string, neighborhood: Types.ObjectId | string): Promise<HydratedDocument<User>> {
     const dateJoined = new Date();
-    // TODO: Uncomment out the line below once neighborhood is implemented. 
+    // TODO: Uncomment out the line below once neighborhood is implemented.
     //        Update line 27 accordingly
     // const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
     const user = new UserModel({firstName, lastName, email, password, dateJoined, neighborhood});
     await user.save(); // Saves user to MongoDB
-    return user;
+    return user.populate("neighborhood");
   }
 
   /**
@@ -36,7 +36,7 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given email, if any
    */
   static async findOneByUserId(userId: Types.ObjectId | string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({_id: userId});
+    return UserModel.findOne({_id: userId}).populate("neighborhood");
   }
 
   /**
@@ -46,7 +46,7 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given email, if any
    */
   static async findOneByEmail(email: string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({email: new RegExp(`^${email.trim()}$`, 'i')});
+    return UserModel.findOne({email: new RegExp(`^${email.trim()}$`, 'i')}).populate("neighborhood");
   }
 
   /**
@@ -60,7 +60,7 @@ class UserCollection {
     return UserModel.findOne({
       email: new RegExp(`^${email.trim()}$`, 'i'),
       password
-    });
+    }).populate("neighborhood");
   }
 
   /**
@@ -93,7 +93,7 @@ class UserCollection {
     }
 
     await user.save();
-    return user;
+    return user.populate("neighborhood");
   }
 
   /**

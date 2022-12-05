@@ -33,8 +33,9 @@
         <font-awesome-icon
           icon="fa-regular fa-comment-dots"
           size="lg"
-        /> replies
+        /> View replies
       </router-link>
+     
       <div>
         <div
           v-if="!liked"
@@ -44,7 +45,7 @@
           <img
             src="../../public/upvoteTriangle.svg"
             style="width: 20px; height: 20px"
-          > Upvote
+          >  {{likes + (likes === 1 ? " Upvote" : " Upvotes")}} 
         </div>
         <div
           v-if="liked"
@@ -119,6 +120,9 @@
       liked() {
         return this.forum.likes.includes(this.$store.state.userEmail);
      },
+     likes() {
+      return this.forum.likes.length;
+     }
     },
     mounted(){
       this.fetchResponse();
