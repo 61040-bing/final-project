@@ -97,7 +97,7 @@ export default {
       title: 'Schedule RoundTable',
       callback: () => {
         this.$store.commit('refreshNeighborhoodRoundTables',this.$route.params.id);
-        const message = 'Successfully created a petition!';
+        const message = 'Successfully created a round table!';
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }

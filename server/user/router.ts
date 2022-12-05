@@ -1,7 +1,13 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import NeighborhoodCollection from '../neighborhood/collection';
-import type { Neighborhood } from '../neighborhood/model';
+import RoundTableCollection from '../roundtable/collection';
+import PetitionCollection from '../petition/collection';
+import SignatureCollection from '../signature/collection';
+import ForumCollection from '../forum/collection';
+import CommentCollection from '../comments/collection';
+import LikeCollection from '../likes/collection';
+import type {Neighborhood} from '../neighborhood/model';
 import UserCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as util from './util';
@@ -160,6 +166,22 @@ router.patch(
   }
 );
 
+router.get(
+  '/:email',
+  async (req: Request, res: Response) => {
+    if (req.params.email !== undefined) { // If email is not being changed, skip this check
+      const user = await UserCollection.findOneByEmail(req.params.email);
+      if (user) {
+        res.status(409).json({
+          error: 'An account with this email already exists.'
+        });
+      } else {
+        res.status(200).json('This email is available.');
+      }
+    }
+  }
+);
+
 /**
  * Delete a user.
  *
@@ -176,6 +198,11 @@ router.delete(
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     await UserCollection.deleteOne(userId);
+    await PetitionCollection.deleteMany(userId);
+    await SignatureCollection.deleteMany(userId);
+    await RoundTableCollection.deleteMany(userId);
+    await ForumCollection.deleteMany(userId);
+    await CommentCollection.deleteMany(userId);
     req.session.userId = undefined;
     res.status(200).json({
       message: 'Your account has been deleted successfully.'

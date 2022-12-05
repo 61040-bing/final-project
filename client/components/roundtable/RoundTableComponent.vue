@@ -7,10 +7,10 @@
   >
     <header>
       <h3 class="author">
-        @{{ roundtable.author }}
+        @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
       </h3>
       <div
-        v-if="$store.state.username === roundtable.author"
+        v-if="$store.state. userObject === roundtable.authorId"
         class="actions"
       >
         <button @click="deleteRoundTable">
@@ -19,13 +19,13 @@
       </div>
     </header>
     <p class="roundTableName">
-      Starts at {{ roundtable.name }}
+      {{ roundtable.roundTableName }}
     </p>
 
     <p
       class="petition"
     >
-      {{ roundtable.petition.title }}
+      Roundtable on {{ roundtable.petitionId.title }} petition
       <!-- POTENTIALLY ADD A CLICK HERE SO THAT IF SOMEONE CLICKS PETITION THEY CAN SEE DETAILS PAGE-->
     </p>
     <p class="start">
@@ -65,7 +65,7 @@ export default {
    
   },
   mounted() {
-
+    console.log(this.roundtable);
   },
   data() {
     return {
@@ -107,7 +107,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-        this.$store.commit('refreshNeighborhoodRoundTables');
+        this.$store.commit('refreshNeighborhoodRoundTables', this.$store.state.neighborhoodRoundTableFilter);
 
         params.callback();
       } catch (e) {

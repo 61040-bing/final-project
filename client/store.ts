@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     userNeighborhood: null,
     alerts: {},
     neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
+    neighborhoodRoundTableFilter : null,
     forumPosts: [],
     forumPostComments: [],
     userObject: null,
@@ -62,6 +63,15 @@ const store = new Vuex.Store({
       const res = await fetch(url).then(async r => r.json());
       state.neighborhoods = res.filter(neighborhood => neighborhood.name !== 'city');
     },
+
+    /**
+     * Updates the stored filter for roundtable neighborhood
+     * @param neighborhood - neighborhood to store
+     */
+    async updateRoundTableFilter(state, neighborhood){
+      state.neighborhoodRoundTableFilter = neighborhood;
+    },
+
     updateNeighborhoodRoundtables(state, roundTables) {
       /**
        * Update the stored roundTables to the provided roundTables.
@@ -75,6 +85,7 @@ const store = new Vuex.Store({
        */
         const url = `/api/roundtables?neighborhood=${neighborhood}`;
         const res = await fetch(url).then(async r => r.json());
+        console.log("res in store", res)
         state.neighborhoodRoundTables = res;
     },
     async refreshForumPosts(state, neighborhoodId) {

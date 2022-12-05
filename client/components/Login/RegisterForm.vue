@@ -23,7 +23,7 @@
     </div>
     </article>
 
-    <button v-if="!selectingNeighborhood" type="button" @click="selectingNeighborhood = !selectingNeighborhood">
+    <button v-if="!selectingNeighborhood" type="button" @click="canMove">
       Next
     </button>
 
@@ -113,10 +113,19 @@ export default {
       } else {
         this.selected = neighborhood._id;
       }
+    },
+    async canMove(){
+      const r = await  fetch(`/api/users/${this.fields[2].value}`, {method: 'GET', headers: {'Content-Type': 'application/json'}});
+      if (r.status !== 200){
+        alert("This email has already been taken");
+      } else {
+        this.selectingNeighborhood = !this.selectingNeighborhood
+      }
     }
   },
   data() {
     return {
+      alerts: {},
       selectingNeighborhood: false,
       url: '/api/users',
       method: 'POST',

@@ -36,7 +36,7 @@
       <div 
         v-if="$store.state.userEmail"
         class="nav-item"
-        @click="navigateTo('/neighborhood/'+$store.state.userNeighborhood)"
+        @click="navigateTo('/neighborhood/'+$store.state.userNeighborhood._id)"
       >
         My Neighborhood
       </div>

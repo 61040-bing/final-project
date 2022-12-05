@@ -1,9 +1,10 @@
 <template>
   <section
     class="buffer"
+    v-if="$store.state.userNeighborhood"
   >
     <CreateForumForm 
-      v-if="$store.state.userNeighborhood === $route.params.id || ($route.params.id === undefined && $store.state.userEmail !== undefined)"
+      v-if="$store.state.userNeighborhood._id === $route.params.id || ($route.params.id === undefined && $store.state.userEmail !== undefined)"
     />
     <section>
       <header class="left">
@@ -18,6 +19,9 @@
         @refresh="$store.commit('refreshForumPosts', $route.params.id === undefined ? cityId : $route.params.id);"
       />
     </section>
+  </section>
+  <section v-else>
+    Login to View!
   </section>
 </template>
   
