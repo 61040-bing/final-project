@@ -15,6 +15,12 @@
       Posted at {{ petition.dateCreated}}
       </p>
     </div>
+  </header>
+    <p
+      class="content"
+    >
+      {{ petition.content }}
+    </p>
 
       <div v-if="($store.state.userEmail === petition.author.email)"
         class="actions">
@@ -30,13 +36,9 @@
       :petition="petition"/>
       </div>
 
-    </header>
+    
 
-    <p
-      class="content"
-    >
-      {{ petition.content }}
-    </p>
+    
 
     <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userNeighborhood._id === petition.neighborhoodId">
 

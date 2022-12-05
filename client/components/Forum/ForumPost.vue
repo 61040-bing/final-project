@@ -56,7 +56,7 @@
             style="width: 20px; height: 20px"
             class="upvote-button"
           >
-          Remove Upvote
+          {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
         </div>
       </div>
     </section>
