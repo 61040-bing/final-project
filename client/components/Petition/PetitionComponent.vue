@@ -37,13 +37,6 @@
       :petition="petition"/>
       </div>
 
-
-    <div>
-      <p class="content">
-        {{ petition.content }}
-      </p>
-    </div>
-
     <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
 
       <button v-if="signed" @click="unsignPetition">
