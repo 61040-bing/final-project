@@ -1,9 +1,11 @@
 <template>
   <section v-if="$store.state.userEmail === 'admin@admin.com'">
     <div class="container">
+      <router-link to="/admin/submittedpetitions">
       <button class="button">
         View Submitted Petitions
       </button>
+    </router-link>
       <router-link to="/admin/editneighborhood">
         <button class="button">
           Edit Neighborhoods
