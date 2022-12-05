@@ -19,7 +19,7 @@
       </div>
     </header>
     <p class="roundTableName">
-      Name {{ roundtable.roundTableName }}
+      Name: {{ roundtable.roundTableName }}
     </p>
 
     <p
