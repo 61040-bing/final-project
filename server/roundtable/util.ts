@@ -1,13 +1,17 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {RoundTable, PopulatedRoundTable} from '../roundtable/model';
+import {Neighborhood} from "../neighborhood/model";
+import {Petition} from "../petition/model";
+import {User} from "../user/model";
+
 
 // Update this if you add a property to the RoundTable type!
 type RoundTableResponse = {
   _id: string;
-  author: string;
-  petition: string;
-  neighborhood: string;
+  authorId: User;
+  petitionId: Petition;
+  neighborhoodId: Neighborhood;
   roundTableName: string;
   startDate: string;
   endDate: string;
@@ -36,14 +40,11 @@ const constructRoundTableResponse = (roundTable: HydratedDocument<RoundTable>): 
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  const {email} = roundTableCopy.authorId;
-  delete roundTableCopy.authorId;
+  // const {email} = roundTableCopy.authorId;
+  // delete roundTableCopy.authorId;
   return {
     ...roundTableCopy,
     _id: roundTableCopy._id.toString(),
-    author: email,
-    petition:roundTableCopy.petitionId.toString(),
-    neighborhood: roundTableCopy.neighborhoodId.name,
     startDate: formatDate(roundTable.startDate),
     endDate:formatDate(roundTable.endDate),
     dateCreated: formatDate(roundTable.dateCreated)
