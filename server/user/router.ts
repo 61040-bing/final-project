@@ -7,14 +7,14 @@ import SignatureCollection from '../signature/collection';
 import ForumCollection from '../forum/collection';
 import CommentCollection from '../comments/collection';
 import LikeCollection from '../likes/collection';
-import type { Neighborhood } from '../neighborhood/model';
+import type {Neighborhood} from '../neighborhood/model';
 import UserCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as util from './util';
 
 const router = express.Router();
 
-// TODO: 
+// TODO:
 //           -  first and last name functionality - in model and routeer
 //              middleware checks it is not empty
 /**
@@ -162,6 +162,22 @@ router.patch(
       message: 'Your profile was updated successfully.',
       user: util.constructUserResponse(user)
     });
+  }
+);
+
+router.get(
+  '/:email',
+  async (req: Request, res: Response) => {
+    if (req.params.email !== undefined) { // If email is not being changed, skip this check
+      const user = await UserCollection.findOneByEmail(req.params.email);
+      if (user) {
+        res.status(409).json({
+          error: 'An account with this email already exists.'
+        });
+      } else {
+        res.status(200).json('This email is available.');
+      }
+    }
   }
 );
 
