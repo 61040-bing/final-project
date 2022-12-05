@@ -35,7 +35,7 @@
       Ends at {{ roundtable.endDate }}
     </p>
     <p class="meetingLink">
-      Meeting Link {{ roundtable.zoomLink }}
+      Meeting Link: {{ roundtable.zoomLink }}
     </p>
     <section class="alerts">
       <article
