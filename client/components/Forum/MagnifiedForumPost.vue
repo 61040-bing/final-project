@@ -27,7 +27,7 @@
       </section>
       <section class="comment">
         <CreateForumCommentForm 
-          v-if="(($store.state.userNeighborhood === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userEmail !== undefined)))"
+          v-if="(($store.state.userNeighborhood._id === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userEmail !== undefined)))"
           :key="forumPost.id"
         />
       </section>
