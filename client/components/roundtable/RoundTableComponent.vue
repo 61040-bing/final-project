@@ -25,7 +25,7 @@
     <p
       class="petition"
     >
-      Roundtable on {{ roundtable.petitionId.title }} petition
+      Petition : {{ roundtable.petitionId.title }}
       <!-- POTENTIALLY ADD A CLICK HERE SO THAT IF SOMEONE CLICKS PETITION THEY CAN SEE DETAILS PAGE-->
     </p>
     <p class="start">
