@@ -1,22 +1,22 @@
 <!-- Reusable component representing a single freet and its actions -->
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
-<template>
+<template> 
   <article
     class="freet"
   >
-    <header class="freetHeader">
+  <header class="freetHeader">
       <div class="mainInfo">
-      <p class="author">
-        {{( petition.author.firstName + " " +  petition.author.lastName)}}
+
+      <p class="title">
+        {{( petition.title)}}
       </p>
 
-      <p class="date">
-      Posted at {{ petition.dateCreated}}
+      <p class="author">
+        Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
       </p>
     </div>
-
-    </header>
+  </header>
 
     <p
       class="content"
@@ -24,14 +24,14 @@
       {{ petition.content }}
     </p>
 
-    <!-- <p class="info">
+    <p class="info" v-if="petition.accepted !== 'true' && petition.denied !== 'true' ">
 
-      <button @click="unsignPetition">
+      <button @click="denyPetition">
         ❌ Deny
 
       </button>
 
-      <button @click="signPetition">
+      <button @click="acceptPetition">
         ✅ Accept
       </button>
 
@@ -74,33 +74,32 @@ export default {
        * Updates freet to have the submitted draft content.
        */
 
-      // console.log(this.petition._id);
-
-      // const params = {
-      //   method: 'POST',
-      //   message: 'Successfully signed petition!',
-      //   body: JSON.stringify({petitionId: this.petition._id}),
-      //   callback: () => {
-      //     this.$set(this.alerts, params.message, 'success');
-      //     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
-      //   }
-      // };
-      // this.signRequest(params);
+      console.log(this.petition._id);
+      const params = {
+        method: 'PUT',
+        message: 'Successfully signed petition!',
+        body: JSON.stringify({accept: true}),
+        callback: () => {
+          this.$set(this.alerts, params.message, 'success');
+          setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+        }
+      };
+      this.request(params);
     },
     denyPetition() {
       /**
        * Updates freet to have the submitted draft content.
        */
-      // const params = {
-      //   method: 'DELETE',
-      //   message: 'Successfully removed signature from petition!',
-      //   body: JSON.stringify({petitionId: this.petition._id}),
-      //   callback: () => {
-      //     this.$set(this.alerts, params.message, 'success');
-      //     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
-      //   }
-      // };
-      // this.signRequest(params);
+      const params = {
+        method: 'PUT',
+        message: 'Successfully removed signature from petition!',
+        body: JSON.stringify({deny: true}),
+        callback: () => {
+          this.$set(this.alerts, params.message, 'success');
+          setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+        }
+      };
+      this.signRequest(params);
     },
     async request(params) {
       /**
@@ -122,9 +121,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-
-        this.editing = false;
-        this.$store.commit('refreshPetitions');
+        //this.$store.commit('refreshPetitions');
         //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();

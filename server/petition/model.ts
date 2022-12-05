@@ -18,7 +18,8 @@ export type Petition = {
   content: string;
   targetSignatures: number;
   submitted: boolean;
-  
+  accepted: boolean;
+  denied: boolean;
 };
 
 export type PopulatedPetition = {
@@ -30,7 +31,8 @@ export type PopulatedPetition = {
   content: string;
   targetSignatures: number;
   submitted: boolean;
- 
+  accepted: boolean;
+  denied: boolean;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -70,6 +72,12 @@ const PetitionSchema = new Schema<Petition>({
   submitted: {
     type: Boolean,
     required: true
+  },  
+  accepted: {
+    type: Boolean,
+  },  
+  denied: {
+    type: Boolean,
   },  
 
 });

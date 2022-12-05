@@ -13,6 +13,8 @@ type PetitionResponse = {
   content: string;
   targetSignatures: string;
   submitted: string;
+  accepted: string;
+  denied: string;
 };
 
 /**
@@ -47,7 +49,9 @@ const constructPetitionResponse = (petition: HydratedDocument<Petition>): Petiti
     neighborhood: name,
     dateCreated: formatDate(petition.dateCreated),
     targetSignatures: petitionCopy.targetSignatures.toString(),
-    submitted: petitionCopy.submitted.toString()
+    submitted: petitionCopy.submitted.toString(),
+    accepted: petitionCopy.accepted.toString(),
+    denied: petitionCopy.denied.toString(),
   };
 };
 

@@ -35,7 +35,8 @@ class PetitionCollection {
       content,
       targetSignatures,
       submitted: false,
-     
+      accepted: false,
+      denied: false,
     });
     await petition.save(); // Saves petition to MongoDB
     return petition.populate('authorId');
@@ -49,6 +50,22 @@ class PetitionCollection {
    */
   static async findOne(petitionId: Types.ObjectId | string): Promise<HydratedDocument<Petition>> {
     return PetitionModel.findOne({_id: petitionId}).populate('authorId');
+  }
+
+  /**
+   * Find a petition by petitionId
+   *
+   * @param {string} petitionId - The id of the petition to find
+   * @return {Promise<HydratedDocument<Petition>> | Promise<null> } - The petition with the given petitionId, if any
+   */
+  static async acceptOrDenyOne(petitionId: Types.ObjectId | string, accept: string, deny: string): Promise<void> {
+    const petition = await PetitionModel.findOne({_id: petitionId});
+    if (accept) {
+      petition.accepted = true;
+    } else if (deny) {
+      petition.denied = true;
+    }
+    await petition.save();
   }
 
   /**

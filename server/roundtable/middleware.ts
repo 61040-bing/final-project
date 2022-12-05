@@ -149,6 +149,7 @@ const isValidRoundTableModifier = async (req: Request, res: Response, next: Next
 */
 const isValidStartEndDates = async (req: Request, res: Response, next: NextFunction) => {
 
+  console.log(req.body.endDate);
   
   if (!req.body.startDate){
    res.status(400).json({
