@@ -32,7 +32,7 @@
       <p>{{ content }}</p>
     </article>
     <section v-if="fetchPetition">
-      <div @click="toggleMenu">
+      <div class="button" @click="toggleMenu">
         Select Petition
       </div>
       <div  v-if="petition">
@@ -280,4 +280,13 @@ textarea {
   width: 100%;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
 }
+
+.button {
+    padding: 5px;
+    background-color: rgb(170, 85, 64);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
 </style>
