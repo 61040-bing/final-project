@@ -108,10 +108,12 @@
 
         console.log('here');
         console.log(this.$store.state.neighborhoodRoundTables);
-        //this.$store.commit('refreshNeighborhoodRoundTables', "638ce78e88e91521eb0338c0");
+        this.$store.commit('updateRoundTableFilter', this.cityId);
+        this.$store.commit('refreshNeighborhoodRoundTables', this.cityId);
 
       } else {
-        //this.$store.commit('refreshNeighborhoodRoundTables', this.$route.params.id );
+        this.$store.commit('updateRoundTableFilter', this.$route.params.id);
+        this.$store.commit('refreshNeighborhoodRoundTables', this.$route.params.id );
 
       }
     },
