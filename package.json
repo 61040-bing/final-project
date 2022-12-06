@@ -28,6 +28,7 @@
         "morgan": "~1.10.0",
         "nanoid": "^3.3.4",
         "vue": "^2.7.13",
+        "vue-js-modal": "^2.0.1",
         "vue-router": "^3.6.5",
         "vuex": "^3.6.2",
         "vuex-persistedstate": "^4.1.0"

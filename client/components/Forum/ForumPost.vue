@@ -35,7 +35,7 @@
           size="lg"
         /> View replies
       </router-link>
-     
+
       <div>
         <div
           v-if="!liked"
@@ -45,7 +45,7 @@
           <img
             src="../../public/upvoteTriangle.svg"
             style="width: 20px; height: 20px"
-          >  {{likes + (likes === 1 ? " Upvote" : " Upvotes")}} 
+          >  {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
         </div>
         <div
           v-if="liked"
@@ -79,9 +79,14 @@
       {{ response.content }}
     </section>
     <section v-if="forum.petitionId">
-      <router-link :to="petitionPath">
-        Linked Petition
-      </router-link> 
+
+      <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
+      <modal name="petitionModal"
+             :width="400"
+             :height="400"
+             :adaptive="true">
+        <PetitionComponent :petitionId="forum.petitionId"/>
+      </modal>
     </section>
     <section class="alerts">
       <article
@@ -97,8 +102,10 @@
 
   <script>
   import moment from 'moment';
+  import PetitionComponent from "../Petition/PetitionDetails";
   export default {
     name: 'ForumPost',
+    components: {PetitionComponent},
     props: {
       forum: {
         type: Object,
@@ -139,6 +146,10 @@
       this.fetchResponse();
     },
     methods: {
+
+      showModal(){
+        this.$modal.show('petitionModal');
+      },
       async fetchResponse(){
         if (this.forum.parentId){
           const url = `/api/comments/subcomments/${this.forum._id}`;
@@ -252,5 +263,13 @@
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     text-align: left;
+  }
+  .linkedPetitionButton{
+    text-decoration: underline;
+    color: blue;
+
+  }
+  .linkedPetitionButton:hover{
+    cursor: pointer;
   }
   </style>

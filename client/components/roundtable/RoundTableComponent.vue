@@ -27,14 +27,17 @@
     >
       Roundtable on "{{ roundtable.petitionId.title }}" petition
     </p>
-    <p>
-      <router-link
-        class="expand"
-        :to="`/petition/${roundtable.petitionId._id}`"
-      >
-        Open Petition
-      </router-link>
-    </p>
+
+
+      <div @click="showModal" class="linkedPetitionButton"> Open Petition</div>
+      <modal name="petitionModal"
+             :width="400"
+             :height="400"
+             :adaptive="true">
+        <PetitionComponent :petitionId="roundtable.petitionId._id"/>
+      </modal>
+
+
     <p class="start">
       Starts at {{ roundtable.startDate }}
     </p>
@@ -57,12 +60,12 @@
 </template>
 
 <script>
-
+import PetitionComponent from "../Petition/PetitionDetails";
 
 export default {
   name: 'RoundTableComponent',
   components:{
-   
+    PetitionComponent,
   },
   props: {
     // Data from the stored RoundTable
@@ -85,6 +88,11 @@ export default {
     console.log(this.roundtable);
   },
   methods: {
+
+    showModal(){
+      this.$modal.show('petitionModal');
+    },
+
     deleteRoundTable() {
       /**
        * Deletes this roundTable.
@@ -140,7 +148,15 @@ export default {
     height:20%;
     /* height: 200px;
     width:50%; */
-   
+
     /* background: lightgoldenrodyellow; */
+}
+.linkedPetitionButton{
+  text-decoration: underline;
+  color: blue;
+
+}
+.linkedPetitionButton:hover{
+  cursor: pointer;
 }
 </style>

@@ -28,7 +28,7 @@
       {{ petition.content }}
     </p>
 
-      <div v-if="($store.state.userObject.email === petition.author.email)"
+      <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
         <button @click="deletePetition">
           🗑️ Delete
@@ -236,7 +236,6 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
@@ -258,7 +257,6 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
