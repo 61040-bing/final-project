@@ -166,6 +166,7 @@ export default {
         //   console.log(finalEndDate);
         // } 
         // else {
+        //   req_fields = [...this.fields];
         // }
 
         const req_fields = [...this.fields];

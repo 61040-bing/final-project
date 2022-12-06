@@ -41,7 +41,7 @@
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="$store.state.userObject !== null && !(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
