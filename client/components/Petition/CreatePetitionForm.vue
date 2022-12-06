@@ -64,7 +64,7 @@ export default {
       fields: [
         {id: 'title', label: 'Title', value: ''},
         {id: 'content', label: 'Description', value: ''},
-        {id: 'targetSignatures', label: 'Number of Signatures', value: ''},
+        {id: 'targetSignatures', label: 'Number of Signatures Needed', value: ''},
       ],
       neighborhoodId: this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id,
       title: 'Create a petition',
