@@ -144,6 +144,8 @@ const store = new Vuex.Store({
       const r = await fetch(url);
       let res = await r.json();
       state.userObject = res.user;
+      state.userNeighborhood = res.user.neighborhood
+      state.userEmail = res.user.email
       console.log("user obj", state.userObject)
     },
 
