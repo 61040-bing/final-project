@@ -51,7 +51,7 @@
     </p>
 
     <button @click="toggleSignatures" v-if="!showingSignatures">
-          Show Signatures: {{signatures.length}} 
+          Show Signatures: {{signatures.length}}
       </button>
       <button @click="toggleSignatures" v-if="showingSignatures">
           Hide Signatures
@@ -60,7 +60,7 @@
     <p
       v-if="showingSignatures"
       class="signatures"
-    > 
+    >
     {{ this.signatures }}
     </p>
     <section class="alerts">
@@ -80,9 +80,16 @@
 
 import ScheduleRoundTableForm from '@/components/Petition/ScheduleRoundTableForm.vue';
 
+const none_string = "Non"
 export default {
   name: 'PetitionComponent',
   components: {ScheduleRoundTableForm},
+  props: {
+    petitionId: {
+      type : String,
+      default: none_string,
+    }
+    },
   async mounted() {
     await this.getPetition();
     await this.getSignatures();
@@ -231,8 +238,15 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
+          let localPetitionId;
+          if (this.petitionId === none_string){
+            localPetitionId = this.$route.params.petitionId.toString();
+          } else{
+            localPetitionId = this.petitionId;
+          }
           for (const petition of res) {
-            if (petition._id.toString() === this.$route.params.petitionId.toString()) {
+
+            if (petition._id.toString() === localPetitionId) {
               this.petition = petition;
               break
             }
