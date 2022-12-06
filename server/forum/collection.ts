@@ -28,7 +28,7 @@ class ForumCollection {
       dateCreated: date,
       content,
       dateModified: date,
-      neighborhoodId: neighborhoodId,
+      neighborhoodId,
       linkedPetition: petitionId,
       qna
     });
@@ -74,7 +74,7 @@ class ForumCollection {
    * @param authorId
    */
   static async findAllByAuthorId(authorId: string): Promise<Array<HydratedDocument<Forum>>> {
-    return ForumModel.find({authorId: authorId}).sort({dateModified: -1}).populate('authorId');
+    return ForumModel.find({authorId}).sort({dateModified: -1}).populate('authorId');
   }
 
   /**
@@ -120,6 +120,12 @@ class ForumCollection {
    */
   static async deleteMany(authorId: Types.ObjectId | string): Promise<void> {
     await ForumModel.deleteMany({authorId});
+  }
+
+  static async updateManyByPetitionId(petitionId: Types.ObjectId | string): Promise<boolean> {
+    const forum = await ForumModel.updateMany({linkedPetition: petitionId}, {$set: {linkedPetition: null}});
+    console.log(forum);
+    return forum !== null;
   }
 }
 

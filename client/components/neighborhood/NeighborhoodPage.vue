@@ -154,8 +154,8 @@
 
 .example .name-overlay {
   position: absolute;
-  top: 450px;
-  left: 50px;
+  top: 70%;
+  left: 5%;
   font-weight: bold;
   text-align: right;
   font-size: 50px;

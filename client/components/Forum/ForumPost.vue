@@ -108,12 +108,17 @@
     data() {
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
-        path: `/forum/${this.forum._id}`,
-        petitionPath: this.forum.petitionId ? `/petition/${this.forum.petitionId}`  : "",
+        
         response: null
       };
     },
     computed: {
+      path(){
+        return `/forum/${this.forum._id}`;
+      },
+      petitionPath(){
+        return this.forum.petitionId ? `/petition/${this.forum.petitionId}`  : ""
+      } ,
       date(){
         return moment(this.forum.dateCreated, 'MMMM Do YYYY, h:mm:ss a').toDate();
       },

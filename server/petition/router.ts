@@ -3,6 +3,7 @@ import express from 'express';
 import PetitionCollection from './collection';
 import SignatureCollection from '../signature/collection';
 import RoundTableCollection from '../roundtable/collection';
+import ForumCollection from '../forum/collection';
 import * as userValidator from '../user/middleware';
 import * as petitionValidator from './middleware';
 import * as util from './util';
@@ -133,6 +134,7 @@ router.delete(
     await PetitionCollection.deleteOne(req.params.petitionId);
     await SignatureCollection.deleteManybyPetitionId(req.params.petitionId);
     await RoundTableCollection.deleteManybyPetitionId(req.params.petitionId);
+    await ForumCollection.updateManyByPetitionId(req.params.petitionId);
     res.status(200).json({
       message: 'Your petition was deleted successfully.'
     });
