@@ -8,6 +8,10 @@
   <header class="freetHeader">
       <div class="mainInfo">
 
+      <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+
+      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+
       <p class="title">
         {{( petition.title)}}
       </p>
@@ -17,7 +21,7 @@
       </p>
     </div>
 
-      <div v-if="($store.state.userEmail === petition.author.email)"
+      <div v-if="!(petition.submitted === 'true') && ($store.state.userEmail === petition.author.email)"
         class="actions">
         <button @click="deletePetition">
           🗑️ Delete
@@ -39,7 +43,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
+    <p class="info" v-if="$store.state.userObject !== null && !(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -63,6 +67,13 @@
     >
     {{ this.signatures }}
     </p>
+
+    <h3 v-if="roundTables.length">RoundTables</h3>
+    <p v-for="roundTable in roundTables">
+   
+      {{formatDate(roundTable.startDate)}}
+    </p>
+    
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -93,6 +104,7 @@ export default {
   async mounted() {
     await this.getPetition();
     await this.getSignatures();
+    await this.getRoundTables();
 
     for (const signature of this.signatures) {
       if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
@@ -105,6 +117,7 @@ export default {
       petition: null,
       signed: false,
       signatures: [],
+      roundTables: [],
       showingSignatures: false,
       schedulingRoundTable: false,
       alerts: {} // Displays success/error messages encountered during freet modification
@@ -131,6 +144,18 @@ export default {
       };
       this.request(params);
     },
+    formatDate(date) {
+
+      const months = ['JAN','FEB','MAR','April','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+      const dateSep = date.split('-');
+
+      const day = dateSep[2];
+      const month = dateSep[1];
+      const year = dateSep[0];
+
+      return months[parseInt(month)-1] + " " + day[0] +  day[1]  + ", " + year;
+      },
     signPetition() {
       /**
        * Updates freet to have the submitted draft content.
@@ -215,6 +240,32 @@ export default {
           }
           console.log(res.length);
           this.signatures = res;
+        } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+    },
+    async getRoundTables() {
+      /**
+       * Submits a request to the freet's endpoint
+       * @param params - Options for the request
+       * @param params.body - Body for the request, if it exists
+       * @param params.callback - Function to run if the the request succeeds
+       */
+        const options = {
+          method: 'GET',
+        };
+
+        try {
+        const neighborhood = this.$route.params.id === undefined? '638ce78e88e91521eb0338c0': this.$route.params.id;
+        const r = await fetch(`/api/roundtables?neighborhood=${neighborhood}&petition=${this.petition._id}`);
+        const res = await r.json();
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+          }
+          console.log(res.length);
+          this.roundTables = res;
         } catch (e) {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -321,6 +372,14 @@ export default {
     border-radius: 3px;
     margin: 3px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.accepted {
+  color: green;
+}
+
+.denied {
+  color: red;
 }
 
 .scheduleTab{

@@ -62,7 +62,6 @@ router.get(
     res.status(200).json(response);
   },
   [
-    roundTableValidator.isAuthorExists,
   ],
   async (req: Request, res: Response, next: NextFunction) => {
     if (req.query.petition !== undefined){

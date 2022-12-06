@@ -27,7 +27,7 @@
       {{ petition.content }}
     </p>
 
-      <div v-if="($store.state.userEmail === petition.author.email)"
+      <div v-if="!(petition.submitted === 'true') && ($store.state.userEmail === petition.author.email)"
         class="actions">
         <button @click="deletePetition">
           🗑️ Delete
@@ -41,7 +41,7 @@
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+    <p class="info" v-if="$store.state.userObject !== null && !(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -236,7 +236,6 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
@@ -258,7 +257,6 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
