@@ -48,33 +48,20 @@
         <PetitionsPage />
       </section>
       <section v-if="viewingTab === 'roundtable'">
-        <section
-          v-if="$store.state.neighborhoodRoundTables.length"
-        >
-          <RoundTableComponent
-            v-for="roundtable in $store.state.neighborhoodRoundTables"
-            :key="roundtable.id"
-            :roundtable="roundtable"
-          />
-        </section>
-        <article
-          v-else
-        >
-          <h3>No RoundTables found.</h3>
-        </article>
+        <RoundTablePage />
       </section>
     </section>
   </section>
 </template>
 
 <script>
-  import RoundTableComponent from '../roundtable/RoundTableComponent.vue';
+  import RoundTablePage from '../roundtable/RoundTablePage.vue';
   import ForumPage from '../Forum/ForumPage.vue';
   import PetitionsPage from '@/components/Petition/PetitionsPage.vue'; 
 
   export default {
     name: 'NeighborhoodPage',
-    components: {ForumPage, RoundTableComponent, PetitionsPage},
+    components: {ForumPage, PetitionsPage, RoundTablePage},
     props: {
 
     },
@@ -96,11 +83,11 @@
       this.fetchNeighborhood();
       if (this.$route.params.id === undefined ) {
         
-        console.log(this.$store.state.neighborhoodRoundTables);
+        // console.log(this.$store.state.neighborhoodRoundTables);
         this.$store.commit('updateRoundTableFilter', this.cityId);
-        console.log('here', this.$store.state.neighborhoodRoundTableFilter );
+        // console.log('here', this.$store.state.neighborhoodRoundTableFilter );
         this.$store.commit('refreshNeighborhoodRoundTables', this.cityId);
-        console.log(this.$store.state.neighborhoodRoundTables)
+        // console.log(this.$store.state.neighborhoodRoundTables)
       } else {
         this.$store.commit('updateRoundTableFilter', this.$route.params.id);
         this.$store.commit('refreshNeighborhoodRoundTables', this.$route.params.id );
