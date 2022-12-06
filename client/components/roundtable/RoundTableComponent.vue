@@ -26,7 +26,11 @@
       class="petition"
     >
       Roundtable on "{{ roundtable.petitionId.title }}" petition
-      <!-- POTENTIALLY ADD A CLICK HERE SO THAT IF SOMEONE CLICKS PETITION THEY CAN SEE DETAILS PAGE-->
+       <router-link
+        class="expand"
+        :to="`/petition/${roundtable.petitionId._id}`">
+            Open Petition
+      </router-link>
     </p>
     <p class="start">
       Starts at {{ roundtable.startDate }}
