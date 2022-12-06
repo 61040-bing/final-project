@@ -1,5 +1,8 @@
 <template>
-    
+  <section
+    class="buffer"
+    v-if="$store.state.userNeighborhood"
+  >   
     <section class="content"
           v-if="$store.state.neighborhoodRoundTables.length"
         >
@@ -14,7 +17,10 @@
     >
         <h3>No RoundTables found.</h3>
     </article>
-   
+  </section>
+  <section v-else>
+    Login to View!
+  </section>  
 </template>
 
 <script>
