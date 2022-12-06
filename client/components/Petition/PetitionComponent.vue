@@ -8,6 +8,10 @@
     <header class="freetHeader">
       <div class="mainInfo">
 
+      <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+
+      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+
       <p class="title">
         {{( petition.title)}}
       </p>
@@ -37,7 +41,7 @@
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
+    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -282,6 +286,14 @@ export default {
 
 .author {
   font-size: medium;
+}
+
+.accepted {
+  color: green;
+}
+
+.denied {
+  color: red;
 }
 
 .scheduleTab{
