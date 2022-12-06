@@ -7,7 +7,7 @@
   >
     <header>
       <h3 class="author">
-        @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
+        Created by @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
       </h3>
       <div
         v-if="$store.state.userObject._id === roundtable.authorId._id"
@@ -27,13 +27,14 @@
     >
       Roundtable on "{{ roundtable.petitionId.title }}" petition
     </p>
-      <p>
-        <router-link
-          class="expand"
-          :to="`/petition/${roundtable.petitionId._id}`">
-              Open Petition
-        </router-link>
-      </p>
+    <p>
+      <router-link
+        class="expand"
+        :to="`/petition/${roundtable.petitionId._id}`"
+      >
+        Open Petition
+      </router-link>
+    </p>
     <p class="start">
       Starts at {{ roundtable.startDate }}
     </p>
@@ -41,7 +42,7 @@
       Ends at {{ roundtable.endDate }}
     </p>
     <p class="meetingLink">
-      Meeting Link: {{ roundtable.zoomLink }}
+      Meeting Link: <a :href="meetingLink"> {{ roundtable.zoomLink }}</a>
     </p>
     <section class="alerts">
       <article
@@ -60,6 +61,9 @@
 
 export default {
   name: 'RoundTableComponent',
+  components:{
+   
+  },
   props: {
     // Data from the stored RoundTable
     roundtable: {
@@ -67,16 +71,18 @@ export default {
       required: true
     }
   },
-  components:{
-   
-  },
-  mounted() {
-    console.log(this.roundtable);
-  },
   data() {
     return {
       alerts: {} // Displays success/error messages encountered during roundtable modification
     };
+  },
+  computed : {
+    meetingLink() {
+      return this.roundtable.zoomLink.includes("//") ? this.roundtable.zoomLink : '//'+this.roundtable.zoomLink;
+    }
+  },
+  mounted() {
+    console.log(this.roundtable);
   },
   methods: {
     deleteRoundTable() {
