@@ -135,6 +135,39 @@ export default {
       };
       if (this.hasBody) {
 
+        // let req_fields = [];
+        // if (this.setDate) {
+
+        //   let startDate;
+        //   let startTime;
+        //   let endDate;
+        //   let endTime;
+
+        //   for (const field of this.fields) {
+        //     if (field.id === 'startDate') {
+        //       startDate = field;
+        //     } else if (field.id === 'endDate') {
+        //       endDate = field;
+        //     } else if (field.id === 'startTime') { 
+        //       startTime = field;
+        //     } else if (field.id === 'endTime') {
+        //       endTime = field;             
+        //     } else {
+        //       req_fields.push(field);
+        //     }
+        //   }
+
+        //   const finalStartDate = startDate.value + "T" + startTime.value + ":00Z";
+        //   req_fields.push({id: 'startDate', value: finalStartDate });
+
+        //   const finalEndDate = endDate.value + "T" + endTime.value + ":00Z";
+        //   req_fields.push({id: 'endDate', finalEndDate });
+
+        //   console.log(finalEndDate);
+        // } 
+        // else {
+        // }
+
         const req_fields = [...this.fields];
 
         if (this.neighborhoodId) {
@@ -158,6 +191,8 @@ export default {
             return [id, value];
           })
         ));
+
+        console.log(options.body);
       }
 
       try {

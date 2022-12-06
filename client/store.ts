@@ -129,7 +129,7 @@ const store = new Vuex.Store({
     },
     async refreshPetitions(state, neighborhood) {
       /**
-       * Request the server for the currently available freets.
+       * Request the server for the currently available petitions.
        */
       const url = neighborhood ? `/api/petitions?neighborhood=${neighborhood}` : '/api/petitions';
       const res = await fetch(url).then(async r => r.json());

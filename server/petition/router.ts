@@ -105,7 +105,6 @@ router.post(
     petitionValidator.isPetitionExists,
   ],
   async (req: Request, res: Response) => {
-    console.log(req.body.accept);
     await PetitionCollection.acceptOrDenyOne(req.params.petitionId, req.body.accept, req.body.deny);
     res.status(200).json({
       message: 'Your petition was updated successfully.',

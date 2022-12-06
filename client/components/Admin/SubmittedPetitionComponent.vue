@@ -28,7 +28,6 @@
 
       <button @click="denyPetition">
         ❌ Deny
-
       </button>
 
       <button @click="acceptPetition">
@@ -99,7 +98,7 @@ export default {
           setTimeout(() => this.$delete(this.alerts, params.message), 3000);
         }
       };
-      this.signRequest(params);
+      this.request(params);
     },
     async request(params) {
       /**
@@ -121,7 +120,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-        //this.$store.commit('refreshPetitions');
+        this.$store.commit('refreshPetitions');
         //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();

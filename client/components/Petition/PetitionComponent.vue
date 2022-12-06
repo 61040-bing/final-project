@@ -37,7 +37,7 @@
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
+    <p class="info" v-if="petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -46,7 +46,9 @@
       <button v-else @click="signPetition">
           ❤️ Sign
       </button>
+    </p>
 
+    <p>
       {{signatures.length}} signatures
     </p>
     <section class="alerts">
@@ -106,6 +108,7 @@ export default {
   methods: {
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
+      console.log(this.petition.neighborhoodId);
     },
     deletePetition() {
       /**
@@ -176,7 +179,7 @@ export default {
         }
 
         this.editing = false;
-        this.$store.commit('refreshPetitions',this.$route.params.id);
+        this.$store.commit('refreshPetitions', this.$route.params.id);
         //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();
