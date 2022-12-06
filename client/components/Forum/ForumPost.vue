@@ -79,7 +79,7 @@
       {{ response.content }}
     </section>
     <section v-if="forum.petitionId">
-      <router-link to="/">
+      <router-link :to="petitionPath">
         Linked Petition
       </router-link> 
     </section>
@@ -109,6 +109,7 @@
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
         path: `/forum/${this.forum._id}`,
+        petitionPath: this.forum.petitionId ? `/petition/${this.forum.petitionId}`  : "",
         response: null
       };
     },

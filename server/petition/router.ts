@@ -85,6 +85,33 @@ router.post(
   }
 );
 
+
+/**
+ * Modify a petition
+ *
+ * @name PUT /api/petitions/:petitionId
+ *
+ * @param {string} content - the new content for the comment
+ * @return {CommentResponse} - the updated comment
+ * @throws {403} - if the user is not logged in or not the author of
+ *                 of the comment
+ * @throws {404} - If the commentId is not valid
+ * @throws {400} - If the comment content is empty or a stream of empty spaces
+ */
+ router.put(
+  '/:petitionId?',
+  [
+    userValidator.isUserLoggedIn,
+    petitionValidator.isPetitionExists,
+  ],
+  async (req: Request, res: Response) => {
+    await PetitionCollection.acceptOrDenyOne(req.params.petitionId, req.body.accept, req.body.deny);
+    res.status(200).json({
+      message: 'Your petition was updated successfully.',
+    });
+  }
+);
+
 /**
  * Delete a petition
  *

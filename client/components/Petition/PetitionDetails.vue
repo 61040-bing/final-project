@@ -2,15 +2,11 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
-  <article
+  <article v-if="(petition !== null)"
     class="freet"
   >
-    <header class="freetHeader">
+  <header class="freetHeader">
       <div class="mainInfo">
-
-      <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
-
-      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
       <p class="title">
         {{( petition.title)}}
@@ -20,12 +16,6 @@
         Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
       </p>
     </div>
-  </header>
-    <p
-      class="content"
-    >
-      {{ petition.content }}
-    </p>
 
       <div v-if="($store.state.userEmail === petition.author.email)"
         class="actions">
@@ -33,15 +23,23 @@
           🗑️ Delete
         </button>
 
-        <button @click="toggleScheduling">
+        <!-- <button @click="toggleScheduling">
           Schedule RoundTable
-        </button>
+        </button> -->
 
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+    </header>
+
+    <p
+      class="content"
+    >
+      {{ petition.content }}
+    </p>
+
+    <p class="info" v-if="petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -52,8 +50,18 @@
       </button>
     </p>
 
-    <p>
-      {{signatures.length}} signatures
+    <button @click="toggleSignatures" v-if="!showingSignatures">
+          Show Signatures: {{signatures.length}} 
+      </button>
+      <button @click="toggleSignatures" v-if="showingSignatures">
+          Hide Signatures
+      </button>
+
+    <p
+      v-if="showingSignatures"
+      class="signatures"
+    > 
+    {{ this.signatures }}
     </p>
     <section class="alerts">
       <article
@@ -65,12 +73,6 @@
       </article>
     </section>
 
-  <router-link
-    class="expand"
-    :to="`/petition/${petition._id}`">
-    Open Petition
-  </router-link>
-
   </article>
 </template>
 
@@ -81,20 +83,11 @@ import ScheduleRoundTableForm from '@/components/Petition/ScheduleRoundTableForm
 export default {
   name: 'PetitionComponent',
   components: {ScheduleRoundTableForm},
-  props: {
-    // Data from the stored freet
-    petition: {
-      type: Object,
-      required: true
-    }
-  },
   async mounted() {
+    await this.getPetition();
     await this.getSignatures();
 
-    this.neighborhood = this.$route.params.id;
-
     for (const signature of this.signatures) {
-      console.log(signature.authorId.toString());
       if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
         this.signed = true;
       }
@@ -102,9 +95,10 @@ export default {
   },
   data() {
     return {
+      petition: null,
       signed: false,
       signatures: [],
-      neighborhood: null,
+      showingSignatures: false,
       schedulingRoundTable: false,
       alerts: {} // Displays success/error messages encountered during freet modification
     };
@@ -112,7 +106,9 @@ export default {
   methods: {
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
-      console.log(this.petition.neighborhoodId);
+    },
+    toggleSignatures() {
+      this.showingSignatures = !this.showingSignatures;
     },
     deletePetition() {
       /**
@@ -183,7 +179,7 @@ export default {
         }
 
         this.editing = false;
-        this.$store.commit('refreshPetitions', this.$route.params.id);
+        this.$store.commit('refreshPetitions',this.petition.neighborhoodId._id);
         //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();
@@ -217,6 +213,35 @@ export default {
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
     },
+    async getPetition() {
+      /**
+       * Submits a request to the freet's endpoint
+       * @param params - Options for the request
+       * @param params.body - Body for the request, if it exists
+       * @param params.callback - Function to run if the the request succeeds
+       */
+        const options = {
+          method: 'GET',
+        };
+
+        try {
+        const r = await fetch(`/api/petitions`);
+        const res = await r.json();
+        if (!r.ok) {
+          const res = await r.json();
+          throw new Error(res.error);
+          }
+          for (const petition of res) {
+            if (petition._id.toString() === this.$route.params.petitionId.toString()) {
+              this.petition = petition;
+              break
+            }
+          }
+        } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+    },
     async signRequest(params) {
       /**
        * Submits a request to the freet's endpoint
@@ -236,7 +261,7 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
+          this.$store.commit('refreshPetitions',this.petition.neighborhoodId._id);
           await this.getSignatures();
 
           params.callback();
@@ -258,7 +283,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions',this.$route.params.id);
+          this.$store.commit('refreshPetitions',this.petition.neighborhoodId._id);
           await this.getSignatures();
 
           params.callback();
@@ -282,18 +307,6 @@ export default {
     border-radius: 3px;
     margin: 3px;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-.author {
-  font-size: medium;
-}
-
-.accepted {
-  color: green;
-}
-
-.denied {
-  color: red;
 }
 
 .scheduleTab{

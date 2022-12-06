@@ -39,6 +39,8 @@ class SignatureCollection {
     if (signatuesOnPetitition.length === petition.targetSignatures){
       petition.submitted = true;
     }
+    await petition.save();
+    return petition.submitted;
   }
 
   /**

@@ -11,6 +11,7 @@ import moment from 'moment';
  */
 const isRoundTableExists = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.roundTableId);
+  // console.log("roundtable exists")
   const roundTable = validFormat ? await RoundTableCollection.findOne(req.params.roundTableId) : '';
   if (!roundTable) {
     res.status(404).json({
@@ -55,10 +56,10 @@ const isValidPetitionId = async (req: Request, res: Response, next: NextFunction
 };
 
 /**
- * Checks if the current user is the author of the roundtable whose petitionId is in req.params
+ * Checks if the current user is the author of the roundtable whose roundTableId is in req.params
  */
 const isValidRoundTableModifier = async (req: Request, res: Response, next: NextFunction) => {
-  const roundTable = await RoundTableCollection.findOne(req.params.petitionId)
+  const roundTable = await RoundTableCollection.findOne(req.params.roundTableId)
   const userId = roundTable.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
@@ -149,6 +150,7 @@ const isValidRoundTableModifier = async (req: Request, res: Response, next: Next
 */
 const isValidStartEndDates = async (req: Request, res: Response, next: NextFunction) => {
 
+  console.log(req.body.endDate);
   
   if (!req.body.startDate){
    res.status(400).json({

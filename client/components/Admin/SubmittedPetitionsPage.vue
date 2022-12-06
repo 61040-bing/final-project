@@ -14,11 +14,30 @@
       <section
         v-if="$store.state.petitions.length"
       >
-        <SubmittedPetitionComponent
-         v-for="petition in $store.state.petitions" v-if="petition.submitted"
-          :key="petition.id"
-          :petition="petition"
-        />
+      <div>
+        <h2>Pending Petitions</h2>
+          <SubmittedPetitionComponent
+          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true' && !(petition.accepted === 'true') && !(petition.denied === 'true'))"
+            :key="petition.id"
+            :petition="petition"
+          />
+      </div>
+      <div>
+        <h2>Accepted Petitions</h2>
+          <SubmittedPetitionComponent
+          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true' && petition.accepted === 'true')"
+            :key="petition.id"
+            :petition="petition"
+          />
+      </div>
+      <div>
+        <h2>Denied Petitions</h2>
+          <SubmittedPetitionComponent
+          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true' && petition.denied === 'true')"
+            :key="petition.id"
+            :petition="petition"
+          />
+      </div>
       </section>
       <article
         v-else

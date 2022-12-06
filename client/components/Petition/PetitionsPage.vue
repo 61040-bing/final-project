@@ -31,8 +31,16 @@
       <section
         v-if="$store.state.petitions.length"
       >
+      <h2>Active Petitions</h2>
         <PetitionComponent
-          v-for="petition in $store.state.petitions"
+          v-for="petition in $store.state.petitions" v-if="!(petition.submitted === 'true')"
+          :key="petition.id"
+          :petition="petition"
+        />
+
+        <h2>Submitted Petitions</h2>
+        <PetitionComponent
+          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true')"
           :key="petition.id"
           :petition="petition"
         />
