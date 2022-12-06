@@ -2,7 +2,7 @@
 
 <template>
   <main>
-    <div v-if="$store.state.userEmail && ($route.params.id === $store.state.userNeighborhood._id || $route.params.id === undefined)" class="freetButton">
+    <div v-if="$store.state.userObject && ($route.params.id === $store.state.userObject.neighborhood._id || $route.params.id === undefined)" class="freetButton">
     <button class="freetPost" @click="posting = true"> Create a New Petition </button>
   </div>
 

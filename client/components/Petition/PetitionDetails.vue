@@ -17,7 +17,7 @@
       </p>
     </div>
 
-      <div v-if="($store.state.userEmail === petition.author.email)"
+      <div v-if="($store.state.userObject.email === petition.author.email)"
         class="actions">
         <button @click="deletePetition">
           🗑️ Delete
@@ -180,7 +180,6 @@ export default {
 
         this.editing = false;
         this.$store.commit('refreshPetitions',this.petition.neighborhoodId._id);
-        //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();
       } catch (e) {

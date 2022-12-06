@@ -34,14 +34,14 @@
         </div>
       </div>
       <div 
-        v-if="$store.state.userEmail"
+        v-if="$store.state.userObject !== null && $store.state.userObject.email"
         class="nav-item"
-        @click="navigateTo('/neighborhood/'+$store.state.userNeighborhood._id)"
+        @click="navigateTo('/neighborhood/'+$store.state.userObject.neighborhood._id)"
       >
         My Neighborhood
       </div>
       <router-link
-        v-if="$store.state.userEmail"
+        v-if="$store.state.userObject !== null && $store.state.userObject.email"
         to="/profile"
       >
         Profile
@@ -65,7 +65,7 @@
   </nav>
   <nav v-else>
     <div
-      v-if="$store.state.userEmail === 'admin@admin.com'"
+      v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
       class="left"
     >
       <h1 class="title">
@@ -73,7 +73,7 @@
       </h1>
     </div>
     <div
-      v-if="$store.state.userEmail === 'admin@admin.com'"
+      v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
       class="right"
     >
       <div class="nav-item">

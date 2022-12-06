@@ -12,10 +12,12 @@ export default {
       method: 'DELETE',
       setEmail: true,
       setNeighborhood: true,
+      setUser: true,
       title: 'Sign out',
       fields: [],
       content: 'Taking a break? See you later.',
       callback: () => {
+        console.log("Callback");
         this.$router.push({name: 'Home'}); // Goes to Home page after signing out
         this.$store.commit('alert', {
           message: 'You are now signed out!', status: 'success'

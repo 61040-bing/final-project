@@ -1,7 +1,7 @@
 <!-- Default page that also displays freets -->
 
 <template>
-  <section v-if="$store.state.userEmail === 'admin@admin.com'">
+  <section v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'">
     <section>
       <header>
         <div class="left">

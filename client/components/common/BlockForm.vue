@@ -128,6 +128,7 @@ export default {
       /**
         * Submits a form with the specified options from data().
         */
+       console.log("SUBMITTING");
       const options = {
         method: this.method,
         headers: {'Content-Type': 'application/json'},
@@ -135,48 +136,13 @@ export default {
       };
       if (this.hasBody) {
 
-        // let req_fields = [];
-        // if (this.setDate) {
-
-        //   let startDate;
-        //   let startTime;
-        //   let endDate;
-        //   let endTime;
-
-        //   for (const field of this.fields) {
-        //     if (field.id === 'startDate') {
-        //       startDate = field;
-        //     } else if (field.id === 'endDate') {
-        //       endDate = field;
-        //     } else if (field.id === 'startTime') { 
-        //       startTime = field;
-        //     } else if (field.id === 'endTime') {
-        //       endTime = field;             
-        //     } else {
-        //       req_fields.push(field);
-        //     }
-        //   }
-
-        //   const finalStartDate = startDate.value + "T" + startTime.value + ":00Z";
-        //   req_fields.push({id: 'startDate', value: finalStartDate });
-
-        //   const finalEndDate = endDate.value + "T" + endTime.value + ":00Z";
-        //   req_fields.push({id: 'endDate', finalEndDate });
-
-        //   console.log(finalEndDate);
-        // } 
-        // else {
-        // }
-
         const req_fields = [...this.fields];
 
         if (this.neighborhoodId) {
-          console.log(this.neighborhoodId);
           req_fields.push({id: 'neighborhoodId', value: this.neighborhoodId });
         }
 
         if (this.petitionId) {
-          console.log(this.petitionId);
           req_fields.push({id: 'petitionId', value: this.petitionId });
         }
 
@@ -194,29 +160,33 @@ export default {
 
         console.log(options.body);
       }
-
+      console.log("123");
       try {
-
         const r = await fetch(this.url, options);
+        console.log("Look Gianna", this.setUser);
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
           const res = await r.json();
+          console.log("error"+res.error)
           throw new Error(res.error);
         }
 
         const text = await r.text();
         console.log(text);
+        
+        if (this.setUser){
+          const res = text ? JSON.parse(text) : {user: null};
+          this.$store.commit('setUserObject', res.user ? res.user : null);
+        }
 
         if (this.setEmail) {
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setEmail', res.user ? res.user.email : null);
-          console.log(this.$store.state.userEmail);
         }
 
         if (this.setNeighborhood) {
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setNeighborhood', res.user ? res.user.neighborhood : null);
-          console.log(this.$store.state.userNeighborhood);
         }
 
         if (this.refreshComments) {
@@ -231,11 +201,7 @@ export default {
         if (this.callback) {
           this.callback();
         }
-        if (this.setUser){
-          const res = text ? JSON.parse(text) : {user: null};
-          this.$store.commit('setUserObject', res.user ? res.user : null);
-          console.log("setting user: ", this.$store.state.userObject);
-        }
+        
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);

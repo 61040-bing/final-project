@@ -37,7 +37,7 @@ const router = new VueRouter({routes});
 router.beforeEach((to, from, next) => {
   if (router.app.$store) {
 
-    if (to.name === 'Profile' && !router.app.$store.state.userEmail) {
+    if (to.name === 'Profile' && !router.app.$store.state.userObject) {
       next({name: 'Login'}); // Go to Login page if user navigates to Profile and are not signed in
       return;
     }

@@ -42,7 +42,7 @@
       <section
         v-if="viewingTab === 'forum'"
       >
-        <ForumPage />
+        <ForumPage :key="$route.name" />
       </section>
       <section v-if="viewingTab === 'petition'">
         <PetitionsPage />

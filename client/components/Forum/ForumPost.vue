@@ -129,7 +129,7 @@
         return Date();
       },
       liked() {
-        return this.forum.likes.includes(this.$store.state.userEmail);
+        return this.forum.likes.includes(this.$store.state.userObject.email);
      },
      likes() {
       return this.forum.likes.length;

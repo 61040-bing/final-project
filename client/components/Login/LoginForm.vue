@@ -20,7 +20,7 @@ export default {
       ],
       title: 'Sign in',
       callback: () => {
-        if( this.$store.state.userEmail === 'admin@admin.com'){
+        if( this.$store.state.userObject.email === 'admin@admin.com'){
           this.$router.push('/admin');
         } else {
           this.$router.push({name: 'Home'});

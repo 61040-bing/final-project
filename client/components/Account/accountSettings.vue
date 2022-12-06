@@ -99,7 +99,7 @@ export default {
         throw new Error(res.error);
       }
       this.$router.push({name: 'Home'}); // Goes to Home page after signing out
-      this.$store.commit('setEmail', null)
+      this.$store.commit('setUserObject', null)
       this.$store.commit('alert', {
         message: 'You are now signed out!', status: 'success'
       });

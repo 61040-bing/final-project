@@ -1,10 +1,10 @@
 <template>
   <section
+    v-if="$store.state.userObject"
     class="buffer"
-    v-if="$store.state.userNeighborhood"
   >
     <CreateForumForm 
-      v-if="$store.state.userNeighborhood._id === $route.params.id || ($route.params.id === undefined && $store.state.userEmail !== undefined)"
+      v-if="$store.state.userObject.neighborhood._id === $route.params.id || ($route.params.id === undefined && $store.state.userObject.email !== undefined)"
     />
     <section>
       <header class="left">

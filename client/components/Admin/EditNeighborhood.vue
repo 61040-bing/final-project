@@ -1,5 +1,5 @@
 <template>
-  <section v-if="$store.state.userEmail === 'admin@admin.com'">
+  <section v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'">
     <div
       v-if="clicked"
       class="add"

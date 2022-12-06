@@ -1,5 +1,8 @@
 <template>
-  <div class="ha"  v-if="$store.state.userNeighborhood">
+  <div
+    v-if="$store.state.userObject"
+    class="ha"
+  >
     <article
       v-if="forumPost"
       class="freet"
@@ -27,7 +30,7 @@
       </section>
       <section class="comment">
         <CreateForumCommentForm 
-          v-if="(($store.state.userNeighborhood._id === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userEmail !== undefined)))"
+          v-if="(($store.state.userObject.neighborhood._id === forumPost.neighborhood || (forumPost.neighborhood === '638ce78e88e91521eb0338c0' && $store.state.userObject.email !== undefined)))"
           :key="forumPost.id"
         />
       </section>

@@ -121,7 +121,6 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('refreshPetitions');
-        //this.$store.commit('refreshPetitions', this.$store.state.username);
 
         params.callback();
       } catch (e) {
