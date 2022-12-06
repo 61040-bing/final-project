@@ -7,7 +7,7 @@
   >
     <header>
       <h3 class="author">
-        @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
+        Created by @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
       </h3>
       <div
         v-if="$store.state.userObject._id === roundtable.authorId._id"
