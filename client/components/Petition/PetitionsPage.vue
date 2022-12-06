@@ -6,7 +6,7 @@
     <button class="freetPost" @click="posting = true"> Create a New Petition </button>
   </div>
 
-  <main class="page">
+  <main class="page" v-if="$store.state.userNeighborhood">
       <div class="modal-backdrop" v-if="posting">
         <div class="entire">
           
@@ -51,6 +51,9 @@
         <h3>No petitions found.</h3>
       </article>
     </section>
+  </main>
+  <main v-else>
+    Login to View!
   </main>
 </main>
 </template>
