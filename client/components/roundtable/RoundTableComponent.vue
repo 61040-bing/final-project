@@ -7,10 +7,10 @@
   >
     <header>
       <h3 class="author">
-        @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
+        Created by @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
       </h3>
       <div
-        v-if="$store.state. userObject === roundtable.authorId"
+        v-if="$store.state.userObject._id === roundtable.authorId._id"
         class="actions"
       >
         <button @click="deleteRoundTable">
@@ -26,12 +26,14 @@
       class="petition"
     >
       Roundtable on "{{ roundtable.petitionId.title }}" petition
-       <router-link
-        class="expand"
-        :to="`/petition/${roundtable.petitionId._id}`">
-            Open Petition
-      </router-link>
     </p>
+      <p>
+        <router-link
+          class="expand"
+          :to="`/petition/${roundtable.petitionId._id}`">
+              Open Petition
+        </router-link>
+      </p>
     <p class="start">
       Starts at {{ roundtable.startDate }}
     </p>
@@ -111,6 +113,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
+        this.$store.commit('updateRoundTableFilter', this.roundtable.neighborhoodId);
         this.$store.commit('refreshNeighborhoodRoundTables', this.$store.state.neighborhoodRoundTableFilter);
 
         params.callback();
