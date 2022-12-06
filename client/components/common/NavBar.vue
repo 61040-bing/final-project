@@ -18,8 +18,9 @@
         class="nav-item" 
         tabindex="0"
         @blur="hideMenu"
+        @click="toggleMenu"
       >
-        <span @click="toggleMenu">Neighborhoods</span>
+        <span >Neighborhoods</span>
 
         <div :class="['dropdown', displayNeighborhoodMenu ? 'toggle': '']">
           <ul>
