@@ -134,6 +134,7 @@ export default {
       neighborhoodImgs: [],
       setEmail: true,
       setNeighborhood: true,
+      setUser: true,
       selected: undefined,
       fields: [
         {id: 'firstName', label: 'First Name', value: ''},
