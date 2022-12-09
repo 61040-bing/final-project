@@ -16,6 +16,40 @@
         <AccountSettings/>
       <section>
       </section>
+
+      <section>
+      <header>
+        <div class="left">
+        </div>
+        <div class="right">
+          <GetPetitionsForm
+            ref="getPetitionsForm"/>
+        </div>
+      </header>
+      <section
+        v-if="$store.state.petitions.length"
+      >
+      <h2>Your Active Petitions</h2>
+        <PetitionComponent
+          v-for="petition in $store.state.petitions" v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+          :key="petition.id"
+          :petition="petition"
+        />
+
+        <h2>Your Submitted Petitions</h2>
+        <PetitionComponent
+          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+          :key="petition.id"
+          :petition="petition"
+        />
+      </section>
+      <article
+        v-else
+      >
+        <h3>No petitions found.</h3>
+      </article>
+    </section>
+
     </main>
   </template>
 
@@ -23,15 +57,21 @@
   import LogoutForm from '@/components/Account/LogoutForm.vue';
   import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
   import AccountSettings from "./accountSettings";
+  import GetPetitionsForm from '@/components/Petition/GetPetitionsForm.vue';
+  import PetitionComponent from '@/components/Petition/PetitionComponent.vue';
 
   export default {
     name: 'ProfilePage',
     components: {
       AccountSettings,
       LogoutForm,
-      DeleteAccountForm
+      DeleteAccountForm,
+      GetPetitionsForm,
+      PetitionComponent
     },
-
+    mounted() {
+      this.$refs.getPetitionsForm.submit();
+    },
     methods : {
     },
   };
