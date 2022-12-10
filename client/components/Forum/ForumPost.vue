@@ -85,7 +85,9 @@
              :width="400"
              :height="400"
              :adaptive="true">
+        <p class = "x-icon" @click="hideModal">X </p>
         <PetitionComponent :petitionId="forum.petitionId"/>
+
       </modal>
     </section>
     <section class="alerts">
@@ -149,6 +151,9 @@
 
       showModal(){
         this.$modal.show('forumModal' + this._uid);
+      },
+      hideModal(){
+        this.$modal.hide('forumModal' + this._uid);
       },
       async fetchResponse(){
         if (this.forum.parentId){
@@ -270,6 +275,12 @@
 
   }
   .linkedPetitionButton:hover{
+    cursor: pointer;
+  }
+  .x-icon{
+    font-weight: bold; text-align: right; margin-top: 24px; margin-right: 24px; font-size: 24px;
+  }
+  .x-icon:hover{
     cursor: pointer;
   }
   </style>

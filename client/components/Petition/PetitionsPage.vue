@@ -3,22 +3,24 @@
 <template>
   <main>
     <div v-if="$store.state.userObject && ($route.params.id === $store.state.userObject.neighborhood._id || $route.params.id === undefined)" class="freetButton">
-    <button class="freetPost" @click="posting = true"> Create a New Petition </button>
+    <button class="freetPost" @click="showModal"> Create a New Petition </button>
   </div>
 
   <main class="page" v-if="$store.state.userNeighborhood">
-      <div class="modal-backdrop" v-if="posting">
-        <div class="entire">
-          
-          <button class="close" @click="posting = false">X</button>
-          <div class="mainActions">
-            
-            <h3>Create A Petition</h3>
-          </div>
-          <CreatePetitionForm/>
+    <modal :name="'cpModal' + this._uid"
+           :width="400"
+           :height="400"
+           :adaptive="true">
+      <p class = "x-icon" @click="hideModal">X </p>
+        <div class="mainActions">
+
+          <h3>Create A Petition</h3>
         </div>
-      </div>
-      
+        <CreatePetitionForm/>
+
+
+    </modal>
+
     <section>
       <header>
         <div class="left">
@@ -69,6 +71,17 @@ export default {
   mounted() {
     this.$refs.getPetitionsForm.submit();
   },
+  methods: {
+    showModal(){
+      this.$modal.show('cpModal' + this._uid);
+    },
+    hideModal(){
+      this.$modal.hide('cpModal' + this._uid);
+    },
+
+
+  },
+
   data() {
     return {
       posting: false,
@@ -81,5 +94,11 @@ export default {
 section {
   display: flex;
   flex-direction: column;
+}
+.x-icon{
+  font-weight: bold; text-align: right; margin-top: 24px; margin-right: 24px; font-size: 24px;
+}
+.x-icon:hover{
+  cursor: pointer;
 }
 </style>

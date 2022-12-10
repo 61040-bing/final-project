@@ -31,9 +31,10 @@
 
       <div @click="showModal" class="linkedPetitionButton"> Open Petition</div>
       <modal :name="'rtModal' + this._uid"
-             :width="400"
-             :height="400"
+             :width="500"
+             :height="600"
              :adaptive="true">
+        <p class = "x-icon" @click="hideModal">X </p>
         <PetitionComponent :petitionId="roundtable.petitionId._id"/>
       </modal>
 
@@ -91,6 +92,9 @@ export default {
 
     showModal(){
       this.$modal.show("rtModal" + this._uid);
+    },
+    hideModal(){
+      this.$modal.hide("rtModal" + this._uid);
     },
 
     deleteRoundTable() {
@@ -157,6 +161,12 @@ export default {
 
 }
 .linkedPetitionButton:hover{
+  cursor: pointer;
+}
+.x-icon{
+  font-weight: bold; text-align: right; margin-top: 24px; margin-right: 24px; font-size: 24px;
+}
+.x-icon:hover{
   cursor: pointer;
 }
 </style>
