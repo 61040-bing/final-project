@@ -81,7 +81,7 @@
     <section v-if="forum.petitionId">
 
       <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
-      <modal name="petitionModal"
+      <modal :name="'forumModal' + this._uid"
              :width="400"
              :height="400"
              :adaptive="true">
@@ -115,7 +115,7 @@
     data() {
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
-        
+
         response: null
       };
     },
@@ -148,7 +148,7 @@
     methods: {
 
       showModal(){
-        this.$modal.show('petitionModal');
+        this.$modal.show('forumModal' + this._uid);
       },
       async fetchResponse(){
         if (this.forum.parentId){

@@ -30,7 +30,7 @@
 
 
       <div @click="showModal" class="linkedPetitionButton"> Open Petition</div>
-      <modal name="petitionModal"
+      <modal :name="'rtModal' + this._uid"
              :width="400"
              :height="400"
              :adaptive="true">
@@ -90,7 +90,7 @@ export default {
   methods: {
 
     showModal(){
-      this.$modal.show('petitionModal');
+      this.$modal.show("rtModal" + this._uid);
     },
 
     deleteRoundTable() {
