@@ -63,9 +63,10 @@
 
     <p
       v-if="showingSignatures"
+      v-for="signature in this.signatures"
       class="signatures"
     >
-    {{ this.signatures }}
+      {{ signature.authorId.firstName + " " +  signature.authorId.lastName }}
     </p>
 
     <h3 v-if="roundTables.length">RoundTables</h3>
@@ -239,6 +240,7 @@ export default {
           }
           console.log(res.length);
           this.signatures = res;
+          console.log(this.signatures);
         } catch (e) {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);

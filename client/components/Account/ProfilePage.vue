@@ -70,7 +70,6 @@
       <section v-if="viewingTab === 'posts'">
         Posts
       </section>
-      </section>
     </article>
     
     <section class="alerts">
