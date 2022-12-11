@@ -3,9 +3,17 @@
     class="freet"
   >
     <section class="container">
-      <div class="author-name">
+      <div class="row">
+        <div class="author-name">
         {{ forum.author.firstName + " " + forum.author.lastName }}
       </div>
+        <font-awesome-icon 
+        v-if="$store.state.userObject._id === forum.author._id"
+        icon="fa-solid fa-trash"
+        @click="deletePost"
+      />
+      </div>
+      
       <div class="date">
         Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
       </div>
@@ -23,7 +31,10 @@
         {{ forum.content }}
       </div>
     </router-link>
-    <div v-else class="content">
+    <div
+      v-else
+      class="content"
+    >
       {{ forum.content }}
     </div>
 
@@ -38,6 +49,7 @@
           size="lg"
         /> View replies
       </router-link>
+      
 
       <section v-if="forum.petitionId">
         <div
@@ -90,6 +102,7 @@
         {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
       </div>
     </section>
+    
 
     <section
       v-if="response"
@@ -166,7 +179,25 @@
       this.fetchResponse();
     },
     methods: {
+      async deletePost(){
+        try {
+          const r = await fetch(`/api/forum/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch(e){
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
 
+        if (this.$route.name === 'Forum Post'){
+          this.$router.back()
+        } else {
+          this.$store.commit('refreshForumPosts', this.forum.neighborhood);
+        }
+        
+      },
       showModal(){
         this.$modal.show('forumModal' + this._uid);
       },
@@ -278,5 +309,12 @@
   }
   .x-icon:hover{
     cursor: pointer;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
   }
   </style>
