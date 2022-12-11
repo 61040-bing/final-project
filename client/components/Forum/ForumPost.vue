@@ -5,7 +5,6 @@
     <section class="container">
       <div class="row">
         <div class="author-name">
-
           {{ forum.author.firstName + " " + forum.author.lastName }}
         </div>
         <font-awesome-icon
@@ -38,7 +37,6 @@
     >
       {{ forum.content }}
     </div>
-
     <section style="display: flex; flex-direction: row; justify-content: space-between;">
       <router-link
         v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
@@ -50,24 +48,29 @@
           size="lg"
         /> View replies
       </router-link>
-
-
       <section v-if="forum.petitionId">
-        <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
-        <modal :name="'forumModal' + this._uid"
-               :width="400"
-               :height="400"
-               :adaptive="true">
-          <p class = "x-icon" @click="hideModal">
-            <font-awesome-icon icon="fa-solid fa-x" />
-          </p>
-          <PetitionComponent :petitionId="forum.petitionId"/>
-
-
-        </modal>
-      </section>
-
-
+      <div
+        class="linkedPetitionButton"
+        @click="showModal"
+      >
+      <font-awesome-icon icon="fa-solid fa-file" />
+        Linked Petition
+      </div>
+      <modal
+        :name="'forumModal' + _uid"
+        :width="400"
+        :height="400"
+        :adaptive="true"
+      >
+        <p
+          class="x-icon"
+          @click="hideModal"
+        >
+          <font-awesome-icon icon="fa-solid fa-x" />
+        </p>
+        <PetitionComponent :petition-id="forum.petitionId" />
+      </modal>
+    </section>
       <div v-if="showUpvote">
         <div
           v-if="!liked"
@@ -95,25 +98,8 @@
         {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
       </div>
     </section>
+    
 
-
-    <section
-      v-if="response"
-      class="response"
-    >
-      <section class="container">
-        <header class="user-bio">
-          <h3 class="author">
-            <span class="username">{{ "City Council" }}</span>
-          </h3>
-        </header>
-        <span>
-          {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][responseDate.getMonth()] }} {{ responseDate.getDate() }}, {{ responseDate.getFullYear() }}
-        </span>
-      </section>
-
-      {{ response.content }}
-    </section>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -313,10 +299,9 @@
     padding-bottom: 32px;
   }
   .linkedPetitionButton{
-    text-decoration: underline;
-    color: blue;
-
+    color: rgb(69, 150, 231);
   }
+  
   .linkedPetitionButton:hover{
     cursor: pointer;
   }

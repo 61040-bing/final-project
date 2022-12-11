@@ -4,19 +4,7 @@
 <template>
   <main class="page">
     <section>
-      <header>
-        <h2>Welcome to Participate!</h2>
-      </header>
       <RegisterForm />
-    </section>
-    <section>
-      <header>
-        <h2>Already have an account?</h2>
-      </header>
-      
-      <router-link class="router" to="/login">
-        Sign In
-      </router-link>
     </section>
   </main>
 </template>
