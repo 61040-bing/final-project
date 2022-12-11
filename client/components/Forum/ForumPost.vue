@@ -45,52 +45,46 @@
       >
         <font-awesome-icon
           icon="fa-regular fa-comment-dots"
-          size="lg"
         /> View replies
       </router-link>
       <section v-if="forum.petitionId">
-      <div
-        class="linkedPetitionButton"
-        @click="showModal"
-      >
-      <font-awesome-icon icon="fa-solid fa-file" />
-        Linked Petition
-      </div>
-      <modal
-        :name="'forumModal' + _uid"
-        :width="400"
-        :height="400"
-        :adaptive="true"
-      >
-        <p
-          class="x-icon"
-          @click="hideModal"
+        <div
+          class="linkedPetitionButton"
+          @click="showModal"
         >
-          <font-awesome-icon icon="fa-solid fa-x" />
-        </p>
-        <PetitionComponent :petition-id="forum.petitionId" />
-      </modal>
-    </section>
+          <font-awesome-icon icon="fa-solid fa-file" />
+          Linked Petition
+        </div>
+        <modal
+          :name="'forumModal' + _uid"
+          :width="400"
+          :height="400"
+          :adaptive="true"
+        >
+          <p
+            class="x-icon"
+            @click="hideModal"
+          >
+            <font-awesome-icon icon="fa-solid fa-x" />
+          </p>
+          <PetitionComponent :petition-id="forum.petitionId" />
+        </modal>
+      </section>
       <div v-if="showUpvote">
         <div
           v-if="!liked"
           class="upvote-button"
           @click="likeRequest"
         >
-          <img
-            src="../../public/upvoteTriangle.svg"
-            style="width: 20px; height: 20px"
-          >  {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
+          <font-awesome-icon icon="fa-solid fa-arrow-up" /> {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
         <div
           v-if="liked"
+          class="upvote-button"
+          style="color: rgb(170, 85, 64)"
           @click="removeLikeRequest"
         >
-          <img
-            src="../../public/triangleFilled.png"
-            style="width: 20px; height: 20px"
-            class="upvote-button"
-          >
+          <font-awesome-icon icon="fa-solid fa-arrow-up" />
           {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
       </div>

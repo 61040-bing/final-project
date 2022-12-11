@@ -154,13 +154,12 @@
       cursor: pointer;
     }
 
-
     .containerTwo  {
       flex-direction: row;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     header {
