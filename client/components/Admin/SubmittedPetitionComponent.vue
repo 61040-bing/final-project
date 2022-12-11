@@ -76,7 +76,7 @@ export default {
       console.log(this.petition._id);
       const params = {
         method: 'PUT',
-        message: 'Successfully signed petition!',
+        message: 'Successfully accepted petition!',
         body: JSON.stringify({accept: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
@@ -91,7 +91,7 @@ export default {
        */
       const params = {
         method: 'PUT',
-        message: 'Successfully removed signature from petition!',
+        message: 'Successfully declined petition!',
         body: JSON.stringify({deny: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
