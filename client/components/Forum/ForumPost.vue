@@ -46,7 +46,9 @@
                :width="400"
                :height="400"
                :adaptive="true">
-          <p class = "x-icon" @click="hideModal">X </p>
+          <p class = "x-icon" @click="hideModal">
+            <font-awesome-icon icon="fa-solid fa-x" />
+          </p>
           <PetitionComponent :petitionId="forum.petitionId"/>
 
         </modal>
