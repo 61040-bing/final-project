@@ -190,6 +190,36 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
   next();
 };
 
+
+const isPatchEmailNotAlreadyInUse =  async (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.email !== undefined) { // If email is not being changed, skip this check
+    await isEmailNotAlreadyInUse(req, res, next);
+  }
+  next();
+};
+
+const isPatchValidPassword = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.password !== undefined){
+    isValidPassword(req,res,next)
+  }
+  next();
+};
+
+const isValidPatchFirstName = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.firstName !== undefined){
+    isValidFirstName(req, res, next)
+  }
+
+  next();
+};
+
+const isValidPatchLastName = (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.lastName !== undefined){
+    isValidLastName(req,res,next)
+  }
+
+  next();
+};
 export {
   isCurrentSessionUserExists,
   isUserLoggedIn,
@@ -201,5 +231,9 @@ export {
   isValidPassword,
   isValidFirstName,
   isValidLastName,
-  isNeighborhoodExists
+  isNeighborhoodExists,
+  isPatchEmailNotAlreadyInUse,
+  isPatchValidPassword,
+  isValidPatchFirstName,
+  isValidPatchLastName,
 };

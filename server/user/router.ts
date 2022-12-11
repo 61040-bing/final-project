@@ -147,12 +147,12 @@ router.post(
 router.patch(
   '/',
   [
-    // userValidator.isUserLoggedIn,
-    // userValidator.isValidEmail,
-    // userValidator.isEmailNotAlreadyInUse,
-    // userValidator.isValidPassword,
-    // userValidator.isValidFirstName,
-    // userValidator.isValidLastName,
+    userValidator.isUserLoggedIn,
+    // userValidator.isValidEmail, in Front end
+    userValidator.isPatchEmailNotAlreadyInUse,
+    userValidator.isPatchValidPassword,
+    userValidator.isValidPatchFirstName,
+    userValidator.isValidPatchLastName,
     // userValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
