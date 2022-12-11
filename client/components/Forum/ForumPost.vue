@@ -4,7 +4,7 @@
   >
     <section class="container">
       <div class="author-name">
-            {{ forum.author.firstName + " " + forum.author.lastName }}
+        {{ forum.author.firstName + " " + forum.author.lastName }}
       </div>
       <div class="date">
         Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
@@ -15,13 +15,13 @@
     </section>
 
     <router-link
-        v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
-        style="text-decoration: none; color: inherit; width: inherit;"
-        :to="path"
+      v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
+      style="text-decoration: none; color: inherit; width: inherit;"
+      :to="path"
     >
-    <div class="content">
-      {{ forum.content }}
-    </div>
+      <div class="content">
+        {{ forum.content }}
+      </div>
     </router-link>
 
     <section style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -37,20 +37,30 @@
       </router-link>
 
       <section v-if="forum.petitionId">
-
-        <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
-        <modal :name="'forumModal' + this._uid"
-               :width="400"
-               :height="400"
-               :adaptive="true">
-          <p class = "x-icon" @click="hideModal">X </p>
-          <PetitionComponent :petitionId="forum.petitionId"/>
-
+        <div
+          class="linkedPetitionButton"
+          @click="showModal"
+        >
+          Linked Petition
+        </div>
+        <modal
+          :name="'forumModal' + _uid"
+          :width="400"
+          :height="400"
+          :adaptive="true"
+        >
+          <p
+            class="x-icon"
+            @click="hideModal"
+          >
+            X
+          </p>
+          <PetitionComponent :petition-id="forum.petitionId" />
         </modal>
       </section>
 
 
-      <div>
+      <div v-if="$route.name === 'Home' || ($store.state.userObject && $store.state.userObject.neighborhood._id === forum.neighborhood)">
         <div
           v-if="!liked"
           class="upvote-button"
@@ -59,7 +69,7 @@
           <img
             src="../../public/upvoteTriangle.svg"
             style="width: 20px; height: 20px"
-          >  {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
+          >  {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
         <div
           v-if="liked"
@@ -70,8 +80,11 @@
             style="width: 20px; height: 20px"
             class="upvote-button"
           >
-          {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
+          {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
+      </div>
+      <div v-else>
+        {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
       </div>
     </section>
 
