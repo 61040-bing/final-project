@@ -108,7 +108,7 @@ export default {
     await this.getRoundTables();
 
     for (const signature of this.signatures) {
-      if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
+      if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
         this.signed = true;
       }
     }
