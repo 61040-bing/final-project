@@ -1,75 +1,77 @@
 <template>
   <section>
-    <div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%">
+    <div>
+      <h4>Account Settings for {{ $store.state.userObject.firstName }} {{ $store.state.userObject.lastName }} </h4>
+      <hr>
+    </div>
+    <div>
       <article>
         Neighborhood:
       </article>
-      <article              tabindex="0"
-                            @blur="hideMenu">
-      <span v-if="!editing_neighborhood">{{ $store.state.userObject.neighborhood.name }} </span>
-
-
-        <div v-if="editing_neighborhood"
-             :class="['dropdown', editing_email ? 'toggle': '']">
+      <article
+        tabindex="0"
+        @blur="hideMenu"
+      >
+        <span v-if="!editing_neighborhood">{{ $store.state.userObject.neighborhood.name }} </span>
+        <div
+          v-if="editing_neighborhood"
+          :class="['dropdown', editing_email ? 'toggle': '']"
+        >
           <ul>
             <li
-                v-for="neighborhood in $store.state.neighborhoods"
-                :key="neighborhood._id"
-                @click="submitNeighborhoodEdit(neighborhood._id)"
-
+              v-for="neighborhood in $store.state.neighborhoods"
+              :key="neighborhood._id"
+              @click="submitNeighborhoodEdit(neighborhood._id)"
             >
               {{ neighborhood.name }}
-
             </li>
           </ul>
         </div>
 
-      <img
-          v-if="!editing_neighborhood"
-          src="../../public/pencil.png"
+        <font-awesome-icon
+          v-if="!editing_neighborhood" 
+          icon="fa-solid fa-pencil"
           @click="startEditingNeighborhood"
-      >
-      <img
-          v-if="editing_neighborhood"
-          src="../../public/yes.png"
-          @click="submitNeighborhoodEdit"
-      >
-      <img
-          v-if="editing_neighborhood"
-          src="../../public/no.png"
-          @click="stopEditingNeighborhood"
-      >
+        />
       </article>
     </div>
-
-    <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+    <hr>
+    <div>
       <article>
         Email:
       </article>
       <article>
         <span v-if="!editing_email">{{ $store.state.userObject.email }} </span>
-        <textarea
-            v-if="editing_email"
-            :value="email_draft"
-            @input="email_draft = $event.target.value"
+        <input
+          v-if="editing_email"
+          :value="email_draft"
+          @input="email_draft = $event.target.value"
+        >
+
+        <font-awesome-icon
+          v-if="!editing_email" 
+          icon="fa-solid fa-pencil"
+          @click="startEditingEmail"
+        />
+        <font-awesome-icon 
+          v-if="editing_email"
+          icon="fa-solid fa-check"
+          @click="submitEmailEdit" 
         />
 
-        <img
-            v-if="!editing_email"
-            src="../../public/pencil.png"
-            @click="startEditingEmail"
-        >
-        <img
-            v-if="editing_email"
-            src="../../public/yes.png"
-            @click="submitEmailEdit"
-        >
-        <img
-            v-if="editing_email"
-            src="../../public/no.png"
-            @click="stopEditingEmail"
-        >
+        <font-awesome-icon 
+          v-if="editing_email"
+          icon="fa-solid fa-xmark"
+          @click="stopEditingEmail"
+        />
       </article>
+    </div>
+    <hr>
+    <div
+      class="button-click"
+      @click="logout"
+    >
+      Log Out
     </div>
     <section class="alerts">
       <article
@@ -80,8 +82,6 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-
-    <div @click="logout" class="button-click">logout </div>
   </section>
 </template>
 
@@ -192,14 +192,24 @@ export default {
 };
 </script>
 
+
 <style scoped>
+
+section {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px
+}
+h4 {
+  margin-bottom: 5px;
+  color: rgb(67, 67, 67);
+}
 .container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 200px;
   align-items: center;
-  margin-top: 20%;
+  margin-top: 5px;
 }
 
 button {
@@ -222,17 +232,17 @@ img {
 }
 
 .button-click{
-  width: 100%;
-  height: 50px;
+  max-width: fit-content;
+  padding: 10px;
   background-color: rgb(170, 85, 64);
-  border-radius: 40px;
+  border-radius: 5px;
   color: white;
-  font-size: 24px;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 220px;
+  margin-top: 30px;
 }
 .button-click:hover{
   cursor: pointer;
