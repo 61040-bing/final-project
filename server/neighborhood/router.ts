@@ -1,5 +1,6 @@
 import type {Request, Response} from 'express';
 import express from 'express';
+import UserCollection from '../user/collection';
 import NeighborhoodCollection from './collection';
 import * as neighborhoodValidator from './middleware';
 import type {Neighborhood} from './model';
@@ -86,7 +87,13 @@ router.delete(
     neighborhoodValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
+    const neighborhoodUsers = await (UserCollection.findAllByNeighborhoodId(req.params.neighborhoodId));
+    const cityId = '638ce78e88e91521eb0338c0';
     await NeighborhoodCollection.deleteOne(req.params.neighborhoodId);
+    // reeassign users to city ID
+    for (const user of neighborhoodUsers){
+      UserCollection.updateOne(user._id, {neighborhood: cityId})
+    }
     res.status(200).json({
       message: 'Your neighborhood was deleted successfully.'
     });
