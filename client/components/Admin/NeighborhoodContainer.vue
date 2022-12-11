@@ -82,6 +82,9 @@
                     }
                     this.$store.commit('refreshNeighborhoods');
                     this.editing = false;
+                    const successMessage = `successfully edited neighborhood from ${this.neighborhood.name} to ${this.draft}`
+                    this.$set(this.alerts, successMessage, 'success');
+                    setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
                 } catch (e) {
                     this.$set(this.alerts, e, 'error');
                     setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -96,6 +99,9 @@
                     }
                     this.$store.commit('refreshNeighborhoods');
                     this.editing = false;
+                    const successMessage = `successfully deleted ${this.neighborhood.name} neighborhood`
+                    this.$set(this.alerts, successMessage, 'success');
+                    setTimeout(() => this.$delete(this.alerts, successMessage), 10000);
                 } catch (e) {
                     this.$set(this.alerts, e, 'error');
                     setTimeout(() => this.$delete(this.alerts, e), 3000);
