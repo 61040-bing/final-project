@@ -130,10 +130,12 @@
         padding: 20px;
         position: relative;
         margin: auto;
+        
     }
     .ha {
       width: 60%;
       margin: auto;
+      font-family: Arial, Helvetica, sans-serif;
     }
     .comment {
       margin-top: 30px;
