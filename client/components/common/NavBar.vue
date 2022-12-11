@@ -4,7 +4,7 @@
 
 <template>
   <nav v-if="$route.name !== 'Admin' && $route.name !== 'Edit Neighborhood' && $route.name !== 'View Submitted Petitions'">
-    <div class="left">
+    <div class="left home-icon" @click="navigateTo('/')" >
       <img src="../../public/participate.png">
       <h1 class="title">
         Participate
@@ -14,8 +14,8 @@
       <div class="nav-item">
         <span @click="navigateTo('/')">Home/City</span>
       </div>
-      <div 
-        class="nav-item" 
+      <div
+        class="nav-item"
         tabindex="0"
         @blur="hideMenu"
         @click="toggleMenu"
@@ -34,7 +34,7 @@
           </ul>
         </div>
       </div>
-      <div 
+      <div
         v-if="$store.state.userObject !== null && $store.state.userObject.email"
         class="nav-item"
         @click="navigateTo('/neighborhood/'+$store.state.userObject.neighborhood._id)"
@@ -85,8 +85,8 @@
         @click="logout"
       >
         Logout
-      </div>   
-    </div>   
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -224,19 +224,14 @@ img {
   width: 100%;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
 }
-/* .dropdown:hover .dropdown-content {
-  display: block;
+
+
+.home-icon{
+
 }
-.dropdown-content a {
-  display: block;
-  color: #000000;
-  padding: 5px;
-  text-decoration: none;
+.home-icon:hover{
+  cursor: pointer;
 }
-.dropdown-content a:hover {
-  color: #FFFFFF;
-  background-color: #00A4BD;
-} */
 
 
 </style>

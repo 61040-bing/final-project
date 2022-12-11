@@ -9,9 +9,11 @@
     >
       <section>
         <header>
-          <span  class="backButton containerTwo">
-            <font-awesome-icon icon="fa-solid fa-arrow-left" @click="$router.back()"/>
-          Back
+          <span class="backButton containerTwo" @click="goBack">
+            <font-awesome-icon
+              icon="fa-solid fa-arrow-left"
+            />
+            Back
           </span>
           
           <h2>Forum Post</h2>
@@ -94,6 +96,14 @@
           this.fetchForumPost();
       },
       methods: {
+        goBack(){
+          if (this.forumPost.neighborhood === "638ce78e88e91521eb0338c0") {
+            this.$router.push('/')
+          } else {
+            this.$router.push(`/neighborhood/${this.forumPost.neighborhood}`)
+          }
+          
+        },
           async fetchForumPost() {
             const url =`/api/forum/${this.$route.params.postId}`;
             try {
@@ -120,10 +130,12 @@
         padding: 20px;
         position: relative;
         margin: auto;
+        
     }
     .ha {
-      width: 75%;
+      width: 60%;
       margin: auto;
+      font-family: Arial, Helvetica, sans-serif;
     }
     .comment {
       margin-top: 30px;

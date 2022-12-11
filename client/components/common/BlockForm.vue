@@ -80,8 +80,6 @@ export default {
       url: '', // Url to submit form to
       method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
-      setEmail: false, // Whether or not stored email should be updated after form submission
-      setNeighborhood: false, // Whether or not stored neighborhood should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission,
       neighborhoodId: null,
