@@ -29,7 +29,12 @@
 
     </div>
     <div class="rt-info">
-      End Date: {{ roundtable.endDate }}
+      <div>
+        End Date:
+      </div>
+      <div>
+        {{ roundtable.endDate }}
+      </div>
     </div>
 
     <div style="width: 100%; text-align: center; margin-top: 16px;" @click="showModal" >
@@ -193,5 +198,15 @@ export default {
 .rt-info{
   font-size: 18px;
   margin-top: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  /*width: 100%;*/
+}
+.rt-info > div{
+  margin-right: 12px;
+  /*background-color: #4CAF50;*/
+  /*width: 40%;*/
+  /*text-align: left;*/
 }
 </style>
