@@ -4,7 +4,10 @@
 
 <template>
   <nav v-if="$route.name !== 'Admin' && $route.name !== 'Edit Neighborhood' && $route.name !== 'View Submitted Petitions'">
-    <div class="left home-icon" @click="navigateTo('/')" >
+    <div
+      class="left home-icon"
+      @click="navigateTo('/')"
+    >
       <img src="../../public/participate.png">
       <h1 class="title">
         Participate
@@ -20,7 +23,7 @@
         @blur="hideMenu"
         @click="toggleMenu"
       >
-        <span >Neighborhoods</span>
+        <span>Neighborhoods</span>
 
         <div :class="['dropdown', displayNeighborhoodMenu ? 'toggle': '']">
           <ul>
@@ -37,7 +40,7 @@
       <div
         v-if="$store.state.userObject !== null && $store.state.userObject.email"
         class="nav-item"
-        @click="navigateTo('/neighborhood/'+$store.state.userObject.neighborhood._id)"
+        @click="navigateTo(neighborhoodPath)"
       >
         My Neighborhood
       </div>
@@ -100,6 +103,14 @@
     data() {
       return {
         displayNeighborhoodMenu: false
+      }
+    },
+    computed: {
+      neighborhoodPath(){
+        if (this.$store.state.userObject.neighborhood._id === '638ce78e88e91521eb0338c0'){
+          return '/';
+        }
+        return '/neighborhood/' + this.$store.state.userObject.neighborhood._id;
       }
     },
     mounted(){
