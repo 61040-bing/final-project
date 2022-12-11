@@ -3,14 +3,9 @@
     class="freet"
   >
     <section class="container">
-      <div class="user-bio">
-        <div class="author">
-          <div class="username">
+      <div class="author-name">
             {{ forum.author.firstName + " " + forum.author.lastName }}
-          </div>
-        </div>
       </div>
-
       <div class="date">
         Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
       </div>
@@ -19,12 +14,17 @@
       </h3>
     </section>
 
-
+    <router-link
+        v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
+        style="text-decoration: none; color: inherit; width: inherit;"
+        :to="path"
+    >
     <div class="content">
       {{ forum.content }}
     </div>
+    </router-link>
 
-    <section style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 12px">
+    <section style="display: flex; flex-direction: row; justify-content: space-between;">
       <router-link
         v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
         style="text-decoration: none; color: inherit; width: inherit;"
@@ -35,6 +35,20 @@
           size="lg"
         /> View replies
       </router-link>
+
+      <section v-if="forum.petitionId">
+
+        <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
+        <modal :name="'forumModal' + this._uid"
+               :width="400"
+               :height="400"
+               :adaptive="true">
+          <p class = "x-icon" @click="hideModal">X </p>
+          <PetitionComponent :petitionId="forum.petitionId"/>
+
+        </modal>
+      </section>
+
 
       <div>
         <div
@@ -77,18 +91,6 @@
       </section>
 
       {{ response.content }}
-    </section>
-    <section v-if="forum.petitionId">
-
-      <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
-      <modal :name="'forumModal' + this._uid"
-             :width="400"
-             :height="400"
-             :adaptive="true">
-        <p class = "x-icon" @click="hideModal">X </p>
-        <PetitionComponent :petitionId="forum.petitionId"/>
-
-      </modal>
     </section>
     <section class="alerts">
       <article
@@ -194,30 +196,12 @@
   </script>
 
   <style scoped>
-  .containerT {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 0px;
-  }
-
   .container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 0px;
   }
-  .toxicity {
-    font-size:10pt;
-    color: #898b8c;
-    font-family: Arial, Helvetica, sans-serif
-  }
-  .refreet {
-    font-size:10pt;
-    color: #898b8c;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-left: 70px;
-  }
+
   .freet {
       box-shadow: 0px 2px 5px rgb(141, 156, 160);
       padding: 24px;
@@ -226,17 +210,13 @@
     margin-top: 10px;
     margin-right: 15px;
   }
-  .author {
-    color: #24b2e1;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .username {
+
+  .author-name {
     font-size: 25px;
     color: rgb(0, 0, 0);
+    margin-bottom: 16px;
   }
-  .user-bio {
-    margin-bottom: 8px;
-  }
+
   img {
     height: 50px;
     margin-right: 20px;
@@ -263,11 +243,11 @@
     cursor: pointer;
   }
   .content{
-    margin-top: 32px;
-    margin-bottom: 32px;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     text-align: left;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
   .linkedPetitionButton{
     text-decoration: underline;
