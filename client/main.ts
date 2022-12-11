@@ -12,14 +12,18 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faHeart as faHeartSolid, faArrowLeft} from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartSolid, faArrowLeft, faTrash, faX, faInfo} from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular, faCommentDots} from '@fortawesome/free-regular-svg-icons'
 
 library.add(faHeartSolid)
 library.add(faHeartRegular)
 library.add(faArrowLeft);
+library.add(faTrash);
 
 library.add(faCommentDots)
+library.add(faX)
+library.add(faInfo)
+
 
 Vue.config.productionTip = false;
 
