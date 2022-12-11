@@ -153,6 +153,9 @@ export default {
         }
         this.$store.commit('refreshUser');
         this.editing_neighborhood = false;
+        const successMessage = "successfully changed neighborhood"
+        this.$set(this.alerts, successMessage, 'success');
+        setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -165,7 +168,7 @@ export default {
           throw new Error("email cannot be empty")
         }
         if (!emailRegex.test(this.email_draft)) {
-            throw new Error('Email must be a nonempty alphanumeric string with no empty spaces.')
+            throw new Error('Email must be a valid email with no empty spaces.')
         }
         const fields = {email: this.email_draft};
         const r = await  fetch(`/api/users/`, {method: 'PATCH', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
@@ -175,6 +178,9 @@ export default {
         }
         this.$store.commit('refreshUser');
         this.editing_email = false;
+        const successMessage = "successfully changed email"
+        this.$set(this.alerts, successMessage, 'success');
+        setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
