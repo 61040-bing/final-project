@@ -168,7 +168,7 @@ export default {
           throw new Error("email cannot be empty")
         }
         if (!emailRegex.test(this.email_draft)) {
-            throw new Error('Email must be a nonempty alphanumeric string with no empty spaces.')
+            throw new Error('Email must be a valid email with no empty spaces.')
         }
         const fields = {email: this.email_draft};
         const r = await  fetch(`/api/users/`, {method: 'PATCH', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
