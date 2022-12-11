@@ -3,9 +3,17 @@
     class="freet"
   >
     <section class="container">
-      <div class="author-name">
-            {{ forum.author.firstName + " " + forum.author.lastName }}
+      <div class="row">
+        <div class="author-name">
+        {{ forum.author.firstName + " " + forum.author.lastName }}
       </div>
+        <font-awesome-icon
+        v-if="$store.state.userObject._id === forum.author._id"
+        icon="fa-solid fa-trash"
+        @click="deletePost"
+      />
+      </div>
+
       <div class="date">
         Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
       </div>
@@ -15,15 +23,18 @@
     </section>
 
     <router-link
-        v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
-        style="text-decoration: none; color: inherit; width: inherit;"
-        :to="path"
+      v-if="($route.name === 'Neighborhood' || $route.name === 'Home')"
+      style="text-decoration: none; color: inherit; width: inherit;"
+      :to="path"
     >
-    <div class="content">
-      {{ forum.content }}
-    </div>
+      <div class="content">
+        {{ forum.content }}
+      </div>
     </router-link>
-    <div v-else class="content">
+    <div
+      v-else
+      class="content"
+    >
       {{ forum.content }}
     </div>
 
@@ -39,8 +50,8 @@
         /> View replies
       </router-link>
 
-      <section v-if="forum.petitionId">
 
+      <section v-if="forum.petitionId">
         <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
         <modal :name="'forumModal' + this._uid"
                :width="400"
@@ -51,11 +62,12 @@
           </p>
           <PetitionComponent :petitionId="forum.petitionId"/>
 
+
         </modal>
       </section>
 
 
-      <div>
+      <div v-if="$route.name === 'Home' || ($store.state.userObject && $store.state.userObject.neighborhood._id === forum.neighborhood)">
         <div
           v-if="!liked"
           class="upvote-button"
@@ -64,7 +76,7 @@
           <img
             src="../../public/upvoteTriangle.svg"
             style="width: 20px; height: 20px"
-          >  {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
+          >  {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
         <div
           v-if="liked"
@@ -75,10 +87,14 @@
             style="width: 20px; height: 20px"
             class="upvote-button"
           >
-          {{likes + (likes === 1 ? " Upvote" : " Upvotes")}}
+          {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
       </div>
+      <div v-else>
+        {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
+      </div>
     </section>
+
 
     <section
       v-if="response"
@@ -155,7 +171,25 @@
       this.fetchResponse();
     },
     methods: {
+      async deletePost(){
+        try {
+          const r = await fetch(`/api/forum/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch(e){
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
 
+        if (this.$route.name === 'Forum Post'){
+          this.$router.back()
+        } else {
+          this.$store.commit('refreshForumPosts', this.forum.neighborhood);
+        }
+
+      },
       showModal(){
         this.$modal.show('forumModal' + this._uid);
       },
@@ -267,5 +301,12 @@
   }
   .x-icon:hover{
     cursor: pointer;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
   }
   </style>
