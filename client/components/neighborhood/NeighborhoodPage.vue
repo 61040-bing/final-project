@@ -10,19 +10,27 @@
         <br>
         <br>
         <span class="winner">⭐ West Cambridge</span>
-        <div class="info-woh"  @click="showModal">
+        <div
+          class="info-woh"
+          @click="showModal"
+        >
           <font-awesome-icon icon="fa-solid fa-info" />
-          <div class = "learn-more-text">
+          <div class="learn-more-text">
             Learn more
           </div>
         </div>
       </div>
 
-      <modal :name="'wohModal' + this._uid"
-             :width="400"
-             :height="400"
-             :adaptive="true">
-        <p class = "x-icon" @click="hideModal">
+      <modal
+        :name="'wohModal' + _uid"
+        :width="400"
+        :height="400"
+        :adaptive="true"
+      >
+        <p
+          class="x-icon"
+          @click="hideModal"
+        >
           <font-awesome-icon icon="fa-solid fa-x" />
         </p>
         <div style="margin: 16px">
@@ -218,14 +226,12 @@
 }
 .navbar {
   font-size: 30px;
-  padding: 0px;
+  
   font-family: Arial;
   display: flex;
   flex-direction: row;
-  gap: 300px;
-  justify-content: center;
+  justify-content: space-between;
   background: rgb(198, 193, 193);
-  padding: 20px;
 }
 .navbar p{
   cursor: pointer;
@@ -240,12 +246,17 @@
   text-align: center;
 }
 .selected {
-  color: rgb(170, 85, 64);
-  font-weight: bolder;
+  background-color: rgb(255, 255, 255);
+  height: 100%;
+  width: 100%;
+  text-align:center;
 }
 
 .hoverPointer{
-
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+  text-align:center;
 }
 .hoverPointer:hover{
   cursor: pointer;
