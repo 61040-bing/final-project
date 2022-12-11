@@ -1,7 +1,14 @@
 <!-- Form for registering an account (block style) -->
 
 <template>
+
+
   <form @submit.prevent="submit">
+
+    <header v-if="!selectingNeighborhood">
+      <h2 >Welcome to Participate!</h2>
+    </header>
+
     <article
       v-if="!selectingNeighborhood"
     >
@@ -14,7 +21,7 @@
       :key="field.id"
       >
       <label :for="field.id">{{ field.label }}:</label>
-      <input 
+      <input
         :type="field.id === 'password' ? 'password' : 'text'"
         :name="field.id"
         :value="field.value"
@@ -31,59 +38,60 @@
       v-if="selectingNeighborhood"
     >
 
-    <button type="button" @click="selectingNeighborhood = !selectingNeighborhood">
-      Back
-    </button>
 
-    <h3>Select your neighborhood!</h3>
+
+      <div @click="selectingNeighborhood = !selectingNeighborhood" class="back-button">
+        <font-awesome-icon
+            icon="fa-solid fa-arrow-left"
+        />
+        Back
+      </div>
+
+    <h3 style="margin-top: 40px; margin-bottom: 40px; text-align: center">Select your neighborhood </h3>
 
       <div class="neighborhood-container">
         <section v-for="neighborhood in $store.state.neighborhoods" @click="selectNeighborhood(neighborhood); fields[4].value = neighborhood._id">
 
-          <div v-if="neighborhood._id == selected" class="selectedNeighborhood" >
-                    
-            <img v-if="neighborhood._id == '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef42135a5b0cd779e43b1'" src="../../public/neighborhoodImgs/well-harr.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637da8b92cc172c4569f7a9b'" src="../../public/neighborhoodImgs/theport.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgePort.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef52035a5b0cd779e43b3'" src="../../public/neighborhoodImgs/midCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef56335a5b0cd779e43b5'" src="../../public/neighborhoodImgs/baldwin.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neigh9.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHigh.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawberryHill.jpeg" class="neighborhoodImg">
+          <div v-if="neighborhood._id === selected" class="selectedNeighborhood" >
+
+            <img v-if="neighborhood._id === '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef42135a5b0cd779e43b1'" src="../../public/neighborhoodImgs/well-harr.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637da8b92cc172c4569f7a9b'" src="../../public/neighborhoodImgs/theport.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgePort.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef52035a5b0cd779e43b3'" src="../../public/neighborhoodImgs/midCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef56335a5b0cd779e43b5'" src="../../public/neighborhoodImgs/baldwin.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neigh9.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHigh.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawberryHill.jpeg" class="neighborhoodImg">
             <img v-else src="../../public/neighborhoodImgs/defaultNeighborhood.png" class="neighborhoodImg">
-            <p>{{ neighborhood.name }}</p>
+            <p class="neighborhood-name">{{ neighborhood.name }}</p>
           </div>
 
           <div v-else class="neighborhood">
-            <img v-if="neighborhood._id == '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef42135a5b0cd779e43b1'" src="../../public/neighborhoodImgs/well-harr.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637da8b92cc172c4569f7a9b'" src="../../public/neighborhoodImgs/theport.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgePort.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef52035a5b0cd779e43b3'" src="../../public/neighborhoodImgs/midCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef56335a5b0cd779e43b5'" src="../../public/neighborhoodImgs/baldwin.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neigh9.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCam.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHigh.jpeg" class="neighborhoodImg">
-            <img v-else-if="neighborhood._id == '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawberryHill.jpeg" class="neighborhoodImg">
+            <img v-if="neighborhood._id === '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef42135a5b0cd779e43b1'" src="../../public/neighborhoodImgs/well-harr.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637da8b92cc172c4569f7a9b'" src="../../public/neighborhoodImgs/theport.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgePort.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef52035a5b0cd779e43b3'" src="../../public/neighborhoodImgs/midCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef56335a5b0cd779e43b5'" src="../../public/neighborhoodImgs/baldwin.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neigh9.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCam.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHigh.jpeg" class="neighborhoodImg">
+            <img v-else-if="neighborhood._id === '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawberryHill.jpeg" class="neighborhoodImg">
             <img v-else src="../../public/neighborhoodImgs/defaultNeighborhood.png" class="neighborhoodImg">
-            <p>{{ neighborhood.name }}</p>
+            <p class="neighborhood-name">{{ neighborhood.name }}</p>
           </div>
         </section>
       </div>
 
-      <button
-        type="submit"
-      >
-        Register
-      </button>
+
 
       <section class="alerts">
         <article
@@ -95,6 +103,24 @@
         </article>
       </section>
   </article>
+    <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;" v-if="selectingNeighborhood">
+      <div class = "submit-button"
+           type="submit"
+      >
+        Register
+      </div>
+    </div>
+
+    <section v-if="!selectingNeighborhood">
+      <header>
+        <h2>Already have an account?</h2>
+      </header>
+
+      <router-link class="router" to="/login">
+        Sign In
+      </router-link>
+    </section>
+
   </form>
 </template>
 
@@ -106,14 +132,24 @@ export default {
   mixins: [BlockForm],
   mounted() {
     this.$store.commit('refreshNeighborhoods');
+
   },
   methods: {
-    selectNeighborhood(neighborhood) {
 
-      if (this.selected == neighborhood._id) {
+    toBottom(){
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      })
+    },
+    async selectNeighborhood(neighborhood) {
+
+      if (this.selected === neighborhood._id) {
         this.selected = undefined;
       } else {
         this.selected = neighborhood._id;
+        await new Promise(f => setTimeout(f, 400));
+        this.toBottom();
       }
     },
     async canMove(){
@@ -128,7 +164,7 @@ export default {
   data() {
     return {
       alerts: {},
-      selectingNeighborhood: false,
+      selectingNeighborhood: true,
       url: '/api/users',
       method: 'POST',
       hasBody: true,
@@ -168,21 +204,35 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
 }
 .neighborhood:hover{
-  background-color: rgb(194, 194, 194);
+  /*background-color: rgb(194, 194, 194);*/
+  background-color: rgb(170, 85, 64);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .selectedNeighborhood{
-  background-color: rgb(132, 132, 132);
+  /*background-color: rgb(132, 132, 132);*/
+  background-color: rgb(120, 85, 64);
   color: white;
+  box-shadow: 0px 2px 5px rgb(141, 156, 160);
+  border-radius:8px;
 }
 
 .neighborhoodImg {
   width: 100%;
-  height: 20%;
+  height: 150px;
+  object-fit: cover;
 }
 
+.neighborhood{
+  border-radius:8px;
+  box-shadow: 0px 2px 5px rgb(141, 156, 160);
+  transition: all 0.3s;
+}
 form {
-  border: 1px solid #111;
+  /*border: 1px solid #111;*/
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -196,9 +246,6 @@ form {
   flex-direction: column;
 }
 
-/* form > article p {
-  margin: 0;
-} */
 
 form h3,
 form > * {
@@ -208,4 +255,38 @@ form > * {
 form h3 {
   margin-top: 0;
 }
+
+.neighborhood-name{
+  margin-left: 8px;
+  padding-bottom: 12px;
+}
+
+.back-button{
+  color:  rgb(170, 85, 64);
+  font-weight: 800;
+  margin-top: 32px;
+}
+.back-button:hover{
+  cursor: pointer;
+}
+
+.submit-button{
+  background-color:  rgb(170, 85, 64);
+  width: 50%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  text-align: center;
+  border-radius: 32px;
+  font-weight: 800;
+  font-size: 24px;
+  color: white;
+  font-family: Roboto;
+  transition: all 0.3s;
+}
+.submit-button:hover{
+  cursor: pointer;
+  transform: scale(1.03);
+
+}
+
 </style>
