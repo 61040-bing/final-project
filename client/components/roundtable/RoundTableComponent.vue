@@ -5,31 +5,42 @@
   <article
     class="roundtable"
   >
-    <header>
-      <h3 class="author">
-        Created by @{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}
-      </h3>
-      <div
-        v-if="$store.state.userObject._id === roundtable.authorId._id"
-        class="actions"
-      >
-        <button @click="deleteRoundTable">
-          🗑️ Delete
-        </button>
+
+    <button @click="deleteRoundTable" v-if="$store.state.userObject._id === roundtable.authorId._id">
+      🗑️ Delete
+    </button>
+    <h2>
+      Roundtable on  {{ roundtable.roundTableName }}
+    </h2>
+
+
+      <div class="rt-info">
+         <div>Host:</div>
+        <div>{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}</div>
       </div>
-    </header>
-    <p class="roundTableName">
-      Name: {{ roundtable.roundTableName }}
-    </p>
 
-    <p
-      class="petition"
-    >
-      Roundtable on "{{ roundtable.petitionId.title }}" petition
-    </p>
+    <div class="rt-info">
+      <div>
+        Start Date:
+      </div>
+      <div>
+        {{ roundtable.startDate }}
+      </div>
+
+    </div>
+    <div class="rt-info">
+      End Date: {{ roundtable.endDate }}
+    </div>
+
+    <div style="width: 100%; text-align: center; margin-top: 16px;" @click="showModal" >
+      Associated Petition
+      <div class="petition_container">
+      <font-awesome-icon icon="fa-solid fa-file" />
+        {{ roundtable.petitionId.title }}
+    </div>
+    </div>
 
 
-      <div @click="showModal" class="linkedPetitionButton"> Open Petition</div>
       <modal :name="'rtModal' + this._uid"
              :width="500"
              :height="600"
@@ -41,14 +52,9 @@
       </modal>
 
 
-    <p class="start">
-      Starts at {{ roundtable.startDate }}
-    </p>
-    <p class="end">
-      Ends at {{ roundtable.endDate }}
-    </p>
+
     <p class="meetingLink">
-      Meeting Link: <a :href="meetingLink"> {{ roundtable.zoomLink }}</a>
+      Video Meeting Link: <a :href="meetingLink"> {{ roundtable.zoomLink }}</a>
     </p>
     <section class="alerts">
       <article
@@ -148,14 +154,16 @@ export default {
 
 <style scoped>
 .roundtable {
-    border: 1px solid #111;
-    padding: 20px;
-    position: relative;
-    height:20%;
-    /* height: 200px;
-    width:50%; */
+  box-shadow: 0px 2px 5px rgb(141, 156, 160);
+  padding: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 16px;
 
-    /* background: lightgoldenrodyellow; */
+  /*background-color: #4CAF50;*/
 }
 .linkedPetitionButton{
   text-decoration: underline;
@@ -170,5 +178,20 @@ export default {
 }
 .x-icon:hover{
   cursor: pointer;
+}
+
+.petition_container{
+  border: 2px solid rgb(69, 150, 231);
+  border-radius: 20px;
+  padding: 12px;
+  color: rgb(69, 150, 231);
+  margin-top: 12px;
+}
+.petition_container:hover{
+  cursor: pointer;
+}
+.rt-info{
+  font-size: 18px;
+  margin-top: 2px;
 }
 </style>
