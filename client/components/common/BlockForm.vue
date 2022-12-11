@@ -136,7 +136,50 @@ export default {
       };
       if (this.hasBody) {
 
-        const req_fields = [...this.fields];
+        let req_fields = [];
+
+        if (this.setDate) {
+
+          let startDate;
+          let startTime;
+          let endDate;
+          let endTime;
+
+          for (const field of this.fields) {
+            if (field.id === 'startDate') {
+              startDate = field;
+            } else if (field.id === 'endDate') {
+              endDate = field;
+            } else if (field.id === 'startTime') { 
+              startTime = field;
+            } else if (field.id === 'endTime') {
+              endTime = field;             
+            } else {
+              req_fields.push(field);
+            }
+          }
+
+          let startHour = parseInt(startTime.value[0] + startTime.value[1]);
+          startHour += 5;
+
+          const newStartHour = startHour.toString().length === 2? startHour.toString() : "0" + startHour.toString();
+
+          const finalStartDate = startDate.value + "T" + newStartHour + startTime.value[2] + startTime.value[3] + startTime.value[4] + ":00Z";
+          req_fields.push({id: 'startDate', value: finalStartDate });
+
+          let endHour = parseInt(endTime.value[0] + endTime.value[1]);
+          endHour += 5;
+
+          const newEndHour = endHour.toString().length === 2? endHour.toString() : "0" + endHour.toString();
+
+          const finalEndDate = endDate.value + "T" + newEndHour + endTime.value[2] + endTime.value[3] + endTime.value[4]+ ":00Z";
+          req_fields.push({id: 'endDate', value: finalEndDate });
+
+          console.log(req_fields);
+        } 
+        else {
+          req_fields = [...this.fields];
+        }
 
         if (this.neighborhoodId) {
           req_fields.push({id: 'neighborhoodId', value: this.neighborhoodId });

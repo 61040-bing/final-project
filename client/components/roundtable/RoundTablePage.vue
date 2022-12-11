@@ -1,7 +1,7 @@
 <template>
   <section
     class="buffer"
-    v-if="$store.state.userNeighborhood"
+    v-if="$store.state.userObject"
   >   
     <section class="content"
           v-if="$store.state.neighborhoodRoundTables.length"
