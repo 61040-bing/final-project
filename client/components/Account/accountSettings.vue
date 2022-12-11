@@ -153,6 +153,9 @@ export default {
         }
         this.$store.commit('refreshUser');
         this.editing_neighborhood = false;
+        const successMessage = "successfully changed neighborhood"
+        this.$set(this.alerts, successMessage, 'success');
+        setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -175,6 +178,9 @@ export default {
         }
         this.$store.commit('refreshUser');
         this.editing_email = false;
+        const successMessage = "successfully changed email"
+        this.$set(this.alerts, successMessage, 'success');
+        setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
