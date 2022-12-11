@@ -65,4 +65,8 @@
   border-radius: 10px;
   padding: 20px;
 }
+
+.button:hover {
+  cursor: pointer;
+}
   </style>
