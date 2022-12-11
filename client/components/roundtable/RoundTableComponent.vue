@@ -34,7 +34,9 @@
              :width="500"
              :height="600"
              :adaptive="true">
-        <p class = "x-icon" @click="hideModal">X </p>
+        <p class = "x-icon" @click="hideModal">
+          <font-awesome-icon icon="fa-solid fa-x" />
+        </p>
         <PetitionComponent :petitionId="roundtable.petitionId._id"/>
       </modal>
 

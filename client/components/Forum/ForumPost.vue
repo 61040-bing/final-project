@@ -5,15 +5,16 @@
     <section class="container">
       <div class="row">
         <div class="author-name">
+
           {{ forum.author.firstName + " " + forum.author.lastName }}
         </div>
-        <font-awesome-icon 
+        <font-awesome-icon
           v-if="$store.state.userObject._id === forum.author._id"
           icon="fa-solid fa-trash"
           @click="deletePost"
         />
       </div>
-      
+
       <div class="date">
         Posted on {{ ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()] }} {{ date.getDate() }}, {{ date.getFullYear() }}
       </div>
@@ -49,28 +50,20 @@
           size="lg"
         /> View replies
       </router-link>
-      
+
 
       <section v-if="forum.petitionId">
-        <div
-          class="linkedPetitionButton"
-          @click="showModal"
-        >
-          Linked Petition
-        </div>
-        <modal
-          :name="'forumModal' + _uid"
-          :width="400"
-          :height="400"
-          :adaptive="true"
-        >
-          <p
-            class="x-icon"
-            @click="hideModal"
-          >
-            X
+        <div @click="showModal" class="linkedPetitionButton">Linked Petition</div>
+        <modal :name="'forumModal' + this._uid"
+               :width="400"
+               :height="400"
+               :adaptive="true">
+          <p class = "x-icon" @click="hideModal">
+            <font-awesome-icon icon="fa-solid fa-x" />
           </p>
-          <PetitionComponent :petition-id="forum.petitionId" />
+          <PetitionComponent :petitionId="forum.petitionId"/>
+
+
         </modal>
       </section>
 
@@ -102,7 +95,7 @@
         {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
       </div>
     </section>
-    
+
 
     <section
       v-if="response"
@@ -204,21 +197,21 @@
         } 
         else {
           try {
-          const r = await fetch(`/api/forum/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
-          if (!r.ok) {
-            const res = await r.json();
-            throw new Error(res.error);
+            const r = await fetch(`/api/forum/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+            if (!r.ok) {
+              const res = await r.json();
+              throw new Error(res.error);
+            }
+          } catch(e){
+            this.$set(this.alerts, e, 'error');
+            setTimeout(() => this.$delete(this.alerts, e), 3000);
           }
-        } catch(e){
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
-        }
 
-        if (this.$route.name === 'Forum Post'){
-          this.$router.back()
-        } else {
-          this.$store.commit('refreshForumPosts', this.forum.neighborhood);
-        }
+          if (this.$route.name === 'Forum Post'){
+            this.$router.back()
+          } else {
+            this.$store.commit('refreshForumPosts', this.forum.neighborhood);
+          }
         }
       },
       showModal(){
