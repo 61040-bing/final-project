@@ -75,7 +75,7 @@
       </section>
 
 
-      <div v-if="forum.neighborhood === '638ce78e88e91521eb0338c0' || ($store.state.userObject && $store.state.userObject.neighborhood._id === forum.neighborhood)">
+      <div v-if="showUpvote">
         <div
           v-if="!liked"
           class="upvote-button"
@@ -153,6 +153,15 @@
       };
     },
     computed: {
+      showUpvote(){
+        let neighborhood = null;
+        if (this.forum.parentId){
+          neighborhood = this.forum.parentId.neighborhoodId
+        } else {
+          neighborhood = this.forum.neighborhood;
+        }
+        return this.$store.state.userObject && (this.$store.state.userObject.neighborhood._id === this.forum.neighborhood || neighborhood === '638ce78e88e91521eb0338c0');
+      },
       path(){
         return `/forum/${this.forum._id}`;
       },
@@ -180,7 +189,21 @@
     },
     methods: {
       async deletePost(){
-        try {
+        if (this.forum.parentId){
+          try {
+          const r = await fetch(`/api/comments/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+          if (!r.ok) {
+            const res = await r.json();
+            throw new Error(res.error);
+          }
+        } catch(e){
+          this.$set(this.alerts, e, 'error');
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+        }
+        this.$store.commit('refreshForumPostComments', this.$route.params.postId);
+        } 
+        else {
+          try {
           const r = await fetch(`/api/forum/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
           if (!r.ok) {
             const res = await r.json();
@@ -196,7 +219,7 @@
         } else {
           this.$store.commit('refreshForumPosts', this.forum.neighborhood);
         }
-        
+        }
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);
