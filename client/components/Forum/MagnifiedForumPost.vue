@@ -9,6 +9,11 @@
     >
       <section>
         <header>
+          <span  class="backButton containerTwo">
+            <font-awesome-icon icon="fa-solid fa-arrow-left" @click="$router.back()"/>
+          Back
+          </span>
+          
           <h2>Forum Post</h2>
         </header>
         <article>
@@ -127,5 +132,26 @@
     h1,h2 {
       color: rgb(170, 85, 64);
     font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .backButton {
+      color: rgb(170, 85, 64);
+    }
+
+    .backButton:hover {
+      cursor: pointer;
+    }
+
+
+    .containerTwo  {
+      flex-direction: row;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      margin-bottom: 40px;
     }
     </style>
