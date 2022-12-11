@@ -11,11 +11,15 @@
         v-for="field in fields"
         :key="field.id"
       >
-        <label :for="field.id">{{ field.label }}:</label>
+        <label
+          v-if="field.label !== 'Content'"
+          :for="field.id"
+        >{{ field.label }}:</label>
         <textarea
           v-if="field.id === 'content'"
           :name="field.id"
           :value="field.value"
+          :placeholder="getPlaceholder(field.label)"
           @input="field.value = $event.target.value"
         />
         <input
@@ -32,10 +36,21 @@
       <p>{{ content }}</p>
     </article>
     <section v-if="fetchPetition">
-      <div class="button" @click="toggleMenu">
-        Select Petition
+      <div
+        class="button"
+        @click="toggleMenu"
+      >
+        Attach Petition
+        <font-awesome-icon
+          v-if="!displayMenu"
+          icon="fa-solid fa-caret-down"
+        />
+        <font-awesome-icon
+          v-else
+          icon="fa-solid fa-caret-up"
+        />
       </div>
-      <div  v-if="petition">
+      <div v-if="petition">
         {{ petition.title }}
       </div>
       <div :class="['dropdown', displayMenu ? 'toggle': '']">
@@ -52,6 +67,7 @@
     </section>
    
     <button
+      class="sub"
       type="submit"
     >
       {{ title }}
@@ -98,6 +114,12 @@ export default {
     }
   },
   methods: {
+    getPlaceholder(label){
+      if (label === 'Content'){
+        return "What's on your mind?"
+      }
+      return "";
+    },
     selectPetition(selectedPetition){
       this.petition = selectedPetition;
       this.hideMenu();
@@ -201,8 +223,8 @@ export default {
 
 <style scoped>
 form {
-  border: 1px solid #111;
-  padding: 0.5rem;
+  box-shadow: 0px 2px 5px rgb(141, 156, 160);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -231,6 +253,9 @@ form h3 {
 textarea {
    font-family: inherit;
    font-size: inherit;
+   padding: 10px;
+   border: 1.5px solid rgb(228, 228, 228);
+   border-radius: 5px;
 }
 
 .dropdown {
@@ -270,12 +295,37 @@ textarea {
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
 }
 
+h3 {
+  color: rgb(170, 85, 64);
+}
+
 .button {
     padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: rgb(170, 85, 64);
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: left;
+    max-width: fit-content;
+    min-width: fit-content;
+  }
+
+.button:hover {
+  cursor: pointer;
+}
+  .sub{
+    max-width: fit-content;
+    min-width: fit-content;
+    padding: 7px;
     background-color: rgb(170, 85, 64);
     color: #fff;
     border: none;
     border-radius: 5px;
     font-weight: bold;
+    
   }
 </style>
