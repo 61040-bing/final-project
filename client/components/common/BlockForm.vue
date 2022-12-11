@@ -36,23 +36,32 @@
       <p>{{ content }}</p>
     </article>
     <section v-if="fetchPetition">
-      <div
-        class="button"
-        @click="toggleMenu"
-      >
-        Attach Petition
-        <font-awesome-icon
-          v-if="!displayMenu"
-          icon="fa-solid fa-caret-down"
-        />
-        <font-awesome-icon
-          v-else
-          icon="fa-solid fa-caret-up"
-        />
+      <div class="attachment">
+        <div
+          class="button"
+          @click="toggleMenu"
+        >
+          Attach Petition
+          <font-awesome-icon
+            v-if="!displayMenu"
+            icon="fa-solid fa-caret-down"
+          />
+          <font-awesome-icon
+            v-else
+            icon="fa-solid fa-caret-up"
+          />
+        </div>
+        <div class="petitionPreview" v-if="petition">
+          {{ petition.title }}
+          <font-awesome-icon
+            style="color: rgb(170, 85, 64);"
+            icon="fa-solid fa-xmark"
+            class="cancel"
+            @click="removePetition"
+          />
+        </div>
       </div>
-      <div v-if="petition">
-        {{ petition.title }}
-      </div>
+      
       <div :class="['dropdown', displayMenu ? 'toggle': '']">
         <ul>
           <li
@@ -122,7 +131,16 @@ export default {
     },
     selectPetition(selectedPetition){
       this.petition = selectedPetition;
+      const successMessage = "Attached petition successfully";
+      this.$set(this.alerts, successMessage, 'success');
+      setTimeout(() => this.$delete(this.alerts, successMessage), 2000);
       this.hideMenu();
+    },
+    removePetition(){
+      this.petition = null;
+      const successMessage = "Removed petition successfully";
+      this.$set(this.alerts, successMessage, 'success');
+      setTimeout(() => this.$delete(this.alerts, successMessage), 2000);
     },
     hideMenu() {
         this.displayMenu = false;
@@ -265,6 +283,7 @@ export default {
 </script>
 
 <style scoped>
+
 form {
   box-shadow: 0px 2px 5px rgb(141, 156, 160);
   padding: 1rem;
@@ -301,17 +320,29 @@ textarea {
    border-radius: 5px;
 }
 
+.attachment {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.petitionPreview {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  align-items: center;
+}
+
 .dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
   z-index: 1;
   background: white;
   color: black;
   display: none;
-  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
-  border-radius: 0.5rem;
+  border: 1.5px solid rgb(228, 228, 228);
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .dropdown.toggle {
@@ -370,5 +401,8 @@ h3 {
     border-radius: 5px;
     font-weight: bold;
     
+  }
+  .cancel {
+    cursor: pointer;
   }
 </style>

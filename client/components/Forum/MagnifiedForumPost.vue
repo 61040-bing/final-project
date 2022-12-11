@@ -44,7 +44,7 @@
       <section
         v-if="$store.state.forumPostComments.length"
       >
-        <h1>Comments</h1>
+        <h2>Comments</h2>
         <ForumPost
           v-for="comment in comments"
           :key="comment.id"
