@@ -6,7 +6,7 @@
     <button class="freetPost" @click="showModal"> Create a New Petition </button>
   </div>
 
-  <main class="page" v-if="$store.state.userNeighborhood">
+  <main class="page" v-if="$store.state.userObject && $store.state.userObject.neighborhood">
     <modal :name="'cpModal' + this._uid"
            :width="400"
            :height="400"

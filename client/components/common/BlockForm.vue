@@ -179,16 +179,6 @@ export default {
           this.$store.commit('setUserObject', res.user ? res.user : null);
         }
 
-        if (this.setEmail) {
-          const res = text ? JSON.parse(text) : {user: null};
-          this.$store.commit('setEmail', res.user ? res.user.email : null);
-        }
-
-        if (this.setNeighborhood) {
-          const res = text ? JSON.parse(text) : {user: null};
-          this.$store.commit('setNeighborhood', res.user ? res.user.neighborhood : null);
-        }
-
         if (this.refreshComments) {
           this.$store.commit('refreshForumPostComments', this.$route.params.postId);
         }

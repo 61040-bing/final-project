@@ -111,8 +111,7 @@
       },
       async logout(){
         await  fetch(`/api/users/session`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
-        this.$store.commit('setEmail', null);
-        this.$store.commit('setNeighborhood', null);
+        this.$store.commit('setUserObject', null);
         this.$router.push({name: 'Home'}); // Goes to Home page after signing out
         this.$store.commit('alert', {
           message: 'You are now signed out!', status: 'success'});

@@ -11,8 +11,6 @@ const store = new Vuex.Store({
   state: {
     //TODO: change this into neighborhood objects
     neighborhoods: [],
-    userEmail: null,
-    userNeighborhood: null,
     alerts: {},
     neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
     neighborhoodRoundTableFilter : null,
@@ -31,22 +29,8 @@ const store = new Vuex.Store({
         Vue.delete(state.alerts, payload.message);
       }, 3000);
     },
-    setEmail(state, email) {
-      /**
-       * Update the stored email to the specified one.
-       * @param email - new email to set
-       */
-      state.userEmail = email;
-    },
     setUserObject(state, user){
       state.userObject = user
-    },
-    setNeighborhood(state, neighborhood) {
-      /**
-       * Update the stored neighborhood to the specified one.
-       * @param neighborhood - new neighborhood to set
-       */
-      state.userNeighborhood = neighborhood;
     },
     updateNeighborhoods(state, neighborhoods) {
       /**
@@ -144,8 +128,6 @@ const store = new Vuex.Store({
       const r = await fetch(url);
       let res = await r.json();
       state.userObject = res.user;
-      state.userNeighborhood = res.user.neighborhood
-      state.userEmail = res.user.email
       console.log("user obj", state.userObject)
     },
 

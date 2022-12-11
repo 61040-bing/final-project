@@ -132,8 +132,6 @@ export default {
       hasBody: true,
       neighborhoods: [],
       neighborhoodImgs: [],
-      setEmail: true,
-      setNeighborhood: true,
       setUser: true,
       selected: undefined,
       fields: [

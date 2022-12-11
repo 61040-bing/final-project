@@ -10,8 +10,6 @@ export default {
     return {
       url: '/api/users/session',
       method: 'DELETE',
-      setEmail: true,
-      setNeighborhood: true,
       setUser: true,
       title: 'Sign out',
       fields: [],
