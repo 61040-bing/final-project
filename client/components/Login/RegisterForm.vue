@@ -164,7 +164,7 @@ export default {
   data() {
     return {
       alerts: {},
-      selectingNeighborhood: true,
+      selectingNeighborhood: false,
       url: '/api/users',
       method: 'POST',
       hasBody: true,
