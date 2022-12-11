@@ -15,6 +15,12 @@
       <p class="author">
         Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
       </p>
+
+      <p class = "neighborhood">
+        Neighborhood: {{petition.neighborhoodId.name}}
+
+      </p>
+
     </div>
   </header>
 

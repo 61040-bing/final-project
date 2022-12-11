@@ -49,7 +49,7 @@ class PetitionCollection {
    * @return {Promise<HydratedDocument<Petition>> | Promise<null> } - The petition with the given petitionId, if any
    */
   static async findOne(petitionId: Types.ObjectId | string): Promise<HydratedDocument<Petition>> {
-    return PetitionModel.findOne({_id: petitionId}).populate('authorId');
+    return PetitionModel.findOne({_id: petitionId}).populate('authorId').populate('neighborhoodId');
   }
 
   /**
@@ -75,7 +75,7 @@ class PetitionCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Petition>>> {
     // Retrieves petitions and sorts them from most to least recent
-    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId');
+    return PetitionModel.find({}).sort({dateCreated: -1}).populate('authorId').populate('neighborhoodId');
   }
 
   /**
@@ -86,7 +86,7 @@ class PetitionCollection {
    */
   static async findAllByEmail(email: string): Promise<Array<HydratedDocument<Petition>>> {
     const author = await UserCollection.findOneByEmail(email);
-    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId');
+    return PetitionModel.find({authorId: author._id}).sort({dateCreated: -1}).populate('authorId').populate('neighborhoodId');
   }
 
 /**

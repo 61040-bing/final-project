@@ -86,6 +86,9 @@
                     this.$store.commit('refreshNeighborhoods');
                     this.name = '';
                     this.description = '';
+                        const successMessage = "successfully added a new neighborhood"
+                        this.$set(this.alerts, successMessage, 'success');
+                        setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
                 } catch (e) {
                     this.$set(this.alerts, e, 'error');
                     setTimeout(() => this.$delete(this.alerts, e), 3000);
