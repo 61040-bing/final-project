@@ -2,7 +2,7 @@
   <section
     class="buffer"
     v-if="$store.state.userObject"
-  >   
+  >
     <section class="content"
           v-if="$store.state.neighborhoodRoundTables.length"
         >
@@ -20,7 +20,7 @@
   </section>
   <section v-else>
     Login to View!
-  </section>  
+  </section>
 </template>
 
 <script>
@@ -37,11 +37,11 @@ export default {
         alerts: {}, // Displays success/error messages encountered during roundtable modification,
         cityId: '638ce78e88e91521eb0338c0'
         }
-    }, 
+    },
     mounted(){
       this.fetchNeighborhood();
       if (this.$route.params.id === undefined ) {
-        
+
         // console.log(this.$store.state.neighborhoodRoundTables);
         this.$store.commit('updateRoundTableFilter', this.cityId);
         // console.log('here', this.$store.state.neighborhoodRoundTableFilter );
@@ -54,7 +54,7 @@ export default {
       }
     }
 
- 
+
 }
 </script>
 
@@ -64,7 +64,6 @@ export default {
     margin-top: 50px;
     padding: 0px;
     font-family: Arial;
-    width: 45%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
