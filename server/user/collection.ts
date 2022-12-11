@@ -97,6 +97,17 @@ class UserCollection {
   }
 
   /**
+   * Get all the users in for a given neighborhood
+   *
+   * @param {string} neighborhoodId - The neighborhoodId
+   * @return {Promise<HydratedDocument<User>[]>} - An array of all of the users for the neighborhood
+   */
+ static async findAllByNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<User>>> {
+  const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
+  return UserModel.find({neighborhoodId: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhood');
+}
+
+  /**
    * Delete a user from the collection.
    *
    * @param {string} userId - The userId of user to delete
