@@ -300,8 +300,8 @@
   }
   .linkedPetitionButton{
     color: rgb(69, 150, 231);
-
   }
+  
   .linkedPetitionButton:hover{
     cursor: pointer;
   }
