@@ -5,13 +5,13 @@
     <section class="container">
       <div class="row">
         <div class="author-name">
-        {{ forum.author.firstName + " " + forum.author.lastName }}
-      </div>
+          {{ forum.author.firstName + " " + forum.author.lastName }}
+        </div>
         <font-awesome-icon 
-        v-if="$store.state.userObject._id === forum.author._id"
-        icon="fa-solid fa-trash"
-        @click="deletePost"
-      />
+          v-if="$store.state.userObject._id === forum.author._id"
+          icon="fa-solid fa-trash"
+          @click="deletePost"
+        />
       </div>
       
       <div class="date">
@@ -75,7 +75,7 @@
       </section>
 
 
-      <div v-if="$route.name === 'Home' || ($store.state.userObject && $store.state.userObject.neighborhood._id === forum.neighborhood)">
+      <div v-if="forum.neighborhood === '638ce78e88e91521eb0338c0' || ($store.state.userObject && $store.state.userObject.neighborhood._id === forum.neighborhood)">
         <div
           v-if="!liked"
           class="upvote-button"
