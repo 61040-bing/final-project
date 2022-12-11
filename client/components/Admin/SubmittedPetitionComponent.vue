@@ -15,6 +15,12 @@
       <p class="author">
         Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
       </p>
+
+      <p class = "neighborhood">
+        Neighborhood: {{petition.neighborhoodId.name}}
+
+      </p>
+
     </div>
   </header>
 
@@ -76,7 +82,7 @@ export default {
       console.log(this.petition._id);
       const params = {
         method: 'PUT',
-        message: 'Successfully signed petition!',
+        message: 'Successfully accepted petition!',
         body: JSON.stringify({accept: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
@@ -91,7 +97,7 @@ export default {
        */
       const params = {
         method: 'PUT',
-        message: 'Successfully removed signature from petition!',
+        message: 'Successfully declined petition!',
         body: JSON.stringify({deny: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');

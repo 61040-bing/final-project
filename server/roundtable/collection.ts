@@ -58,7 +58,7 @@ class RoundTableCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<RoundTable>>> {
     // Retrieves RoundTables and sorts them from most to least recent
-    return RoundTableModel.find({}).sort({dateCreated: -1}).populate('authorId').populate('petitionId');
+    return RoundTableModel.find({endDate: {$gt: new Date()}}).sort({dateCreated: -1}).populate('authorId').populate('petitionId');
 
   }
 
@@ -70,7 +70,7 @@ class RoundTableCollection {
    */
   static async findAllByEmail(email: string): Promise<Array<HydratedDocument<RoundTable>>> {
     const author = await UserCollection.findOneByEmail(email);
-    return RoundTableModel.find({authorId: author._id}).populate('authorId').populate('petitionId');
+    return RoundTableModel.find({endDate: {$gt: new Date()}, authorId: author._id}).populate('authorId').populate('petitionId');
 
   }
 
@@ -82,7 +82,7 @@ class RoundTableCollection {
    */
  static async findAllByUserId(userId: Types.ObjectId |string): Promise<Array<HydratedDocument<RoundTable>>> {
   const author = await UserCollection.findOneByUserId(userId);
-  return RoundTableModel.find({authorId: author._id}).populate('authorId').populate('petitionId');
+  return RoundTableModel.find({endDate: {$gt: new Date()}, authorId: author._id}).populate('authorId').populate('petitionId');
 
 }
 
@@ -94,7 +94,7 @@ class RoundTableCollection {
    */
   static async findAllbyPetitionId(petitionId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
     const petition = await PetitionCollection.findOne(petitionId);
-    return RoundTableModel.find({petitionId: petition._id}).populate('_id').populate('petitionId').sort('startDate').populate('authorId');
+    return RoundTableModel.find({endDate: {$gt: new Date()}, petitionId: petition._id}).populate('_id').populate('petitionId').sort('startDate').populate('authorId');
   }
 
 /**
@@ -108,7 +108,7 @@ class RoundTableCollection {
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
   console.log("neighborhood found", neighborhood)
 
-  return RoundTableModel.find({neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate').populate('authorId');
+  return RoundTableModel.find({endDate: {$gt: new Date()}, neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate').populate('authorId');
 }
 
   /**

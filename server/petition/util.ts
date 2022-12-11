@@ -2,12 +2,13 @@ import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Petition, PopulatedPetition} from './model';
 import {User} from "../user/model";
+import { Neighborhood } from 'server/neighborhood/model';
 
 // Update this if you add a property to the forum type!
 type PetitionResponse = {
   _id: string;
   author: User;
-  neighborhood:string;
+  neighborhood:Neighborhood;
   dateCreated: string;
   title: string;
   content: string;
@@ -42,11 +43,22 @@ const constructPetitionResponse = (petition: HydratedDocument<Petition>): Petiti
   const author = petitionCopy.authorId;
 
   delete petitionCopy.authorId;
+  // console.log("util response",{
+  //   ...petitionCopy,
+  //   _id: petitionCopy._id.toString(),
+  //   author,
+  //   neighborhood: petitionCopy.neighborhoodId,
+  //   dateCreated: formatDate(petition.dateCreated),
+  //   targetSignatures: petitionCopy.targetSignatures.toString(),
+  //   submitted: petitionCopy.submitted.toString(),
+  //   accepted: petitionCopy.accepted.toString(),
+  //   denied: petitionCopy.denied.toString(),
+  // })
   return {
     ...petitionCopy,
     _id: petitionCopy._id.toString(),
     author,
-    neighborhood: name,
+    neighborhood: petitionCopy.neighborhoodId,
     dateCreated: formatDate(petition.dateCreated),
     targetSignatures: petitionCopy.targetSignatures.toString(),
     submitted: petitionCopy.submitted.toString(),

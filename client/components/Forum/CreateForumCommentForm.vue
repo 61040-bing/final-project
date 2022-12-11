@@ -11,7 +11,7 @@ export default {
       fields: [
         {id: 'content', label: 'Content', value: ''}
       ],
-      title: 'Create a comment on this forum post',
+      title: 'Comment',
       refreshComments: true,
       callback: () => {
         const message = 'Successfully created a forum comment!';
