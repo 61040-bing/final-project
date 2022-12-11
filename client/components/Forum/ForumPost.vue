@@ -23,6 +23,9 @@
         {{ forum.content }}
       </div>
     </router-link>
+    <div v-else class="content">
+      {{ forum.content }}
+    </div>
 
     <section style="display: flex; flex-direction: row; justify-content: space-between;">
       <router-link

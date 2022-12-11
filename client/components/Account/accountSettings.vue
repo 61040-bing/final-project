@@ -71,6 +71,15 @@
         >
       </article>
     </div>
+    <section class="alerts">
+      <article
+        v-for="(status, alert, index) in alerts"
+        :key="index"
+        :class="status"
+      >
+        <p>{{ alert }}</p>
+      </article>
+    </section>
 
     <div @click="logout" class="button-click">logout </div>
   </section>
@@ -89,6 +98,7 @@ export default {
       editing_neighborhood: false,
       neighborhood_draft: this.$store.state.userObject.neighborhood.name,
       displayNeighborhoodMenu: true,
+      alerts:{}
     }
   },
   methods: {
@@ -149,8 +159,14 @@ export default {
       }
     },
     async submitEmailEdit(neighborhoodId){
-      console.log("here we are submitting email")
+      const emailRegex = /^[\w+.\-]{0,25}@(\w+)(\.)(\w+)$/i;
       try {
+        if (!this.email_draft){
+          throw new Error("email cannot be empty")
+        }
+        if (!emailRegex.test(this.email_draft)) {
+            throw new Error('Email must be a nonempty alphanumeric string with no empty spaces.')
+        }
         const fields = {email: this.email_draft};
         const r = await  fetch(`/api/users/`, {method: 'PATCH', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
         if (!r.ok) {
