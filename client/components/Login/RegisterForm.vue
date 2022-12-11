@@ -104,11 +104,11 @@
       </section>
   </article>
     <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;" v-if="selectingNeighborhood">
-      <div class = "submit-button"
+      <button class = "submit-button"
            type="submit"
       >
         Register
-      </div>
+      </button>
     </div>
 
     <section v-if="!selectingNeighborhood">
@@ -164,7 +164,7 @@ export default {
   data() {
     return {
       alerts: {},
-      selectingNeighborhood: false,
+      selectingNeighborhood: true,
       url: '/api/users',
       method: 'POST',
       hasBody: true,
@@ -282,6 +282,7 @@ form h3 {
   color: white;
   font-family: Roboto;
   transition: all 0.3s;
+  border-color: transparent;
 }
 .submit-button:hover{
   cursor: pointer;
