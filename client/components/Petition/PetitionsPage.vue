@@ -16,7 +16,7 @@
       </p>
         <div class="mainActions">
 
-          <h3>Create A Petition</h3>
+          <!-- <h3>Create A Petition</h3> -->
         </div>
         <CreatePetitionForm/>
 
@@ -93,6 +93,16 @@ export default {
 </script>
 
 <style scoped>
+.page {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+h2 {
+  color: brown;
+  text-align: center;
+}
 section {
   display: flex;
   flex-direction: column;

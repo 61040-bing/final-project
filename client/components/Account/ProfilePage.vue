@@ -95,7 +95,7 @@
 </template>
 
   <script>
-  import AccountSettings from "./AccountSettings";
+  import AccountSettings from "./accountSettings";
   import PetitionComponent from '@/components/Petition/PetitionComponent.vue';
   import ForumPost from '@/components/Forum/ForumPost.vue';
 
