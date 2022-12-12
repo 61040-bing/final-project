@@ -29,22 +29,31 @@
         </p>
       </div>
     </header>
-    <p
+    <!-- <p
       class="content"
     >
       {{ petition.content }}
-    </p>
+    </p> -->
    <!-- this needs class and left alignment -->
     <p class="signatureProgress">
       {{signatures.length}} signatures / {{petition.targetSignatures}} Target Signatures
     </p>
-    <div class = "roundtableAndSignatureRow">
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
         <!-- <button @click="deletePetition">
           🗑️ Delete
         </button> -->
+        <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
+          <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
+            <button class="removeSignature" v-if="signed" @click="unsignPetition">
+                💔 Remove Signature
+            </button>
+
+            <button v-else @click="signPetition">
+                ❤️ Sign
+            </button>
+          </p>
         <p class = "roundTable">
           <button @click="toggleScheduling">
             Schedule RoundTable
@@ -54,20 +63,7 @@
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
-
-
-    <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
-      <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
-
-        <button class="removeSignature" v-if="signed" @click="unsignPetition">
-            💔 Remove Signature
-        </button>
-
-        <button v-else @click="signPetition">
-            ❤️ Sign
-        </button>
-      </p>
-    </div>
+    
 
     <router-link
       class="linkedPetition"
@@ -290,7 +286,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 90%;
+    margin-bottom: 30%;
     text-align: left;
     
   }
@@ -313,7 +309,7 @@ export default {
     width: 100%;
     /* column-gap: 300px; */
 }
-.roundtableAndSignatureRow{
+.actions{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -361,7 +357,9 @@ border-radius: 15px;
 .denied {
   color: red;
 }
-
+.signatureProgress{
+  text-align: left;
+}
 .scheduleTab{
   z-index: 1;
   background-color: white;
