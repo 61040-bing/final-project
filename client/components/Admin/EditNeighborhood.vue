@@ -31,6 +31,15 @@
         src="../../public/plus.png"
       >
     </div>
+    <section style="position:relative;" class="alerts">
+      <article
+        v-for="(status, alert, index) in alerts"
+        :key="index"
+        :class="status"
+      >
+        <p>{{ alert }}</p>
+      </article>
+    </section>
     
     
     <h3 class="header">
@@ -43,15 +52,6 @@
         :neighborhood="neighborhood"
       />
     </div>
-    <section class="alerts">
-      <article
-        v-for="(status, alert, index) in alerts"
-        :key="index"
-        :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
   </section>
   <section v-else>
     Forbidden Access
@@ -76,6 +76,12 @@
             this.clicked = true
           },
             async submitNeighborhood(){
+              if (this.name === '' || this.description === ''){
+                const e = "Error: Name and description must be nonempty"
+                this.$set(this.alerts, e, 'error');
+                setTimeout(() => this.$delete(this.alerts, e), 3000);
+                return;
+              }
                 try {
                     const fields = {name: this.name, description: this.description};
                     const r = await  fetch(`/api/neighborhood/`, {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
