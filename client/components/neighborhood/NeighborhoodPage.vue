@@ -33,7 +33,7 @@
         >
           <font-awesome-icon icon="fa-solid fa-x" />
         </p>
-        <div style="margin: 16px">
+        <div style="font-family:Arial, Helvetica, sans-serif; margin: 16px">
           The wall of honor identifies the most active neighborhood in Cambridge in the past week.
           It is calculated by comparing petition and forum activity across neighborhoods, adjusted for
           neighborhood population.
@@ -263,7 +263,7 @@
 }
 
 .info-woh{
-  color: rgb(147, 147, 154);
+  color: rgb(121, 121, 126);
   font-weight: lighter;
   width: 100%;
   margin-top: 16px;

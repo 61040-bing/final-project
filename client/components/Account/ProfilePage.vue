@@ -144,6 +144,12 @@ h4 {
 .navItem {
   padding: 5px;
   color: rgb(84, 84, 84);
+  transition: all 0.3s;
+  border-radius: 5px;
+}
+
+.navItem:hover {
+  background-color: rgb(0, 0, 0, 0.1);
 }
 .cont {
   display: flex;
@@ -167,11 +173,11 @@ h4 {
   font-family: Arial;
   width: 45%;
 }
-.selected {
+.selected,
+.selected:hover {
   color: rgb(170, 85, 64);
   font-weight: bolder;
   background-color: rgb(170, 85, 64, 0.2);
-  border-radius: 5px;
 }
 
 .page{

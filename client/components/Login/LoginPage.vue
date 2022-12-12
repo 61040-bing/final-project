@@ -21,19 +21,19 @@
 </template>
 
 <script>
-import RegisterForm from '@/components/Login/RegisterForm.vue';
 import LoginForm from '@/components/Login/LoginForm.vue';
-import LogoutForm from '@/components/Account/LogoutForm.vue';
 
 export default {
   name: 'LoginPage',
   components: {
-    RegisterForm,
-    LoginForm,
-    LogoutForm
+    LoginForm
   }
 };
 </script>
 
-<style>
+<style scoped>
+
+.page {
+  font-family: Arial, Helvetica, sans-serif;
+}
 </style>

@@ -127,7 +127,6 @@
     data() {
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
-
         response: null
       };
     },
