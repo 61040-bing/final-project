@@ -49,18 +49,21 @@
         >
 
         <font-awesome-icon
-          v-if="!editing_email" 
+          v-if="!editing_email"
+          class="icons" 
           icon="fa-solid fa-pencil"
           @click="startEditingEmail"
         />
         <font-awesome-icon 
           v-if="editing_email"
+          class="icons"
           icon="fa-solid fa-check"
           @click="submitEmailEdit" 
         />
 
         <font-awesome-icon 
           v-if="editing_email"
+          class="icons"
           icon="fa-solid fa-xmark"
           @click="stopEditingEmail"
         />
@@ -283,5 +286,10 @@ img {
 .dropdown-content {
   width: 100%;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+
+.icons {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 </style>
