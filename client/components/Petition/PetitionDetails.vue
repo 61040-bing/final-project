@@ -5,6 +5,12 @@
   <article v-if="(petition !== null)"
     class="freet"
   >
+  <button
+    class="back"
+    @click="$router.go(-1)">
+    Back
+  </button>
+  
   <header class="freetHeader">
       <div class="mainInfo">
 
@@ -63,9 +69,10 @@
 
     <p
       v-if="showingSignatures"
+      v-for="signature in this.signatures"
       class="signatures"
     >
-    {{ this.signatures }}
+      {{ signature.authorId.firstName + " " +  signature.authorId.lastName }}
     </p>
 
     <h3 v-if="roundTables.length">RoundTables</h3>
@@ -107,7 +114,7 @@ export default {
     await this.getRoundTables();
 
     for (const signature of this.signatures) {
-      if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
+      if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
         this.signed = true;
       }
     }
@@ -239,6 +246,7 @@ export default {
           }
           console.log(res.length);
           this.signatures = res;
+          console.log(this.signatures);
         } catch (e) {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);

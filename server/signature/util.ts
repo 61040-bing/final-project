@@ -1,11 +1,12 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Signature, PopulatedSignature} from '../signature/model';
+import {User} from "../user/model";
 
 // Update this if you add a property to the Signature type!
 type SignatureResponse = {
   _id: string;
-  author: string;
+  author: User;
   petition: string;
   dateCreated: string;
 };
@@ -31,12 +32,12 @@ const constructSignatureResponse = (signature: HydratedDocument<Signature>): Sig
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  const {email} = signatureCopy.authorId;
+  const author = signatureCopy.authorId;
   delete signatureCopy.authorId;
   return {
     ...signatureCopy,
     _id: signatureCopy._id.toString(),
-    author: email,
+    author,
     petition:signatureCopy.petitionId.toString(),
     dateCreated: formatDate(signature.dateCreated)
   };
