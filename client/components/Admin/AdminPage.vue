@@ -3,7 +3,6 @@
     v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
     class="dashboard"
   >
-    <h2>Dashboard</h2>
     <div class="container">
       <router-link to="/admin/submittedpetitions">
         <button
@@ -16,7 +15,7 @@
          
           <font-awesome-icon
             icon="fa-solid fa-scroll "
-            style="width: 150px; height: 150px;"
+            style="width: 100px; height: 100px;"
           />
         </button>
       </router-link>
@@ -25,10 +24,12 @@
           style="background-color: #4CAF50;"
           class="button"
         >
-          Edit Neighborhoods
+          <span style="padding-left: 15px; padding-right: 15px; text-decoration: none">
+            Edit Neighborhoods
+          </span>
           <font-awesome-icon 
-            style="width: 150px; height: 150px;"
-            icon="fa-solid fa-pen-to-square"
+            style="width: 100px; height: 100px;"
+            icon="fa-solid fa-file-pen"
           />
         </button>
       </router-link>
@@ -71,16 +72,18 @@
   display: flex;
   flex-direction: column;
   margin: auto;
+  margin-top: 2%;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
 }
 .container {
   display: flex;
   flex-direction: row;
   gap: 200px;
-  align-items: center;
-  margin-top: 5%;
   justify-content: space-evenly;
+  position: absolute;
+  top: 40%;
 }
 
 .button {
@@ -95,8 +98,8 @@
   border-radius: 5px;
   padding: 20px;
   gap: 20px;
-  width: 100%;
-  height: 200px;
+  width: 450px;
+  height: 150px;
 }
 
 a {

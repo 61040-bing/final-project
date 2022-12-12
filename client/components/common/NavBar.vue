@@ -72,7 +72,10 @@
       v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
       class="left"
     >
-      <h1 class="title">
+      <h1
+        class="title home-icon"
+        @click="navigateTo('/admin')"
+      >
         Administrator Account
       </h1>
     </div>
