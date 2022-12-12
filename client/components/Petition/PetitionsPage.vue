@@ -1,7 +1,7 @@
 <!-- Default page that also displays freets -->
 
 <template>
-  <main>
+  <section>
     <div v-if="$store.state.userObject && ($route.params.id === $store.state.userObject.neighborhood._id || $route.params.id === undefined)" class="freetButton">
     <button class="freetPost" @click="showModal"> Create a New Petition </button>
   </div>
@@ -59,7 +59,7 @@
   <main v-else>
     Login to View!
   </main>
-</main>
+</section>
 </template>
 
 <script>
