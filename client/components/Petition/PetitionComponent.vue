@@ -9,53 +9,74 @@
     <header class="freetHeader">
       <div class="mainInfo">
 
-      <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+        <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
 
-      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+        <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
-      <p class="title">
-        {{( petition.title)}}
-      </p>
-
-      <p class="author">
-        Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
-      </p>
-    </div>
-  </header>
+        <div class="row">
+          <div class="title">
+            {{( petition.title)}}
+          </div>
+          <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+            class="deleteAction">
+            <button @click="deletePetition">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+        <p class="author">
+          Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
+        </p>
+      </div>
+    </header>
     <p
       class="content"
     >
       {{ petition.content }}
     </p>
-
+   <!-- this needs class and left alignment -->
+    <p class="signatureProgress">
+      {{signatures.length}} signatures / {{petition.targetSignatures}} Target Signatures
+    </p>
+    <div class = "roundtableAndSignatureRow">
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
-        <button @click="deletePetition">
+        <!-- <button @click="deletePetition">
           🗑️ Delete
-        </button>
+        </button> -->
 
-        <button @click="toggleScheduling">
-          Schedule RoundTable
-        </button>
+        <p class = "roundTable">
+          <button @click="toggleScheduling">
+            Schedule RoundTable
+          </button>
+        </p>
 
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
 
-    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-      <button v-if="signed" @click="unsignPetition">
-          💔 Remove Signature
-      </button>
+    <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
+      <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-      <button v-else @click="signPetition">
-          ❤️ Sign
-      </button>
-    </p>
+        <button class="removeSignature" v-if="signed" @click="unsignPetition">
+            💔 Remove Signature
+        </button>
 
-    <p>
-      {{signatures.length}} signatures
-    </p>
+        <button v-else @click="signPetition">
+            ❤️ Sign
+        </button>
+      </p>
+    </div>
+
+    <router-link
+      class="linkedPetition"
+      :to="`/petition/${petition._id}`">
+      <!-- Open Petition -->
+      <font-awesome-icon icon="fa-solid fa-file" />
+      Open Petition
+    </router-link>
+
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -65,12 +86,6 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-
-  <router-link
-    class="expand"
-    :to="`/petition/${petition._id}`">
-    Open Petition
-  </router-link>
 
   </article>
 </template>
@@ -272,22 +287,77 @@ export default {
 </script>
 
 <style scoped>
-
-.freet {
-    border: 0.5px solid rgb(228, 228, 228);
-    padding: 20px;
+.freetHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 90%;
+    text-align: left;
+    
+  }
+ /* old */
+.freet { 
+    border: 1px solid rgb(228, 228, 228);
+    padding: 24px;
     position: relative;
-    border-radius: 3px;
     margin: 3px;
+    max-width: 100%;
+    /* height: 250px; */
+    box-shadow: 0px 2px 5px rgb(141, 156, 160);
+    border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-.author {
-  font-size: medium;
+/* naomi */
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* column-gap: 300px; */
+}
+.roundtableAndSignatureRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
+/* naomi */
+.roundTable{
+border-radius: 15px;
+}
+.signature{
+border-radius: 15px;
+}
+.deleteAction button {
+  padding-left:5px;
+  padding-right:5px;
+}
+/* naomi */
+.author {
+    font-size: 10px;
+    color: rgb(190, 186, 186);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 16px;
+    
+}
+/* naomi */
+.title{
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+.content{
+  text-align: left;
+}
 .accepted {
   color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    text-align: left;
 }
 
 .denied {
@@ -298,4 +368,11 @@ export default {
   z-index: 1;
   background-color: white;
 }
+.linkedPetition{
+    color: rgb(69, 150, 231);
+    text-align: left;
+  }
+.linkedPetition:hover{
+    cursor: pointer;
+  }
 </style>
