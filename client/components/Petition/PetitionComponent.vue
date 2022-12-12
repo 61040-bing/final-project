@@ -72,7 +72,6 @@
     <router-link
       class="linkedPetition"
       :to="`/petition/${petition._id}`">
-      <!-- Open Petition -->
       <font-awesome-icon icon="fa-solid fa-file" />
       Open Petition
     </router-link>
@@ -302,7 +301,6 @@ export default {
     position: relative;
     margin: 3px;
     max-width: 100%;
-    /* height: 250px; */
     box-shadow: 0px 2px 5px rgb(141, 156, 160);
     border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;

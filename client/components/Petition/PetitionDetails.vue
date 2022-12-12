@@ -14,62 +14,64 @@
   <header class="freetHeader">
       <div class="mainInfo">
 
-      <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+        <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
 
-      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+        <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
-      <div class="row">
-        <p class="title">
-          {{( petition.title)}}
+        <div class="row">
+          <p class="title">
+            {{( petition.title)}}
+          </p>
+            <button @click="deletePetition">
+              🗑️ Delete
+            </button>
+        </div>
+        <p class="author">
+          Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
         </p>
-          <button @click="deletePetition">
-            🗑️ Delete
-          </button>
       </div>
-      <p class="author">
-        Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
-      </p>
-    </div>
+  </header>
 
+  <p
+    class="content"
+  >
+    {{ petition.content }}
+  </p>
+
+
+    <div class="rowActions">
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-        class="actions">
-  
+          class="actions">
+
 
         <button @click="toggleScheduling">
           Schedule RoundTable
         </button>
 
-      <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
-      :petition="petition"/>
+        <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
+        :petition="petition"/>
       </div>
+      <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-    </header>
+        <button v-if="signed" @click="unsignPetition">
+            💔 Remove Signature
+        </button>
 
-    <p
-      class="content"
-    >
-      {{ petition.content }}
-    </p>
-
-    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
-
-      <button v-if="signed" @click="unsignPetition">
-          💔 Remove Signature
-      </button>
-
-      <button v-else @click="signPetition">
-          ❤️ Sign
-      </button>
-    </p>
-
+        <button v-else @click="signPetition">
+            ❤️ Sign
+        </button>
+      </p>
     
-    <button @click="toggleSignatures" v-if="!showingSignatures">
-          Show Signatures: {{signatures.length}}
-      </button>
-      <button @click="toggleSignatures" v-if="showingSignatures">
-          Hide Signatures
-      </button>
-
+        <button @click="toggleSignatures" v-if="!showingSignatures">
+              Show Signatures: {{signatures.length}}
+        </button>
+        <p class="showing">
+          
+          <button @click="toggleSignatures" v-if="showingSignatures">
+              Hide Signatures
+          </button>
+        </p>
+    </div>
     <p
       v-if="showingSignatures"
       v-for="signature in this.signatures"
@@ -77,13 +79,6 @@
     >
       {{ signature.authorId.firstName + " " +  signature.authorId.lastName }}
     </p>
-
-    <h3 v-if="roundTables.length">RoundTables</h3>
-    <p v-for="roundTable in roundTables">
-   <!-- call roundtable component here -->
-      {{formatDate(roundTable.startDate)}}
-    </p>
-    
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -93,18 +88,33 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-
+    <section v-if="roundTables.length">
+   
+      <!-- {{formatDate(roundTable.startDate)}} -->
+      <RoundTableComponent
+        v-for="roundTable in roundTables"
+        :key="roundTable.id"
+        :roundTable="roundTable"
+      />
+    </section>
+    <article
+    v-else
+    >
+        <h3>No RoundTables found.</h3>
+    </article>
   </article>
+
 </template>
 
 <script>
 
 import ScheduleRoundTableForm from '@/components/Petition/ScheduleRoundTableForm.vue';
+import RoundTableComponent from '@/components/roundtable/RoundTableComponent.vue';
 
 const none_string = "Non"
 export default {
   name: 'PetitionComponent',
-  components: {ScheduleRoundTableForm},
+  components: {ScheduleRoundTableForm, RoundTableComponent},
   props: {
     petitionId: {
       type : String,
@@ -380,9 +390,27 @@ export default {
     padding: 24px;
     position: relative;
     margin: 3px;
+    width: 75%;
+    max-width: 100%;
+    box-shadow: 0px 2px 5px rgb(141, 156, 160);
+    border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+.freetHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    text-align: left;
+    
+  }
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* column-gap: 300px; */
+}
 /* format this page once petition component is fixed */
 /* figure out why petition fills whole page even when styling is done */
 .accepted {
@@ -392,7 +420,32 @@ export default {
 .denied {
   color: red;
 }
-
+.author {
+    font-size: 10px;
+    color: rgb(190, 186, 186);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 16px;
+    
+}
+/* naomi */
+.title{
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 5px;
+    margin-right: 30px;
+    font-weight: bold;
+}
+.rowActions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+}
+.showing button{
+  background-color: brown;
+  color: white;
+  border-radius: 5px;
+}
 .scheduleTab{
   z-index: 1;
   background-color: white;
