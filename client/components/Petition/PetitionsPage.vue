@@ -6,10 +6,10 @@
     <button class="freetPost" @click="showModal"> Create a New Petition </button>
   </div>
 
-  <main class="page" v-if="$store.state.userObject && $store.state.userObject.neighborhood">
+  <section class="page" v-if="$store.state.userObject && $store.state.userObject.neighborhood">
     <modal :name="'cpModal' + this._uid"
            :width="400"
-           :height="400"
+           :height="500"
            :adaptive="true">
       <p class = "x-icon" @click="hideModal">
         <font-awesome-icon icon="fa-solid fa-x" />
@@ -55,10 +55,10 @@
         <h3>No petitions found.</h3>
       </article>
     </section>
-  </main>
-  <main v-else>
+  </section>
+  <section v-else>
     Login to View!
-  </main>
+  </section>
 </section>
 </template>
 
