@@ -49,7 +49,15 @@
         /> View replies
       </router-link>
       <section v-if="forum.petitionId">
-        <div
+        
+      <router-link
+        class="linkedPetitionButton"
+        :to="`/petition/${forum.petitionId}`">
+        <font-awesome-icon icon="fa-solid fa-file" />
+        Linked Petition
+      </router-link>
+
+        <!-- <div
           class="linkedPetitionButton"
           @click="showModal"
         >
@@ -69,7 +77,7 @@
             <font-awesome-icon icon="fa-solid fa-x" />
           </p>
           <PetitionComponent :petition-id="forum.petitionId" />
-        </modal>
+        </modal> -->
       </section>
       <div v-if="showUpvote">
         <div
