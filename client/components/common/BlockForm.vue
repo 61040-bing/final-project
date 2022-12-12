@@ -24,7 +24,7 @@
         />
         <input
           v-else
-          :type="field.id === 'password' ? 'password' : 'targetSignatures' ? 'number' : 'text'"
+          :type="field.id === 'password' ? 'password' : (field.id === 'targetSignatures' ? 'number' : 'text')"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
