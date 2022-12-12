@@ -99,6 +99,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+h2 {
+  color: brown;
+  text-align: center;
+}
 section {
   display: flex;
   flex-direction: column;
