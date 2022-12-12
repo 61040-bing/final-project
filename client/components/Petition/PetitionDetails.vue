@@ -12,10 +12,14 @@
 
       <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
-      <p class="title">
-        {{( petition.title)}}
-      </p>
-
+      <div class="row">
+        <p class="title">
+          {{( petition.title)}}
+        </p>
+          <button @click="deletePetition">
+            🗑️ Delete
+          </button>
+      </div>
       <p class="author">
         Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
       </p>
@@ -23,13 +27,11 @@
 
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
-        <button @click="deletePetition">
-          🗑️ Delete
-        </button>
+  
 
-        <!-- <button @click="toggleScheduling">
+        <button @click="toggleScheduling">
           Schedule RoundTable
-        </button> -->
+        </button>
 
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
@@ -43,7 +45,7 @@
       {{ petition.content }}
     </p>
 
-    <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
       <button v-if="signed" @click="unsignPetition">
           💔 Remove Signature
@@ -54,6 +56,7 @@
       </button>
     </p>
 
+    
     <button @click="toggleSignatures" v-if="!showingSignatures">
           Show Signatures: {{signatures.length}}
       </button>
@@ -70,7 +73,7 @@
 
     <h3 v-if="roundTables.length">RoundTables</h3>
     <p v-for="roundTable in roundTables">
-   
+   <!-- call roundtable component here -->
       {{formatDate(roundTable.startDate)}}
     </p>
     
@@ -364,15 +367,16 @@ export default {
 
 <style scoped>
 
-.freet {
-    border: 0.5px solid rgb(228, 228, 228);
-    padding: 20px;
+.freet { 
+    border: 1px solid rgb(228, 228, 228);
+    padding: 24px;
     position: relative;
-    border-radius: 3px;
     margin: 3px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* format this page once petition component is fixed */
+/* figure out why petition fills whole page even when styling is done */
 .accepted {
   color: green;
 }
