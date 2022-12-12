@@ -200,6 +200,10 @@ export default {
           let startHour = parseInt(startTime.value[0] + startTime.value[1]);
           startHour += 5;
 
+          if (startHour >= 24) {
+            startHour -= 24;
+          }
+
           const newStartHour = startHour.toString().length === 2? startHour.toString() : "0" + startHour.toString();
 
           const finalStartDate = startDate.value + "T" + newStartHour + startTime.value[2] + startTime.value[3] + startTime.value[4] + ":00Z";
@@ -207,6 +211,10 @@ export default {
 
           let endHour = parseInt(endTime.value[0] + endTime.value[1]);
           endHour += 5;
+
+          if (endHour >= 24) {
+            endHour -= 24;
+          }
 
           const newEndHour = endHour.toString().length === 2? endHour.toString() : "0" + endHour.toString();
 
