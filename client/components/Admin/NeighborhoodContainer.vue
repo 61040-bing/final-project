@@ -8,27 +8,33 @@
         @input="draft = $event.target.value"
       />
       <div>
-        <img
-        v-if="!editing"
-        src="../../public/pencil.png"
-        @click="startEditing"
-      >
-      <img
-        v-if="editing"
-        src="../../public/yes.png"
-        @click="submitEdit"
-      >
-      <img
-        v-if="editing"
-        src="../../public/no.png"
-        @click="stopEditing"
-      >
-      <img
-        src="../../public/trash.png"
-        @click="deleteNeighborhood"
-      >
+        <font-awesome-icon 
+          v-if="!editing"
+          class="icons"
+          icon="fa-solid fa-pencil"
+          @click="startEditing" 
+        />
+
+        <font-awesome-icon 
+          v-if="editing"
+          class="icons"
+          icon="fa-solid fa-check"
+          @click="submitEdit" 
+        />
+
+        <font-awesome-icon 
+          v-if="editing"
+          class="icons"
+          icon="fa-solid fa-xmark"
+          @click="stopEditing"
+        />
+
+        <font-awesome-icon 
+          class="icons"
+          icon="fa-solid fa-trash"
+          @click="deleteNeighborhood"
+        />
       </div>
-      
     </button>
     <section class="alerts">
       <article
@@ -146,4 +152,8 @@
     flex-direction: row;
     justify-content: space-between;
   }
+ .icons {
+  margin-right: 12px;
+ }
+
 </style>
