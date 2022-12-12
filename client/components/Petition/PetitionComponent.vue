@@ -38,12 +38,7 @@
     <p class="signatureProgress">
       {{signatures.length}} signatures / {{petition.targetSignatures}} Target Signatures
     </p>
-      <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-        class="actions">
-        <!-- <button @click="deletePetition">
-          🗑️ Delete
-        </button> -->
-        <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
+    <div class="allActions">
           <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
             <button class="removeSignature" v-if="signed" @click="unsignPetition">
@@ -54,6 +49,12 @@
                 ❤️ Sign
             </button>
           </p>
+      <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+        class="actions">
+        <!-- <button @click="deletePetition">
+          🗑️ Delete
+        </button> -->
+        <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
         <p class = "roundTable">
           <button @click="toggleScheduling">
             Schedule RoundTable
@@ -63,6 +64,7 @@
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
+    </div>
     
 
     <router-link
@@ -309,7 +311,7 @@ export default {
     width: 100%;
     /* column-gap: 300px; */
 }
-.actions{
+.allActions{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -22,9 +22,12 @@
           <p class="title">
             {{( petition.title)}}
           </p>
+          <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+            class="deleteAction">
             <button @click="deletePetition">
               🗑️ Delete
             </button>
+          </div>
         </div>
         <p class="author">
           Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
@@ -38,40 +41,40 @@
     {{ petition.content }}
   </p>
 
+  <div class="allActions">
+    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-  <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-      class="actions">
+          <button v-if="signed" @click="unsignPetition">
+              💔 Remove Signature
+          </button>
 
-    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
-
-      <button v-if="signed" @click="unsignPetition">
-          💔 Remove Signature
-      </button>
-
-      <button v-else @click="signPetition">
-          ❤️ Sign
-      </button>
+          <button v-else @click="signPetition">
+              ❤️ Sign
+          </button>
     </p>
+    <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+        class="actions">
 
-    <button @click="toggleScheduling">
-      Schedule RoundTable
-    </button>
+      <button @click="toggleScheduling">
+        Schedule RoundTable
+      </button>
 
-    <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
-    :petition="petition"/>
+      <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
+      :petition="petition"/>
 
 
-    <button @click="toggleSignatures" v-if="!showingSignatures">
-          Show Signatures: {{signatures.length}}
-    </button>
-    <p class="showing">
+      <button @click="toggleSignatures" v-if="!showingSignatures">
+            Show Signatures: {{signatures.length}}
+      </button>
+      <p class="showing">
+        
+        <button @click="toggleSignatures" v-if="showingSignatures">
+            Hide Signatures
+        </button>
+      </p>
       
-      <button @click="toggleSignatures" v-if="showingSignatures">
-          Hide Signatures
-      </button>
-    </p>
-    
     </div>
+  </div>
     <p
       v-if="showingSignatures"
       v-for="signature in this.signatures"
@@ -402,8 +405,12 @@ export default {
     align-items: flex-start;
     margin-bottom: 40px;
     text-align: left;
+    /* width: 100%; */
     
   }
+.mainInfo{
+  width: 100%;
+}
 .row{
     display: flex;
     flex-direction: row;
@@ -427,6 +434,9 @@ export default {
     margin-bottom: 16px;
     
 }
+.content{
+  width: 100%;
+}
 /* naomi */
 .title{
     font-size: 25px;
@@ -435,11 +445,12 @@ export default {
     margin-right: 30px;
     font-weight: bold;
 }
-.rowActions{
+
+.allActions{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-   
+    /* width: 100%; */
 }
 .showing button{
   background-color: brown;
