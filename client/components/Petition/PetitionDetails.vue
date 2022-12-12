@@ -39,38 +39,38 @@
   </p>
 
 
-    <div class="rowActions">
-      <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-          class="actions">
+  <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+      class="actions">
+
+    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+
+      <button v-if="signed" @click="unsignPetition">
+          💔 Remove Signature
+      </button>
+
+      <button v-else @click="signPetition">
+          ❤️ Sign
+      </button>
+    </p>
+
+    <button @click="toggleScheduling">
+      Schedule RoundTable
+    </button>
+
+    <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
+    :petition="petition"/>
 
 
-        <button @click="toggleScheduling">
-          Schedule RoundTable
-        </button>
-
-        <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
-        :petition="petition"/>
-      </div>
-      <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
-
-        <button v-if="signed" @click="unsignPetition">
-            💔 Remove Signature
-        </button>
-
-        <button v-else @click="signPetition">
-            ❤️ Sign
-        </button>
-      </p>
+    <button @click="toggleSignatures" v-if="!showingSignatures">
+          Show Signatures: {{signatures.length}}
+    </button>
+    <p class="showing">
+      
+      <button @click="toggleSignatures" v-if="showingSignatures">
+          Hide Signatures
+      </button>
+    </p>
     
-        <button @click="toggleSignatures" v-if="!showingSignatures">
-              Show Signatures: {{signatures.length}}
-        </button>
-        <p class="showing">
-          
-          <button @click="toggleSignatures" v-if="showingSignatures">
-              Hide Signatures
-          </button>
-        </p>
     </div>
     <p
       v-if="showingSignatures"
