@@ -41,8 +41,8 @@
     {{ petition.content }}
   </p>
 
-  <div class="allActions">
-    <p class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
+  <div class="detailsActions">
+    <div class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
           <button v-if="signed" @click="unsignPetition">
               💔 Remove Signature
@@ -51,7 +51,7 @@
           <button v-else @click="signPetition">
               ❤️ Sign
           </button>
-    </p>
+    </div>
     <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
 
@@ -61,8 +61,8 @@
 
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
-
-
+      </div>
+      <div class="showSignatures">
       <button @click="toggleSignatures" v-if="!showingSignatures">
             Show Signatures: {{signatures.length}}
       </button>
@@ -446,10 +446,11 @@ export default {
     font-weight: bold;
 }
 
-.allActions{
+.detailsActions{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    /* flex-basis: 33.33%; */
     /* width: 100%; */
 }
 .showing button{
