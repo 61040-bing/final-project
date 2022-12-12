@@ -9,6 +9,7 @@
         </div>
         <font-awesome-icon
           v-if="$store.state.userObject._id === forum.author._id"
+          class="trash"
           icon="fa-solid fa-trash"
           @click="deletePost"
         />
@@ -193,6 +194,7 @@
             this.$store.commit('refreshForumPosts', this.forum.neighborhood);
           }
         }
+        this.$emit('refresh');
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);
@@ -302,7 +304,7 @@
   .x-icon{
     font-weight: bold; text-align: right; margin-top: 24px; margin-right: 24px; font-size: 24px;
   }
-  .x-icon:hover{
+  .trash:hover, .x-icon:hover{
     cursor: pointer;
   }
 

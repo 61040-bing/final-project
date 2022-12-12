@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     alerts: {},
     neighborhoodRoundTables: [], // the roundTables for the user's neighborhood
     neighborhoodRoundTableFilter : null,
+    userPosts: [],
     forumPosts: [],
     forumPostComments: [],
     userObject: null,
@@ -86,6 +87,23 @@ const store = new Vuex.Store({
           comment.likes = response.map(liker => liker.author.email);
         }
         state.forumPosts = res;
+      }
+    },
+    async refreshUserPosts(state) {
+      /**
+       * Request the server for the currently available freets.
+       */
+
+      console.log("here");
+      if (this.state.userObject !== undefined){
+        const url = `/api/forum?fetchAuthor=true`;
+        const res = await fetch(url).then(async r => r.json());
+        for (const comment of res){
+          const url = `/api/likes/${comment._id}`;
+          const response = await fetch(url).then(async r => r.json());
+          comment.likes = response.map(liker => liker.author.email);
+        }
+        state.userPosts = res;
       }
     },
     async refreshForumPostComments(state, parentId) {

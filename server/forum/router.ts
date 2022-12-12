@@ -4,8 +4,7 @@ import ForumCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as ForumValidator from '../forum/middleware';
 import * as util from './util';
-import * as neighborhoodValidator from "../neighborhood/middleware"
-
+import * as neighborhoodValidator from '../neighborhood/middleware';
 
 const router = express.Router();
 
@@ -31,19 +30,33 @@ router.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
     // Check if author query parameter was supplied
-    if (req.query.neighborhoodId !== undefined) {
+    if (req.query.neighborhoodId !== undefined || req.query.fetchAuthor !== undefined) {
       next();
       return;
     }
+
     const allPosts = await ForumCollection.findAll();
     const response = allPosts.map(util.constructForumResponse);
     res.status(200).json(response);
   },
   [
-      neighborhoodValidator.isNeighborhoodExists
+    neighborhoodValidator.isNeighborhoodExists
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.fetchAuthor !== undefined) {
+      next();
+      return;
+    }
+
+    const authorPosts = await ForumCollection.findAllByNeighborhoodId(req.query.neighborhoodId as string);
+    const response = authorPosts.map(util.constructForumResponse);
+    res.status(200).json(response);
+  },
+  [
+    userValidator.isUserLoggedIn
   ],
   async (req: Request, res: Response) => {
-    const authorPosts = await ForumCollection.findAllByNeighborhoodId(req.query.neighborhoodId as string);
+    const authorPosts = await ForumCollection.findAllByAuthorId(req.session.userId as string);
     const response = authorPosts.map(util.constructForumResponse);
     res.status(200).json(response);
   }
@@ -59,7 +72,6 @@ router.get(
     });
   }
 );
-
 
 /**
  * Create a new Forum.
@@ -79,7 +91,7 @@ router.post(
   [
     userValidator.isUserLoggedIn,
     ForumValidator.isValidForumPostContent,
-      neighborhoodValidator.isNeighborhoodExists
+    neighborhoodValidator.isNeighborhoodExists
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn

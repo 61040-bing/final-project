@@ -1,14 +1,35 @@
 <template>
-  <section v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'">
+  <section
+    v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
+    class="dashboard"
+  >
+    <h2>Dashboard</h2>
     <div class="container">
       <router-link to="/admin/submittedpetitions">
-      <button class="button">
-        View Submitted Petitions
-      </button>
-    </router-link>
+        <button
+          class="button"
+          style="background-color: #4C0050;"
+        >
+          <span style="text-decoration: none">
+            View Submitted Petitions
+          </span>
+         
+          <font-awesome-icon
+            icon="fa-solid fa-scroll "
+            style="width: 150px; height: 150px;"
+          />
+        </button>
+      </router-link>
       <router-link to="/admin/editneighborhood">
-        <button class="button">
+        <button
+          style="background-color: #4CAF50;"
+          class="button"
+        >
           Edit Neighborhoods
+          <font-awesome-icon 
+            style="width: 150px; height: 150px;"
+            icon="fa-solid fa-pen-to-square"
+          />
         </button>
       </router-link>
     </div>
@@ -44,26 +65,42 @@
     </script>
     
   <style scoped>
-  .container {
+
+.dashboard {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   gap: 200px;
   align-items: center;
-  margin-top: 20%;
+  margin-top: 5%;
+  justify-content: space-evenly;
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: center;
   font-size: 25px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 20px;
+  gap: 20px;
+  width: 100%;
+  height: 200px;
+}
+
+a {
+  text-decoration: none;
 }
 
 .button:hover {

@@ -5,6 +5,10 @@ import NeighborhoodCollection from "./collection";
 
 
 const isNeighborhoodExists = async (req: Request, res: Response, next: NextFunction) => {
+    if (req.query.fetchAuthor !== undefined){
+        next();
+        return;
+    }
     const neighborhood1 = await NeighborhoodCollection.findOne(req.params.neighborhoodId);
     const neighborhood2 = await NeighborhoodCollection.findOne(req.query.neighborhoodId as string);
     const neighborhood3 = await NeighborhoodCollection.findOne(req.body.neighborhoodId);

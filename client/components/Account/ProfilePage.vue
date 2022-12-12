@@ -66,10 +66,19 @@
             <h3>No petitions found.</h3>
           </article>
         </section>
-      </section>
-      <section v-if="viewingTab === 'posts'">
-        Posts
-      </section>
+        <section v-if="viewingTab === 'posts'">
+          <h4>Posts</h4>
+          <hr>
+          <ForumPost
+            v-for="post in $store.state.userPosts"
+            :key="post.id"
+            :forum="post"
+            @refresh="$store.commit('refreshUserPosts');"
+          />
+          <div v-if="!$store.state.userPosts.length">
+            No Posts Found!
+          </div>
+        </section>
       </section>
     </article>
     
@@ -86,24 +95,21 @@
 </template>
 
   <script>
-  import LogoutForm from '@/components/Account/LogoutForm.vue';
-  import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
   import AccountSettings from "./AccountSettings";
-  import GetPetitionsForm from '@/components/Petition/GetPetitionsForm.vue';
   import PetitionComponent from '@/components/Petition/PetitionComponent.vue';
+  import ForumPost from '@/components/Forum/ForumPost.vue';
 
   export default {
     name: 'ProfilePage',
     components: {
       AccountSettings,
-      LogoutForm,
-      DeleteAccountForm,
-      GetPetitionsForm,
+      ForumPost,
       PetitionComponent
     },
     data(){
       return {
-        viewingTab : "settings"
+        viewingTab : "settings",
+        alerts: {}
       }
     },
     computed: {
@@ -119,7 +125,7 @@
       },
     },
     mounted() {
-      this.$refs.getPetitionsForm.submit();
+      this.$store.commit('refreshUserPosts');
     },
     methods : {
       setViewingTab(tab){
