@@ -70,13 +70,10 @@
       </article>
     </div>
     <hr>
-    <div
-      class="button-click"
-      @click="logout"
+    <section
+      style="position: relative"
+      class="alerts"
     >
-      Log Out
-    </div>
-    <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -85,6 +82,12 @@
         <p>{{ alert }}</p>
       </article>
     </section>
+    <div
+      class="button-click"
+      @click="logout"
+    >
+      Log Out
+    </div>
   </section>
 </template>
 
