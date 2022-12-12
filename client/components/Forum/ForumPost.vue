@@ -9,6 +9,7 @@
         </div>
         <font-awesome-icon
           v-if="$store.state.userObject._id === forum.author._id"
+          class="trash"
           icon="fa-solid fa-trash"
           @click="deletePost"
         />
@@ -45,52 +46,46 @@
       >
         <font-awesome-icon
           icon="fa-regular fa-comment-dots"
-          size="lg"
         /> View replies
       </router-link>
       <section v-if="forum.petitionId">
-      <div
-        class="linkedPetitionButton"
-        @click="showModal"
-      >
-      <font-awesome-icon icon="fa-solid fa-file" />
-        Linked Petition
-      </div>
-      <modal
-        :name="'forumModal' + _uid"
-        :width="400"
-        :height="400"
-        :adaptive="true"
-      >
-        <p
-          class="x-icon"
-          @click="hideModal"
+        <div
+          class="linkedPetitionButton"
+          @click="showModal"
         >
-          <font-awesome-icon icon="fa-solid fa-x" />
-        </p>
-        <PetitionComponent :petition-id="forum.petitionId" />
-      </modal>
-    </section>
+          <font-awesome-icon icon="fa-solid fa-file" />
+          Linked Petition
+        </div>
+        <modal
+          :name="'forumModal' + _uid"
+          :width="400"
+          :height="400"
+          :adaptive="true"
+        >
+          <p
+            class="x-icon"
+            @click="hideModal"
+          >
+            <font-awesome-icon icon="fa-solid fa-x" />
+          </p>
+          <PetitionComponent :petition-id="forum.petitionId" />
+        </modal>
+      </section>
       <div v-if="showUpvote">
         <div
           v-if="!liked"
           class="upvote-button"
           @click="likeRequest"
         >
-          <img
-            src="../../public/upvoteTriangle.svg"
-            style="width: 20px; height: 20px"
-          >  {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
+          <font-awesome-icon icon="fa-solid fa-arrow-up" /> {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
         <div
           v-if="liked"
+          class="upvote-button"
+          style="color: rgb(170, 85, 64)"
           @click="removeLikeRequest"
         >
-          <img
-            src="../../public/triangleFilled.png"
-            style="width: 20px; height: 20px"
-            class="upvote-button"
-          >
+          <font-awesome-icon icon="fa-solid fa-arrow-up" />
           {{ likes + (likes === 1 ? " Upvote" : " Upvotes") }}
         </div>
       </div>
@@ -122,12 +117,16 @@
       forum: {
         type: Object,
         required: true
+      },
+      isMagnified: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     data() {
       return {
         alerts: {}, // Displays success/error messages encountered during freet modification,
-
         response: null
       };
     },
@@ -170,16 +169,15 @@
       async deletePost(){
         if (this.forum.parentId){
           try {
-          const r = await fetch(`/api/comments/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
-          if (!r.ok) {
-            const res = await r.json();
-            throw new Error(res.error);
+            const r = await fetch(`/api/comments/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+            if (!r.ok) {
+              const res = await r.json();
+              throw new Error(res.error);
+            }
+          } catch(e){
+            this.$set(this.alerts, e, 'error');
+            setTimeout(() => this.$delete(this.alerts, e), 3000);
           }
-        } catch(e){
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
-        }
-        this.$store.commit('refreshForumPostComments', this.$route.params.postId);
         } 
         else {
           try {
@@ -193,11 +191,12 @@
             setTimeout(() => this.$delete(this.alerts, e), 3000);
           }
 
-          if (this.$route.name === 'Forum Post'){
+          if (this.isMagnified){
             this.$router.back()
-          } else {
-            this.$store.commit('refreshForumPosts', this.forum.neighborhood);
           }
+        }
+        if (!this.isMagnified){
+          this.$emit('refresh');
         }
       },
       showModal(){
@@ -308,7 +307,7 @@
   .x-icon{
     font-weight: bold; text-align: right; margin-top: 24px; margin-right: 24px; font-size: 24px;
   }
-  .x-icon:hover{
+  .trash:hover, .x-icon:hover{
     cursor: pointer;
   }
 

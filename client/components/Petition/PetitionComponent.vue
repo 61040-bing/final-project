@@ -111,7 +111,7 @@ export default {
 
     for (const signature of this.signatures) {
       console.log(signature.authorId.toString());
-      if (signature.authorId.toString() === this.$store.state.userObject._id.toString()) {
+      if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
         this.signed = true;
       }
     }

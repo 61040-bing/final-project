@@ -1,14 +1,14 @@
 <template>
   <section>
-    <button>
+    <button class="flex">
       <span v-if="!editing">{{ neighborhood.name }} </span> 
       <textarea
         v-if="editing"
         :value="draft"
         @input="draft = $event.target.value"
       />
-  
-      <img
+      <div>
+        <img
         v-if="!editing"
         src="../../public/pencil.png"
         @click="startEditing"
@@ -27,6 +27,8 @@
         src="../../public/trash.png"
         @click="deleteNeighborhood"
       >
+      </div>
+      
     </button>
     <section class="alerts">
       <article
@@ -127,16 +129,21 @@
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 25px;
     border-radius: 10px;
     padding: 20px;
-    width: 700px;
+    min-width: 500px;
   }
 
   img {
     height: 20px;
     width: 20px;
     margin-left: 20px;
+  }
+
+  .flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 </style>

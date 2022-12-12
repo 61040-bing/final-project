@@ -1,14 +1,36 @@
 <template>
-  <section v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'">
+  <section
+    v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
+    class="dashboard"
+  >
     <div class="container">
       <router-link to="/admin/submittedpetitions">
-      <button class="button">
-        View Submitted Petitions
-      </button>
-    </router-link>
+        <button
+          class="button"
+          style="background-color: #4C0050;"
+        >
+          <span style="text-decoration: none">
+            View Submitted Petitions
+          </span>
+         
+          <font-awesome-icon
+            icon="fa-solid fa-scroll "
+            style="width: 100px; height: 100px;"
+          />
+        </button>
+      </router-link>
       <router-link to="/admin/editneighborhood">
-        <button class="button">
-          Edit Neighborhoods
+        <button
+          style="background-color: #4CAF50;"
+          class="button"
+        >
+          <span style="padding-left: 15px; padding-right: 15px; text-decoration: none">
+            Edit Neighborhoods
+          </span>
+          <font-awesome-icon 
+            style="width: 100px; height: 100px;"
+            icon="fa-solid fa-file-pen"
+          />
         </button>
       </router-link>
     </div>
@@ -44,26 +66,44 @@
     </script>
     
   <style scoped>
-  .container {
+
+.dashboard {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 2%;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000000;
+}
+.container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   gap: 200px;
-  align-items: center;
-  margin-top: 20%;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 40%;
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: center;
   font-size: 25px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 20px;
+  gap: 20px;
+  width: 450px;
+  height: 150px;
+}
+
+a {
+  text-decoration: none;
 }
 
 .button:hover {

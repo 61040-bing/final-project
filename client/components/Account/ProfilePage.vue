@@ -2,186 +2,186 @@
 <!-- User should be NOT authenticated in order to see this page -->
 
 <template>
-    <main class="page">
-
-      <section style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 40px; margin-bottom: 40px">
-        <h2> {{$store.state.userObject.firstName}} {{$store.state.userObject.lastName}}</h2>
-        <article>
-          <h2>Your Neighborhood:</h2>
-          <h4>{{$store.state.userObject.neighborhood.name}}</h4>
-        </article>
-
-      </section>
-      <h4 style="display: flex; width: 100%; align-items: center; justify-content: center"> Edit Information </h4>
-        <AccountSettings/>
-      <section>
-      </section>
-
-      <section>
-      <header>
-        <div class="left">
+  <main class="page">
+    <article class="cont">
+      <div class="nav">
+        <div>
+          <h4>Profile</h4>
+          <hr>
         </div>
-        <div class="right">
-          <GetPetitionsForm
-            ref="getPetitionsForm"/>
-        </div>
-      </header>
-      <section
-        v-if="$store.state.petitions.length"
-      >
-      <h2>Your Active Petitions</h2>
-        <PetitionComponent
-          v-for="petition in $store.state.petitions" v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-          :key="petition.id"
-          :petition="petition"
-        />
+        <p
+          :class="{selected: viewingTab ==='settings', navItem: true}"
+          @click="setViewingTab('settings')"
+        >
+          Account Settings
+        </p>
+        <p
+          :class="{selected: viewingTab ==='petitions', navItem: true}"
+          @click="setViewingTab('petitions')"
+        >
+          Your Petitions
+        </p>
+        <p
+          :class="{selected: viewingTab ==='posts', navItem: true}"
+          @click="setViewingTab('posts')"
+        >
+          Your Posts
+        </p>
+      </div>
+      <section class="content">
+        <section
+          v-if="viewingTab === 'settings'"
+        >
+          <AccountSettings />
+        </section>
+        <section v-if="viewingTab === 'petitions'">
+          <section
+            v-if="$store.state.petitions.length"
+          >
+            <h4>Petitions</h4>
+            <hr>
+            <h4>Active</h4>
+            <PetitionComponent
+              v-for="petition in activePetitions"
+              :key="petition.id"
+              :petition="petition"
+            />
+            <div v-if="!activePetitions.length">
+              No Petitions Found!
+            </div>
 
-        <h2>Your Submitted Petitions</h2>
-        <PetitionComponent
-          v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-          :key="petition.id"
-          :petition="petition"
-        />
+            <h4>Submitted To City Council</h4>
+            <PetitionComponent
+              v-for="petition in submittedPetitions"
+              :key="petition.id"
+              :petition="petition"
+            />
+            <div v-if="!submittedPetitions.length">
+              No Petitions Found!
+            </div>
+          </section>
+          <article
+            v-else
+          >
+            <h3>No petitions found.</h3>
+          </article>
+        </section>
+        <section v-if="viewingTab === 'posts'">
+          <h4>Posts</h4>
+          <hr>
+          <ForumPost
+            v-for="post in $store.state.userPosts"
+            :key="post.id"
+            :forum="post"
+            @refresh="$store.commit('refreshUserPosts');"
+          />
+          <div v-if="!$store.state.userPosts.length">
+            No Posts Found!
+          </div>
+        </section>
       </section>
+    </article>
+    
+    <section class="alerts">
       <article
-        v-else
+        v-for="(status, alert, index) in alerts"
+        :key="index"
+        :class="status"
       >
-        <h3>No petitions found.</h3>
+        <p>{{ alert }}</p>
       </article>
     </section>
-
-    </main>
-  </template>
+  </main>
+</template>
 
   <script>
-  import LogoutForm from '@/components/Account/LogoutForm.vue';
-  import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
-  import AccountSettings from "./accountSettings";
-  import GetPetitionsForm from '@/components/Petition/GetPetitionsForm.vue';
+  import AccountSettings from "./AccountSettings";
   import PetitionComponent from '@/components/Petition/PetitionComponent.vue';
+  import ForumPost from '@/components/Forum/ForumPost.vue';
 
   export default {
     name: 'ProfilePage',
     components: {
       AccountSettings,
-      LogoutForm,
-      DeleteAccountForm,
-      GetPetitionsForm,
+      ForumPost,
       PetitionComponent
     },
+    data(){
+      return {
+        viewingTab : "settings",
+        alerts: {}
+      }
+    },
+    computed: {
+      activePetitions(){
+        return this.$store.state.petitions.filter((petition)=> {
+          return !(petition.submitted === 'true') && (this.$store.state.userObject.email === petition.author.email);
+        })
+      },
+      submittedPetitions(){
+        return this.$store.state.petitions.filter((petition)=> {
+          return (petition.submitted === 'true') && (this.$store.state.userObject.email === petition.author.email)
+        })
+      },
+    },
     mounted() {
-      this.$refs.getPetitionsForm.submit();
+      this.$store.commit('refreshUserPosts');
     },
     methods : {
+      setViewingTab(tab){
+      this.viewingTab = tab;
+    }
     },
   };
   </script>
 
-  <style>
-  </style>
-
 <style scoped>
 
-.example {
-  position:relative;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+h4 {
+  margin-bottom: 5px;
+  color: rgb(67, 67, 67);
 }
-.example img {
-  max-width:100%;
-  max-height:100%;
-
-}
-
-.example .overlay {
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  font-weight: bold;
-  text-align: right;
-  font-size: 25px;
-  color: #000;
-  font-family: Arial, Helvetica, sans-serif;
-  background: white;
-  border-radius: 25px;
-  padding:15px;
+.navItem {
+  padding: 5px;
+  color: rgb(84, 84, 84);
+  transition: all 0.3s;
+  border-radius: 5px;
 }
 
-.example .name-overlay {
-  position: absolute;
-  top: 450px;
-  left: 50px;
-  font-weight: bold;
-  text-align: right;
-  font-size: 50px;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 25px;
-  padding:15px;
+.navItem:hover {
+  background-color: rgb(0, 0, 0, 0.1);
 }
-
-.winner {
-  font-size: 20px;
-  font-weight: lighter;
-  color: #000;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.example .img_overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  height:0;
-  bottom:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.4);
-}
-
-.container {
+.cont {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 200px;
+  margin-left: 15%;
+  gap: 50px;
+  margin-top: 30px;
 }
-.navbar {
-  font-size: 30px;
-  padding: 0px;
+.nav {
   font-family: Arial;
-  display: flex;
-  flex-direction: row;
-  gap: 300px;
-  justify-content: center;
-  background: rgb(198, 193, 193);
-  padding: 20px;
+  width: 20%;
+  border-radius: 5px;;
+  
 }
-.navbar p{
+.nav p{
   cursor: pointer;
+  margin:5px;
 }
 .content {
-  margin-top: 50px;
   padding: 0px;
   font-family: Arial;
   width: 45%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
 }
-.selected {
+.selected,
+.selected:hover {
   color: rgb(170, 85, 64);
   font-weight: bolder;
-}
-
-.hoverPointer{
-
-}
-.hoverPointer:hover{
-  cursor: pointer;
-  color: rgb(170, 85, 64);
+  background-color: rgb(170, 85, 64, 0.2);
 }
 
 .page{
   width: 80%;
+  font-size: 17px
 }
 </style>
