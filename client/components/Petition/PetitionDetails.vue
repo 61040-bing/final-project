@@ -5,6 +5,12 @@
   <article v-if="(petition !== null)"
     class="freet"
   >
+  <button
+    class="back"
+    @click="$router.go(-1)">
+    Back
+  </button>
+  
   <header class="freetHeader">
       <div class="mainInfo">
 
