@@ -117,6 +117,11 @@
       forum: {
         type: Object,
         required: true
+      },
+      isMagnified: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     data() {
@@ -165,16 +170,15 @@
       async deletePost(){
         if (this.forum.parentId){
           try {
-          const r = await fetch(`/api/comments/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
-          if (!r.ok) {
-            const res = await r.json();
-            throw new Error(res.error);
+            const r = await fetch(`/api/comments/${this.forum._id}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}});
+            if (!r.ok) {
+              const res = await r.json();
+              throw new Error(res.error);
+            }
+          } catch(e){
+            this.$set(this.alerts, e, 'error');
+            setTimeout(() => this.$delete(this.alerts, e), 3000);
           }
-        } catch(e){
-          this.$set(this.alerts, e, 'error');
-          setTimeout(() => this.$delete(this.alerts, e), 3000);
-        }
-        this.$store.commit('refreshForumPostComments', this.$route.params.postId);
         } 
         else {
           try {
@@ -188,13 +192,13 @@
             setTimeout(() => this.$delete(this.alerts, e), 3000);
           }
 
-          if (this.$route.name === 'Forum Post'){
+          if (this.isMagnified){
             this.$router.back()
-          } else {
-            this.$store.commit('refreshForumPosts', this.forum.neighborhood);
           }
         }
-        this.$emit('refresh');
+        if (!this.isMagnified){
+          this.$emit('refresh');
+        }
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);

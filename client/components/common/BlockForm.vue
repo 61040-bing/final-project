@@ -254,6 +254,7 @@ export default {
 
         const text = await r.text();
         console.log(text);
+        this.petition = null;
         
         if (this.setUser){
           const res = text ? JSON.parse(text) : {user: null};

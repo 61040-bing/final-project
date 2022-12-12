@@ -22,6 +22,7 @@
           <ForumPost
             :key="forumPost._id"
             :forum="forumPost"
+            :isMagnified="true"
             @refresh="fetchForumPost"
           />
         </article>
