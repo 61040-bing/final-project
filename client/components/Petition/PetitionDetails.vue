@@ -23,9 +23,12 @@
           </p>
           <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
             class="deleteAction">
-            <button @click="deletePetition">
-              🗑️ Delete
-            </button>
+          <font-awesome-icon
+            v-if="$store.state.userObject._id === petition.author._id"
+            class="trash"
+            icon="fa-solid fa-trash"
+            @click="deletePetition"
+        />
           </div>
         </div>
         <p class="author">
@@ -497,5 +500,10 @@ progress::-webkit-progress-value {
   max-width: 100%;
   margin-top: 16px;
   padding-top: 16px;
+}
+.trash {
+  padding-left:15px;
+  padding-right:5px;
+  color: red;
 }
 </style>
