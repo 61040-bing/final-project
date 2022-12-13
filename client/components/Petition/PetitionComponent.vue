@@ -36,9 +36,9 @@
       {{ petition.content }}
     </p> -->
    <!-- this needs class and left alignment -->
-    <progress :max="petition.targetSignatures" :value="signatures.length">30 </progress>
+    <progress class="signProgress brown" :max="petition.targetSignatures" :value="signatures.length"> </progress>
     <p class="signatureProgress">
-      {{signatures.length}} / {{petition.targetSignatures}}Signatures
+      {{signatures.length}} / {{petition.targetSignatures}} Signatures
     </p>
     <div class="allActions">
           <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
@@ -395,13 +395,24 @@ border-radius: 15px;
 .linkedPetition:hover{
     cursor: pointer;
   }
-.progress{
+.signProgress{
   float: left;
-  width: 20%;
-  height: 24px;
+  width: 50%;
   appearance: none;
-  background-color: brown;
-  border-radius: 2px;
-
+  border-radius: 5px;
+  margin-right: 16px;
+}
+.signProgress::-webkit-progress-bar {
+  background: rgb(202, 196, 196);
+  border-radius: 5px;
+  
+}
+progress::-webkit-progress-value {
+  background-color: rgb(170, 85, 64);
+  border-radius: 5px;
+}
+.signatureProgress{
+  font-size: 16px;
+  max-width: 100%;
 }
 </style>
