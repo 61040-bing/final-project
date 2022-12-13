@@ -225,7 +225,7 @@
 }
 .navbar {
   font-size: 30px;
-  
+
   font-family: Arial;
   display: flex;
   flex-direction: row;
@@ -248,6 +248,11 @@
   background-color: rgb(255, 255, 255);
   height: 100%;
   width: 100%;
+  text-align:center;
+}
+
+.selected:hover {
+  color: black !important;
   text-align:center;
 }
 
