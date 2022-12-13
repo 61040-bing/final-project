@@ -1,7 +1,7 @@
 <!-- Reusable component representing a single freet and its actions -->
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
-<template> 
+<template>
   <article
     class="petition"
   >
@@ -259,7 +259,9 @@ export default {
   color: rgb(0, 166, 255);
   font-size: medium;
 }
-
+.toggle:hover{
+  cursor: pointer;
+}
 .title{
     font-size: 25px;
     color: rgb(0, 0, 0);
@@ -293,7 +295,7 @@ export default {
 .signProgress::-webkit-progress-bar {
   background: rgb(202, 196, 196);
   border-radius: 5px;
-  
+
 }
 progress::-webkit-progress-value {
   background-color: rgb(170, 85, 64);
@@ -308,10 +310,17 @@ progress::-webkit-progress-value {
   font-weight: bold;
 }
 
+button{
+
+}
+button:hover{
+  cursor: pointer;
+}
 /* .mainInfo {
   display: flex;
   justify-content: space-between;
 } */
+
 
 
 </style>
