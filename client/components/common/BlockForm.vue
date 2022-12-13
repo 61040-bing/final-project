@@ -341,6 +341,7 @@ textarea {
   padding: 10px;
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 5px;
+  margin-bottom: 25px;
 }
 
 input {
