@@ -7,11 +7,13 @@
     v-if="$store.state.userObject !== null"
   >
     <header class="freetHeader">
+
+        <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
+        <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
+        <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
+        <h3 class="active" v-if="(petition.submitted === 'false') && (petition.denied === 'false') && (petition.accepted === 'false')"> Active </h3>
+
       <div class="mainInfo">
-
-        <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
-
-        <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
         <div class="row">
           <div class="title">
@@ -288,7 +290,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 30%;
+    margin-bottom: 15%;
     text-align: left;
     
   }
@@ -297,7 +299,7 @@ export default {
     border: 1px solid rgb(228, 228, 228);
     padding: 24px;
     position: relative;
-    margin: 3px;
+    margin: 10px;
     max-width: 100%;
     box-shadow: 0px 2px 5px rgb(141, 156, 160);
     border-radius: 25px;
@@ -349,15 +351,19 @@ border-radius: 15px;
 }
 .accepted {
   color: green;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
 }
 
 .denied {
   color: red;
+}
+
+.pending {
+  color: gray;
+}
+
+.active {
+  color: white;
+  font-size: small;
 }
 .signatureProgress{
   text-align: left;
