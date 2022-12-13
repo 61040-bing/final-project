@@ -48,7 +48,7 @@ const isValidPetitionId = async (req: Request, res: Response, next: NextFunction
   const petition = validFormat ? await PetitionCollection.findOne(req.body.petitionId) : '';
   if (!petition) {
     res.status(404).json({
-      error: `Petition with petition ID ${req.body.petitionId} does not exist.`
+      error: `Invalid Petition: No petition has been provided yet it is required /Petition provided does not exist.`
     });
     return;
   };
