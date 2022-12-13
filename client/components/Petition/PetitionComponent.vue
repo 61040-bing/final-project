@@ -51,7 +51,7 @@
                 Remove Signature
             </button>
             <button class="signBtn" v-else @click="signPetition">
-              <font-awesome-icon 
+              <font-awesome-icon
                 class="icons"
                 icon="fa-solid fa-pencil"
               />
@@ -75,7 +75,7 @@
       :petition="petition"/>
       </div>
     </div>
-    
+
 
     <router-link
       class="linkedPetition"
@@ -304,10 +304,10 @@ export default {
     align-items: flex-start;
     margin-bottom: 10%;
     text-align: left;
-    
+
   }
  /* old */
-.freet { 
+.freet {
     border: 1px solid rgb(228, 228, 228);
     padding: 24px;
     position: relative;
@@ -353,6 +353,9 @@ border-radius: 15px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
 }
+.signBtn:hover{
+  cursor: pointer;
+}
 .signature{
 border-radius: 15px;
 }
@@ -363,11 +366,11 @@ border-radius: 15px;
 }
 /* naomi */
 .author {
-    font-size: 10px;
+    font-size: 14px;
     color: rgb(190, 186, 186);
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 30px;
-    
+
 }
 /* naomi */
 .title{
@@ -441,7 +444,7 @@ border-radius: 15px;
 .signProgress::-webkit-progress-bar {
   background: rgb(202, 196, 196);
   border-radius: 5px;
-  
+
 }
 progress::-webkit-progress-value {
   background-color: rgb(170, 85, 64);

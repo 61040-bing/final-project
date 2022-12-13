@@ -478,6 +478,9 @@ export default {
   border-color: rgb(170, 85, 64);
   font-size: medium;
 }
+.signBtn:hover{
+  cursor: pointer;
+}
 .row{
     display: flex;
     flex-direction: row;
@@ -517,7 +520,7 @@ export default {
 }
 
 .author {
-    font-size: 10px;
+    font-size: 14px;
     color: rgb(190, 186, 186);
     font-family: Arial, Helvetica, sans-serif;
 }
