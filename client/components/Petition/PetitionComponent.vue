@@ -102,32 +102,40 @@
         </button> -->
         <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
 
-        <p class = "roundTable">
-          <button class = "roundTableBtn" @click="showModal">
+        <p class="roundTable">
+          <button
+            class="roundTableBtn"
+            @click="showModal"
+          >
             Schedule RoundTable
           </button>
         </p>
 
         <modal :name="'createRtModal' + this._uid"
                :width="500"
-               :height="600"
+               :height="700"
                :adaptive="true">
           <p class = "x-icon" @click="hideModal">
             <font-awesome-icon icon="fa-solid fa-x" />
           </p>
-          <ScheduleRoundTableForm class="scheduleTab"
-                                  @hide="hideModal"
-                                  :petition="petition"/>
+          <ScheduleRoundTableForm
+            class="scheduleTab"
+            :petition="petition"
+            @hide="hideModal"
+          />
         </modal>
       </div>
     </div>
 
-    <span class="linkedPetition" @click="expand">
+    <span
+      class="linkedPetition"
+      @click="expand"
+    >
       <font-awesome-icon icon="fa-solid fa-file" />
       View More...
     </span>
 
-    <section class="alerts">
+    <section class="alerts" >
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -155,23 +163,28 @@ export default {
   },
   data() {
     return {
-      signed: false,
-      signatures: [],
       neighborhood: null,
       schedulingRoundTable: false,
       alerts: {}, // Displays success/error messages encountered during freet modification
     };
   },
+  computed: {
+    signed (){
+      for (const signature of this.signatures) {
+        if (signature.author._id.toString() === this.$store.state.userObject._id.toString()) {
+          return true;
+        }
+      }
+    return false;
+    },
+    signatures() {
+      return this.petition.signatures;
+    }
+  },
   async mounted() {
 
     this.neighborhood = this.$route.params.id;
-    this.signatures = this.petition.signatures;
-
-    for (const signature of this.signatures) {
-      if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
-        this.signed = true;
-      }
-    }
+   
   },
   methods: {
     showModal(){
@@ -194,9 +207,8 @@ export default {
       const params = {
         method: 'DELETE',
         callback: () => {
-          this.$store.commit('alert', {
-            message: 'Successfully deleted petition!', status: 'success'
-          });
+          this.$set(this.alerts, 'Successfully deleted petition!', 'success');
+          setTimeout(() => this.$delete(this.alerts, 'Successfully deleted petition!'), 3000);
         }
       };
       this.request(params);
@@ -311,7 +323,6 @@ export default {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
-        this.signed = false;
       } else {
         const options = {
           method: params.method, body: params.body, headers: {'Content-Type': 'application/json'}
@@ -330,7 +341,6 @@ export default {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);
         }
-        this.signed = true;
       }
     },
   }
