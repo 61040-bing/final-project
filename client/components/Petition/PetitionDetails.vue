@@ -105,7 +105,7 @@
     </section>
     <section v-if="roundTables.length">
 
-      <h3>Upcoming RoundTables</h3>
+      <h3>RoundTables</h3>
 
       <div v-for="roundtable in roundTables">
 
@@ -150,6 +150,8 @@ export default {
     await this.getSignatures();
     await this.getRoundTables();
     this.date = new Date();
+
+    console.log(this.date);
 
     for (const signature of this.signatures) {
       if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
