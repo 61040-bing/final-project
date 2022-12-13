@@ -111,16 +111,11 @@
           </button>
         </p>
 
-        <modal
-          :name="'createRtModal' + _uid"
-          :width="500"
-          :height="600"
-          :adaptive="true"
-        >
-          <p
-            class="x-icon"
-            @click="hideModal"
-          >
+        <modal :name="'createRtModal' + this._uid"
+               :width="500"
+               :height="700"
+               :adaptive="true">
+          <p class = "x-icon" @click="hideModal">
             <font-awesome-icon icon="fa-solid fa-x" />
           </p>
           <ScheduleRoundTableForm
