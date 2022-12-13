@@ -45,7 +45,8 @@
         Back
       </div>
 
-    <h3 style="margin-top: 40px; margin-bottom: 40px; text-align: center">Select your neighborhood </h3>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; margin-top: 40px; margin-bottom: 40px; text-align: center">Select your neighborhood </h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-align: center">If you are unsure of which neighborhood you are in, check out Cambridge's official neighborhood maps <a href="https://www.cambridgema.gov/cdd/factsandmaps/mapgalleries/neighborhood" target="_blank">here</a>.</p>
 
       <div class="neighborhood-container">
         <section v-for="neighborhood in $store.state.neighborhoods" @click="selectNeighborhood(neighborhood); fields[4].value = neighborhood._id">
