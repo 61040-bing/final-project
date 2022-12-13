@@ -41,6 +41,11 @@ router.beforeEach((to, from, next) => {
       next({name: 'Login'}); // Go to Login page if user navigates to Profile and are not signed in
       return;
     }
+
+    if (!to.path.includes('admin') && router.app.$store.state.userObject && router.app.$store.state.userObject.email === 'admin@admin.com'){
+      next({name: 'Admin'}); 
+      return;
+    }
   }
   next();
 });

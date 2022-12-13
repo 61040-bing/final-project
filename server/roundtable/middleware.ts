@@ -204,9 +204,12 @@ const isValidStartEndDates = async (req: Request, res: Response, next: NextFunct
 
 const isValidZoomlink = async(req: Request, res: Response, next: NextFunction) => {
 
-  if (!req.body.zoomLink){
+  const emailRegex = /^.*[z][o][o][m][.].*$/i;
+
+  //const emailRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/i;
+  if (!req.body.zoomLink || !req.body.zoomLink.match(emailRegex)){
     res.status(400).json({
-      error: "empty zoomLink is not allowed"
+      error: "Please enter a valid zoom link."
     })
     return;
   }

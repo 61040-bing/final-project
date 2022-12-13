@@ -96,7 +96,8 @@ export default {
       setDate: true,
       title: 'Schedule RoundTable',
       callback: () => {
-        this.$store.commit('refreshNeighborhoodRoundTables',this.$route.params.id);
+        const neighborhood = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
+        this.$store.commit('refreshNeighborhoodRoundTables', neighborhood);
         const message = 'Successfully created a round table!';
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);

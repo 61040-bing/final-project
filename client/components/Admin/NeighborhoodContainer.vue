@@ -1,12 +1,12 @@
 <template>
-  <section>
+  <section class="dumm">
     <button class="flex">
       <span v-if="!editing">{{ neighborhood.name }} </span> 
-      <textarea
+      <input
         v-if="editing"
         :value="draft"
         @input="draft = $event.target.value"
-      />
+      >
       <div>
         <font-awesome-icon 
           v-if="!editing"
@@ -36,7 +36,10 @@
         />
       </div>
     </button>
-    <section class="alerts">
+    <section
+      style="position:relative;"
+      class="alerts"
+    >
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -81,6 +84,12 @@
                     setTimeout(() => this.$delete(this.alerts, error), 3000);
                     return;
                 }
+                if (this.draft === '') {
+                    const error = 'Error: Edited neighborhood name should not be empty.';
+                    this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
+                    setTimeout(() => this.$delete(this.alerts, error), 3000);
+                    return;
+                }
                 try {
                     const fields = {name: this.draft};
                     const r = await  fetch(`/api/neighborhood/${this.neighborhood._id}`, {method: 'PUT', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
@@ -120,7 +129,11 @@
 </script>
         
 <style scoped>
-    .container {
+.dumm {
+  display: flex;
+    flex-direction: column;
+}
+.container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -141,12 +154,6 @@
     min-width: 500px;
   }
 
-  img {
-    height: 20px;
-    width: 20px;
-    margin-left: 20px;
-  }
-
   .flex{
     display: flex;
     flex-direction: row;
@@ -154,6 +161,10 @@
   }
  .icons {
   margin-right: 12px;
+ }
+
+ .icons:hover {
+  cursor: pointer;
  }
 
 </style>
