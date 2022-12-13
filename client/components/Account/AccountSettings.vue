@@ -140,7 +140,6 @@ export default {
     hideMenu() {
       this.displayNeighborhoodMenu = false;
       this.editing_neighborhood = false;
-      console.log("hiding menu");
     },
 
     toggleMenu() {
@@ -148,9 +147,7 @@ export default {
 
     },
     async submitNeighborhoodEdit(neighborhoodId){
-      console.log("here we are submitting")
       try {
-        console.log("neigh id", neighborhoodId)
         const fields = {neighborhood: neighborhoodId};
         const r = await  fetch(`/api/users/`, {method: 'PATCH', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
         if (!r.ok) {

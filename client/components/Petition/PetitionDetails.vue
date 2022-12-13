@@ -150,7 +150,6 @@ export default {
     await this.getSignatures();
     await this.getRoundTables();
     this.date = new Date();
-    console.log(this.date);
 
     for (const signature of this.signatures) {
       if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
@@ -221,8 +220,6 @@ export default {
       /**
        * Updates freet to have the submitted draft content.
        */
-
-      console.log(this.petition._id);
 
       const params = {
         method: 'POST',
@@ -298,9 +295,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          console.log(res.length);
           this.signatures = res;
-          console.log(this.signatures);
         } catch (e) {
           this.$set(this.alerts, e, 'error');
           setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -325,7 +320,6 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          console.log(res.length);
           this.roundTables = res;
         } catch (e) {
           this.$set(this.alerts, e, 'error');
@@ -376,7 +370,6 @@ export default {
        * @param params.callback - Function to run if the the request succeeds
        */
 
-      console.log(params.method);
       if (params.method === "DELETE") {
         const options = {
           method: params.method
@@ -402,8 +395,6 @@ export default {
         };
 
         try {
-
-        console.log(options);
         const r = await fetch(`/api/signatures/${this.petition._id}`, options);
         if (!r.ok) {
           const res = await r.json();

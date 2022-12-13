@@ -104,9 +104,7 @@ class RoundTableCollection {
    * @returns Promise<Array<HydratedDocument<RoundTable>>> - An array of all the RoundTables
    */
  static async findAllbyNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<RoundTable>>>{
-  console.log("neighborhoodid param in findallbyid", neighborhoodId)
   const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  console.log("neighborhood found", neighborhood)
 
   return RoundTableModel.find({endDate: {$gt: new Date()}, neighborhoodId: neighborhood._id}).populate('_id').populate('petitionId').sort('startDate').populate('authorId');
 }

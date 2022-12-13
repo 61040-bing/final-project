@@ -190,17 +190,13 @@ export default {
         if (!r.ok) {
           throw new Error(res.error);
         }
-        console.log("beginning filter in block form")
         // const authorPetitions = res.filter(petition => (petition.authorId._id === this.$store.state.userObject._id));
         const authorPetitions = [];
-        console.log("authorpetitions before filter", res);
         for (const petition of res){
-          console.log("petition", petition)
           if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true'){
             authorPetitions.push(petition)
           }
         }
-        console.log("block form author petitions", authorPetitions)
         this.$store.commit('updatePetitions', authorPetitions);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
@@ -211,7 +207,6 @@ export default {
       /**
         * Submits a form with the specified options from data().
         */
-       console.log("SUBMITTING");
       const options = {
         method: this.method,
         headers: {'Content-Type': 'application/json'},
@@ -265,8 +260,6 @@ export default {
 
           const finalEndDate = endDate.value + "T" + newEndHour + endTime.value[2] + endTime.value[3] + endTime.value[4]+ ":00Z";
           req_fields.push({id: 'endDate', value: finalEndDate });
-
-          console.log(req_fields);
         } 
         else {
           req_fields = [...this.fields];
@@ -293,25 +286,19 @@ export default {
             return [id, value];
           })
         ));
-
-        console.log(options.body);
       }
-      console.log("123");
       try {
         // if (this.url ==='/api/roundtables' && options.method === 'POST' && !options.body.petitionId ){
         //   throw new Error ("You need to pick a specific petition that the roundtable concerns")
         // }
         const r = await fetch(this.url, options);
-        console.log("Look Gianna", this.setUser);
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
           const res = await r.json();
-          console.log("error"+res.error)
           throw new Error(res.error);
         }
 
         const text = await r.text();
-        console.log(text);
         this.petition = null;
         
         if (this.setUser){

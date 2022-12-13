@@ -124,7 +124,6 @@ class ForumCollection {
 
   static async updateManyByPetitionId(petitionId: Types.ObjectId | string): Promise<boolean> {
     const forum = await ForumModel.updateMany({linkedPetition: petitionId}, {$set: {linkedPetition: null}});
-    console.log(forum);
     return forum !== null;
   }
 }

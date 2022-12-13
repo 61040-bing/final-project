@@ -42,7 +42,6 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
   delete ForumCopy.authorId;
   const neighborhood = ForumCopy.neighborhoodId;
   delete ForumCopy.neighborhoodId;
-  console.log(Forum);
   return {
     ...ForumCopy,
     _id: ForumCopy._id.toString(),

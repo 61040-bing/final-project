@@ -70,7 +70,6 @@ const store = new Vuex.Store({
        */
         const url = `/api/roundtables?neighborhood=${neighborhood}`;
         const res = await fetch(url).then(async r => r.json());
-        console.log("res in store", res)
         state.neighborhoodRoundTables = res;
     },
     async refreshForumPosts(state, neighborhoodId) {
@@ -93,8 +92,6 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-
-      console.log("here");
       if (this.state.userObject !== undefined){
         const url = `/api/forum?fetchAuthor=true`;
         const res = await fetch(url).then(async r => r.json());
@@ -142,11 +139,9 @@ const store = new Vuex.Store({
        * Request the server for the currently available freets.
        */
       const url = `/api/users/session`;
-      console.log("refreshing user");
       const r = await fetch(url);
       let res = await r.json();
       state.userObject = res.user;
-      console.log("user obj", state.userObject)
     },
 
 

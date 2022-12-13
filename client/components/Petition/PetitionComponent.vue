@@ -31,7 +31,7 @@
       Active
     </h3>
 
-    <header class="freetHeader">
+    <div class="freetHeader">
       <div class="mainInfo">
         <div class="row">
           <div class="title">
@@ -54,7 +54,7 @@
           Created by {{ ( petition.author.firstName + " " + petition.author.lastName) }} on {{ petition.dateCreated }}
         </p>
       </div>
-    </header>
+    </div>
     <!-- <p
       class="content"
     >
@@ -164,7 +164,6 @@ export default {
     this.neighborhood = this.$route.params.id;
 
     for (const signature of this.signatures) {
-      console.log(signature.authorId.toString());
       if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
         this.signed = true;
       }
@@ -173,7 +172,6 @@ export default {
   methods: {
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
-      console.log(this.petition.neighborhoodId);
     },
     expand() {
       this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
@@ -197,8 +195,6 @@ export default {
       /**
        * Updates freet to have the submitted draft content.
        */
-
-      console.log(this.petition._id);
 
       const params = {
         method: 'POST',
@@ -274,7 +270,6 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          console.log(res.length);
           this.signatures = res;
         } catch (e) {
           this.$set(this.alerts, e, 'error');
@@ -289,7 +284,6 @@ export default {
        * @param params.callback - Function to run if the the request succeeds
        */
 
-      console.log(params.method);
       if (params.method === "DELETE") {
         const options = {
           method: params.method
@@ -314,9 +308,7 @@ export default {
           method: params.method, body: params.body, headers: {'Content-Type': 'application/json'}
         };
 
-        try {
-
-        console.log(options);
+      try {
         const r = await fetch(`/api/signatures/${this.petition._id}`, options);
         if (!r.ok) {
           const res = await r.json();
@@ -342,7 +334,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 10%;
     text-align: left;
 
   }
