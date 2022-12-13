@@ -24,12 +24,12 @@
         />
 
         <input v-else-if="field.id === 'startDate' || field.id === 'endDate'"
-          type="date" 
+          type="date"
           :name="field.id"
           :value="field.value"
           min="2022-12-04" max="2025-12-31"
           @input="field.value = $event.target.value">
-  
+
 
         <input v-else-if="field.id === 'startTime' || field.id === 'endTime'"
           type="time"
@@ -37,7 +37,7 @@
           :value="field.value"
           min="2022-12-04" max="2025-12-31"
           @input="field.value = $event.target.value">
-        
+
         <input
           v-else
           :type="field.id === 'password' ? 'password' : (field.id === 'targetSignatures' ? 'number' : 'text')"
@@ -77,7 +77,7 @@
           />
         </div>
       </div>
-      
+
       <div :class="['dropdown', displayMenu ? 'toggle': '']">
         <ul>
           <li
@@ -90,7 +90,7 @@
         </ul>
       </div>
     </section>
-   
+
     <button
       class="sub"
       type="submit"
@@ -228,10 +228,10 @@ export default {
               startDate = field;
             } else if (field.id === 'endDate') {
               endDate = field;
-            } else if (field.id === 'startTime') { 
+            } else if (field.id === 'startTime') {
               startTime = field;
             } else if (field.id === 'endTime') {
-              endTime = field;             
+              endTime = field;
             } else {
               req_fields.push(field);
             }
@@ -260,7 +260,7 @@ export default {
 
           const finalEndDate = endDate.value + "T" + newEndHour + endTime.value[2] + endTime.value[3] + endTime.value[4]+ ":00Z";
           req_fields.push({id: 'endDate', value: finalEndDate });
-        } 
+        }
         else {
           req_fields = [...this.fields];
         }
@@ -277,7 +277,7 @@ export default {
           req_fields.push({id: 'petitionId', value: this.petition._id });
         }
 
-        
+
 
         options.body = JSON.stringify(Object.fromEntries(
           req_fields.map(field => {
@@ -300,7 +300,7 @@ export default {
 
         const text = await r.text();
         this.petition = null;
-        
+
         if (this.setUser){
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setUserObject', res.user ? res.user : null);
@@ -318,7 +318,7 @@ export default {
         if (this.callback) {
           this.callback();
         }
-        
+
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
@@ -446,9 +446,15 @@ h3 {
     border: none;
     border-radius: 5px;
     font-weight: bold;
-    
+
   }
   .cancel {
+    cursor: pointer;
+  }
+
+  button {
+  }
+  button:hover{
     cursor: pointer;
   }
 </style>
