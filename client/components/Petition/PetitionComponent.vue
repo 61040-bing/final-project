@@ -36,8 +36,9 @@
       {{ petition.content }}
     </p> -->
    <!-- this needs class and left alignment -->
+    <progress :max="petition.targetSignatures" :value="signatures.length">30 </progress>
     <p class="signatureProgress">
-      {{signatures.length}} signatures / {{petition.targetSignatures}} Target Signatures
+      {{signatures.length}} / {{petition.targetSignatures}}Signatures
     </p>
     <div class="allActions">
           <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
@@ -120,7 +121,9 @@ export default {
       signatures: [],
       neighborhood: null,
       schedulingRoundTable: false,
-      alerts: {} // Displays success/error messages encountered during freet modification
+      alerts: {}, // Displays success/error messages encountered during freet modification
+      signaturesLength :5,
+      targetSignatures : 10,
     };
   },
   methods: {
@@ -392,4 +395,13 @@ border-radius: 15px;
 .linkedPetition:hover{
     cursor: pointer;
   }
+.progress{
+  float: left;
+  width: 20%;
+  height: 24px;
+  appearance: none;
+  background-color: brown;
+  border-radius: 2px;
+
+}
 </style>
