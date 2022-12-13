@@ -135,7 +135,7 @@
       View More...
     </span>
 
-    <section class="alerts">
+    <section class="alerts" >
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -207,9 +207,8 @@ export default {
       const params = {
         method: 'DELETE',
         callback: () => {
-          this.$store.commit('alert', {
-            message: 'Successfully deleted petition!', status: 'success'
-          });
+          this.$set(this.alerts, 'Successfully deleted petition!', 'success');
+          setTimeout(() => this.$delete(this.alerts, params.message), 3000);
         }
       };
       this.request(params);
