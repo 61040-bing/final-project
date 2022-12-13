@@ -37,7 +37,7 @@ router.get(
       return;
     }
     const allPetitions = await PetitionCollection.findAll();
-    const response = allPetitions.map(util.constructPetitionResponse);
+    const response = await Promise.all(allPetitions.map(util.constructPetitionResponse));
     res.status(200).json(response);
   },
   [
@@ -45,7 +45,7 @@ router.get(
   ],
   async (req: Request, res: Response) => {
     const neighborhoodPetitions = await PetitionCollection.findAllByNeighborhood(req.query.neighborhood as string);
-    const response = neighborhoodPetitions.map(util.constructPetitionResponse);
+    const response = await Promise.all(neighborhoodPetitions.map(util.constructPetitionResponse));
     res.status(200).json(response);
   }
 );
@@ -81,7 +81,7 @@ router.post(
 
     res.status(201).json({
       message: 'Your petition was created successfully.',
-      petition: util.constructPetitionResponse(petition)
+      petition: await util.constructPetitionResponse(petition)
     });
   }
 );

@@ -3,12 +3,14 @@ import moment from 'moment';
 import type {Petition, PopulatedPetition} from './model';
 import {User} from "../user/model";
 import { Neighborhood } from 'server/neighborhood/model';
+import SignatureCollection from '../signature/collection';
+import * as signatureUtil from '../signature/util';
 
 // Update this if you add a property to the forum type!
 type PetitionResponse = {
   _id: string;
   author: User;
-  neighborhood:Neighborhood;
+  neighborhood: Neighborhood;
   dateCreated: string;
   title: string;
   content: string;
@@ -16,6 +18,7 @@ type PetitionResponse = {
   submitted: string;
   accepted: string;
   denied: string;
+  signatures: signatureUtil.SignatureResponse[];
 };
 
 /**
@@ -33,7 +36,7 @@ const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:
  * @param {HydratedDocument<Petition>} petition - A petition
  * @returns {PetitionResponse} - The petition object formatted for the frontend
  */
-const constructPetitionResponse = (petition: HydratedDocument<Petition>): PetitionResponse => {
+const constructPetitionResponse = async (petition: HydratedDocument<Petition>): Promise<PetitionResponse> => {
   const petitionCopy: PopulatedPetition = {
     ...petition.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
@@ -43,17 +46,8 @@ const constructPetitionResponse = (petition: HydratedDocument<Petition>): Petiti
   const author = petitionCopy.authorId;
 
   delete petitionCopy.authorId;
-  // console.log("util response",{
-  //   ...petitionCopy,
-  //   _id: petitionCopy._id.toString(),
-  //   author,
-  //   neighborhood: petitionCopy.neighborhoodId,
-  //   dateCreated: formatDate(petition.dateCreated),
-  //   targetSignatures: petitionCopy.targetSignatures.toString(),
-  //   submitted: petitionCopy.submitted.toString(),
-  //   accepted: petitionCopy.accepted.toString(),
-  //   denied: petitionCopy.denied.toString(),
-  // })
+  const signaturesRaw = await SignatureCollection.findAllbyPetitionId(petitionCopy._id);
+  const signatures = signaturesRaw.map(signatureUtil.constructSignatureResponse);
   return {
     ...petitionCopy,
     _id: petitionCopy._id.toString(),
@@ -64,6 +58,7 @@ const constructPetitionResponse = (petition: HydratedDocument<Petition>): Petiti
     submitted: petitionCopy.submitted.toString(),
     accepted: petitionCopy.accepted.toString(),
     denied: petitionCopy.denied.toString(),
+    signatures
   };
 };
 
