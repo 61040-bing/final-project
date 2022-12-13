@@ -42,6 +42,11 @@ router.beforeEach((to, from, next) => {
       return;
     }
 
+    if (to.name === 'Login' && router.app.$store.state.userObject){
+      next({name: 'Home'});
+      return;
+    }
+
     if (!to.path.includes('admin') && router.app.$store.state.userObject && router.app.$store.state.userObject.email === 'admin@admin.com'){
       next({name: 'Admin'}); 
       return;
