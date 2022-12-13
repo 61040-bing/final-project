@@ -6,17 +6,12 @@
     class="freet"
     v-if="$store.state.userObject !== null"
   >
-    <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
-
-    <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+    <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
+    <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
+    <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
+    <h3 class="active" v-if="(petition.submitted === 'false') && (petition.denied === 'false') && (petition.accepted === 'false')"> Active </h3>
 
     <header class="freetHeader">
-
-        <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
-        <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
-        <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
-        <h3 class="active" v-if="(petition.submitted === 'false') && (petition.denied === 'false') && (petition.accepted === 'false')"> Active </h3>
-
       <div class="mainInfo">
 
         <div class="row">
@@ -357,12 +352,22 @@ border-radius: 15px;
 }
 .accepted {
   color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    text-align: left;
 }
 .mainInfo{
   width: 100%;
 }
 .denied {
   color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    text-align: left;
 }
 
 .pending {

@@ -5,11 +5,12 @@
   <article v-if="(petition !== null)"
     class="freet"
   >
-  <button
-    class="back"
-    @click="$router.go(-1)">
-    Back
-  </button>
+   <span class="back" @click="$router.go(-1)">
+      <font-awesome-icon
+        icon="fa-solid fa-arrow-left"
+      />
+      Back
+    </span>
     <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
 
     <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
@@ -385,7 +386,13 @@ export default {
 </script>
 
 <style scoped>
+  .back {
+      color: rgb(170, 85, 64);
+    }
 
+    .back:hover {
+      cursor: pointer;
+    }
 .freet { 
     border: 1px solid rgb(228, 228, 228);
     padding: 24px;
@@ -420,7 +427,6 @@ export default {
 /* figure out why petition fills whole page even when styling is done */
 .accepted {
   color: green;
-    color: green;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
