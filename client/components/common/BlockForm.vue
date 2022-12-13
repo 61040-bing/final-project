@@ -342,6 +342,12 @@ textarea {
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 5px;
 }
+
+input {
+  margin-bottom: 25px;
+  border-radius: 5px;
+}
+
 .attachment {
   display: flex;
   flex-direction: row;
