@@ -208,7 +208,7 @@ export default {
         method: 'DELETE',
         callback: () => {
           this.$set(this.alerts, 'Successfully deleted petition!', 'success');
-          setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+          setTimeout(() => this.$delete(this.alerts, 'Successfully deleted petition!'), 3000);
         }
       };
       this.request(params);
