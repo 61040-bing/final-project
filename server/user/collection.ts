@@ -103,8 +103,7 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>[]>} - An array of all of the users for the neighborhood
    */
  static async findAllByNeighborhoodId(neighborhoodId: Types.ObjectId | string): Promise<Array<HydratedDocument<User>>> {
-  const neighborhood = await NeighborhoodCollection.findOne(neighborhoodId);
-  return UserModel.find({neighborhoodId: neighborhood._id}).sort({dateCreated: -1}).populate('neighborhood');
+  return UserModel.find({neighborhood: neighborhoodId}).sort({dateCreated: -1}).populate('neighborhood');
 }
 
   /**
