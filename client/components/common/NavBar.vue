@@ -18,6 +18,13 @@
         <span @click="navigateTo('/')">Home/City</span>
       </div>
       <div
+        v-if="$store.state.userObject !== null && $store.state.userObject.email"
+        class="nav-item"
+        @click="navigateTo(neighborhoodPath)"
+      >
+        My Neighborhood
+      </div>
+      <div
         class="nav-item"
         tabindex="0"
         @blur="hideMenu"
@@ -37,13 +44,7 @@
           </ul>
         </div>
       </div>
-      <div
-        v-if="$store.state.userObject !== null && $store.state.userObject.email"
-        class="nav-item"
-        @click="navigateTo(neighborhoodPath)"
-      >
-        My Neighborhood
-      </div>
+     
       <router-link
         v-if="$store.state.userObject !== null && $store.state.userObject.email"
         to="/profile"
