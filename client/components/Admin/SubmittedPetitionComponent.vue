@@ -108,7 +108,6 @@ export default {
       /**
        * Updates freet to have the submitted draft content.
        */
-      console.log(this.petition._id);
       const params = {
         method: 'PUT',
         message: 'Successfully accepted petition!',
@@ -156,7 +155,6 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('refreshPetitions');
-        console.log(this.$store.state.petitions);
 
         params.callback();
       } catch (e) {

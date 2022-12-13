@@ -102,7 +102,6 @@ export default {
   mounted() {
     this.$refs.getAllPetitionsForm.submit();
     for (const petition of this.$store.state.petitions) {
-      console.log(petition.title);
       if ((petition.submitted === 'true') && !(petition.accepted === 'true') && !(petition.denied === 'true')) {
         console.log(petition);
       }
