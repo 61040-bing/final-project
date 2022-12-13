@@ -157,4 +157,10 @@ section {
   border-color: rgb(170, 85, 64);
   font-size: medium;
 }
+button{
+}
+button:hover{
+  cursor: pointer;
+}
 </style>
+
