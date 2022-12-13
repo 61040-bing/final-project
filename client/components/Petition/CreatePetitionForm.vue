@@ -26,6 +26,8 @@ export default {
         this.$store.commit('refreshPetitions',this.$route.params.id);
         const message = 'Successfully created a petition!';
         this.$set(this.alerts, message, 'success');
+        this.$emit('hide');
+        this.$emit('success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }
     };

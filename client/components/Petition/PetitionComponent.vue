@@ -3,34 +3,55 @@
 
 <template>
   <article
-    class="freet"
     v-if="$store.state.userObject !== null"
+    class="freet"
   >
-    <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
-    <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
-    <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
-    <h3 class="active" v-if="(petition.submitted === 'false') && (petition.denied === 'false') && (petition.accepted === 'false')"> Active </h3>
+    <h3
+      v-if="(petition.accepted === 'true') && (petition.denied === 'false')"
+      class="accepted"
+    >
+      Accepted
+    </h3>
+    <h3
+      v-if="(petition.denied === 'true') && (petition.accepted === 'false')"
+      class="denied"
+    >
+      Denied
+    </h3>
+    <h3
+      v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"
+      class="pending"
+    >
+      Pending
+    </h3>
+    <h3
+      v-if="(petition.submitted === 'false') && (petition.denied === 'false') && (petition.accepted === 'false')"
+      class="active"
+    >
+      Active
+    </h3>
 
     <header class="freetHeader">
       <div class="mainInfo">
-
         <div class="row">
           <div class="title">
-            {{( petition.title)}}
+            {{ ( petition.title) }}
           </div>
-          <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-            class="deleteAction">
-          <font-awesome-icon
-            v-if="$store.state.userObject._id === petition.author._id"
-            class="trash"
-            icon="fa-solid fa-trash"
-            @click="deletePetition"
-        />
+          <div
+            v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+            class="deleteAction"
+          >
+            <font-awesome-icon
+              v-if="$store.state.userObject._id === petition.author._id"
+              class="trash"
+              icon="fa-solid fa-trash"
+              @click="deletePetition"
+            />
           <!-- <button> 🗑️ </button> -->
           </div>
         </div>
         <p class="author">
-          Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
+          Created by {{ ( petition.author.firstName + " " + petition.author.lastName) }} on {{ petition.dateCreated }}
         </p>
       </div>
     </header>
@@ -39,47 +60,69 @@
     >
       {{ petition.content }}
     </p> -->
-   <!-- this needs class and left alignment -->
-    <progress class="signProgress brown" :max="petition.targetSignatures" :value="signatures.length"> </progress>
+    <!-- this needs class and left alignment -->
+    <progress
+      class="signProgress brown"
+      :max="petition.targetSignatures"
+      :value="signatures.length"
+    />
     <p class="signatureProgress">
-      {{signatures.length}} / {{petition.targetSignatures}} Signatures
+      {{ signatures.length }} / {{ petition.targetSignatures }} Signatures
     </p>
     <div class="allActions">
-          <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
-
-            <button class="signBtn" v-if="signed" @click="unsignPetition">
-                Remove Signature
-            </button>
-            <button class="signBtn" v-else @click="signPetition">
-              <font-awesome-icon 
-                class="icons"
-                icon="fa-solid fa-pencil"
-              />
-                Sign
-            </button>
-
-          </p>
-      <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
-        class="actions">
+      <p
+        v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"
+        class="signature"
+      >
+        <button
+          v-if="signed"
+          class="signBtn"
+          @click="unsignPetition"
+        >
+          Remove Signature
+        </button>
+        <button
+          v-else
+          class="signBtn"
+          @click="signPetition"
+        >
+          <font-awesome-icon 
+            class="icons"
+            icon="fa-solid fa-pencil"
+          />
+          Sign
+        </button>
+      </p>
+      <div
+        v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
+        class="actions"
+      >
         <!-- <button @click="deletePetition">
           🗑️ Delete
         </button> -->
         <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
-        <p class = "roundTable">
-          <button class = "roundTableBtn" @click="toggleScheduling">
+        <p class="roundTable">
+          <button
+            class="roundTableBtn"
+            @click="toggleScheduling"
+          >
             Schedule RoundTable
           </button>
         </p>
 
-      <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
-      :petition="petition"/>
+        <ScheduleRoundTableForm
+          v-if="schedulingRoundTable"
+          class="scheduleTab"
+          :petition="petition"
+        />
       </div>
     </div>
     
 
     <router-link
       class="linkedPetition"
-      :to="`/petition/${petition._id}`">
+      :to="`/petition/${petition._id}`"
+    >
       <font-awesome-icon icon="fa-solid fa-file" />
       Open Petition
     </router-link>
@@ -93,7 +136,6 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-
   </article>
 </template>
 
@@ -111,6 +153,15 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      signed: false,
+      signatures: [],
+      neighborhood: null,
+      schedulingRoundTable: false,
+      alerts: {}, // Displays success/error messages encountered during freet modification
+    };
+  },
   async mounted() {
     await this.getSignatures();
 
@@ -122,17 +173,6 @@ export default {
         this.signed = true;
       }
     }
-  },
-  data() {
-    return {
-      signed: false,
-      signatures: [],
-      neighborhood: null,
-      schedulingRoundTable: false,
-      alerts: {}, // Displays success/error messages encountered during freet modification
-      signaturesLength :5,
-      targetSignatures : 10,
-    };
   },
   methods: {
     toggleScheduling() {
