@@ -20,9 +20,13 @@
           </div>
           <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
             class="deleteAction">
-            <button @click="deletePetition">
-              🗑️ Delete
-            </button>
+          <font-awesome-icon
+            v-if="$store.state.userObject._id === petition.author._id"
+            class="trash"
+            icon="fa-solid fa-trash"
+            @click="deletePetition"
+        />
+          <!-- <button> 🗑️ </button> -->
           </div>
         </div>
         <p class="author">
@@ -315,7 +319,6 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    /* column-gap: 300px; */
 }
 .allActions{
     display: flex;
@@ -331,16 +334,17 @@ border-radius: 15px;
 .signature{
 border-radius: 15px;
 }
-.deleteAction button {
-  padding-left:5px;
+.trash {
+  padding-left:15px;
   padding-right:5px;
+  color: red;
 }
 /* naomi */
 .author {
     font-size: 10px;
     color: rgb(190, 186, 186);
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 16px;
+    margin-bottom: 30px;
     
 }
 /* naomi */
@@ -400,6 +404,7 @@ border-radius: 15px;
   width: 50%;
   appearance: none;
   border-radius: 5px;
+  margin-top: 16px;
   margin-right: 16px;
 }
 .signProgress::-webkit-progress-bar {
@@ -414,5 +419,7 @@ progress::-webkit-progress-value {
 .signatureProgress{
   font-size: 16px;
   max-width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
 }
 </style>
