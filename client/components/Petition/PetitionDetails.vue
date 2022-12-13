@@ -74,18 +74,17 @@
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
-      <div class="showSignatures">
-      <button @click="toggleSignatures" v-if="!showingSignatures">
+      
+      <button class="showSignatures" @click="toggleSignatures" v-if="!showingSignatures">
             Show Signatures: {{signatures.length}}
       </button>
-      <p class="showing">
 
-        <button @click="toggleSignatures" v-if="showingSignatures">
+        <button class="hideSignatures"  @click="toggleSignatures" v-if="showingSignatures">
             Hide Signatures
         </button>
-      </p>
+    
 
-    </div>
+   
   </div>
     <p
       v-if="showingSignatures"
@@ -541,10 +540,21 @@ export default {
     /* flex-basis: 33.33%; */
     /* width: 100%; */
 }
-.showing button{
-  background-color: brown;
+.showSignatures{
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
   color: white;
-  border-radius: 5px;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
+}
+.hideSignatures{
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
 }
 .scheduleTab{
   z-index: 1;
