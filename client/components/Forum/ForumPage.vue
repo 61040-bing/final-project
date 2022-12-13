@@ -6,7 +6,7 @@
     <CreateForumForm 
       v-if="$store.state.userObject.neighborhood._id === $route.params.id || ($route.params.id === undefined && $store.state.userObject.email !== undefined)"
     />
-    <section>
+    <section v-if="$store.state.forumPosts.length">
       <header class="left">
         <h2>
           Posts
@@ -18,6 +18,9 @@
         :forum="post"
         @refresh="$store.commit('refreshForumPosts', $route.params.id === undefined ? cityId : $route.params.id);"
       />
+    </section>
+    <section v-else>
+      <h3>No posts found!</h3>
     </section>
   </section>
   <section v-else>
