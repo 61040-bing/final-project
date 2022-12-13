@@ -2,6 +2,8 @@
 <!-- We've tagged some elements with classes; consider writing CSS using those classes to style them... -->
 
 <template>
+  <div class="outerWrapper">
+
   <article v-if="(petition !== null)"
     class="freet"
   >
@@ -15,10 +17,10 @@
     <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
     <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
     <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
-    
+
   <header class="freetHeader">
       <div class="mainInfo">
-         
+
         <div class="row">
           <p class="title">
             {{( petition.title)}}
@@ -55,7 +57,7 @@
                 Remove Signature
             </button>
             <button class="signBtn" v-else @click="signPetition">
-              <font-awesome-icon 
+              <font-awesome-icon
                 class="icons"
                 icon="fa-solid fa-pencil"
               />
@@ -77,12 +79,12 @@
             Show Signatures: {{signatures.length}}
       </button>
       <p class="showing">
-        
+
         <button @click="toggleSignatures" v-if="showingSignatures">
             Hide Signatures
         </button>
       </p>
-      
+
     </div>
   </div>
     <p
@@ -104,7 +106,7 @@
     <section v-if="roundTables.length">
 
       <h3>Upcoming RoundTables</h3>
-  
+
       <div v-for="roundtable in roundTables">
 
         <div class="rountTable" v-if="roundtable.startDate < date">
@@ -124,6 +126,7 @@
         <h3>No RoundTables found.</h3>
     </article>
   </article>
+  </div>
 
 </template>
 
@@ -421,7 +424,7 @@ export default {
     .back:hover {
       cursor: pointer;
     }
-.freet { 
+.freet {
     border: 1px solid rgb(228, 228, 228);
     padding: 24px;
     position: relative;
@@ -431,6 +434,7 @@ export default {
     box-shadow: 0px 2px 5px rgb(141, 156, 160);
     border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
 .rountTable {
@@ -451,7 +455,7 @@ export default {
     margin-bottom: 40px;
     text-align: left;
     /* width: 100%; */
-    
+
   }
 .mainInfo{
   width: 100%;
@@ -515,7 +519,7 @@ export default {
 .author {
     font-size: 10px;
     color: rgb(190, 186, 186);
-    font-family: Arial, Helvetica, sans-serif; 
+    font-family: Arial, Helvetica, sans-serif;
 }
 .content{
   width: 100%;
@@ -565,7 +569,7 @@ export default {
 .signProgress::-webkit-progress-bar {
   background: rgb(202, 196, 196);
   border-radius: 5px;
-  
+
 }
 progress::-webkit-progress-value {
   background-color: rgb(170, 85, 64);
@@ -583,5 +587,12 @@ progress::-webkit-progress-value {
   padding-left:15px;
   padding-right:5px;
   color: red;
+}
+.outerWrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 100px;
 }
 </style>
