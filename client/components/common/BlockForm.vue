@@ -284,6 +284,8 @@ export default {
           req_fields.push({id: 'petitionId', value: this.petition._id });
         }
 
+        
+
         options.body = JSON.stringify(Object.fromEntries(
           req_fields.map(field => {
             const {id, value} = field;
@@ -296,6 +298,9 @@ export default {
       }
       console.log("123");
       try {
+        if (this.url ==='/api/roundtables' && options.method === 'POST' && !options.body.petitionId ){
+          throw new Error ("You need to pick a specific petition that the roundtable concerns")
+        }
         const r = await fetch(this.url, options);
         console.log("Look Gianna", this.setUser);
         if (!r.ok) {
