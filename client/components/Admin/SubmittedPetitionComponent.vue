@@ -183,7 +183,7 @@ export default {
   display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 8%;
+    margin-bottom: 18%;
     text-align: left;
 }
 
