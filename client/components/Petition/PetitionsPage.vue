@@ -150,11 +150,14 @@ section {
 }
 
 .createBtn {
+  margin:auto;
+  width: 100%;
   background-color: rgb(170, 85, 64);
   font-weight: bold;
   color: white;
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
-  font-size: medium;
+  font-size: larger;
+  padding: 25px;
 }
 </style>
