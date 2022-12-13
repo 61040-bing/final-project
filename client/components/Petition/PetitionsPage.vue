@@ -160,4 +160,10 @@ section {
   font-size: larger;
   padding: 25px;
 }
+button{
+}
+button:hover{
+  cursor: pointer;
+}
 </style>
+

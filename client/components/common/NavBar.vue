@@ -84,8 +84,8 @@
       v-if="$store.state.userObject !== null && $store.state.userObject.email === 'admin@admin.com'"
       class="right"
     >
-      <div class="nav-item">
-        <span @click="navigateTo('/admin')">Home</span>
+      <div class="nav-item"  @click="navigateTo('/admin')">
+        <span>Home</span>
       </div>
       <div
         class="nav-item"
