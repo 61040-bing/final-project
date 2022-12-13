@@ -51,13 +51,16 @@
   <div class="detailsActions">
     <div class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-          <button v-if="signed" @click="unsignPetition">
-              💔 Remove Signature
-          </button>
-
-          <button v-else @click="signPetition">
-              ❤️ Sign
-          </button>
+            <button class="signBtn" v-if="signed" @click="unsignPetition">
+                Remove Signature
+            </button>
+            <button class="signBtn" v-else @click="signPetition">
+              <font-awesome-icon 
+                class="icons"
+                icon="fa-solid fa-pencil"
+              />
+                Sign
+            </button>
     </div>
     <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
@@ -452,6 +455,24 @@ export default {
   }
 .mainInfo{
   width: 100%;
+}
+
+.roundTableBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
+}
+
+.signBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
 }
 .row{
     display: flex;

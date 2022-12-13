@@ -47,13 +47,17 @@
     <div class="allActions">
           <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-            <button class="removeSignature" v-if="signed" @click="unsignPetition">
-                💔 Remove Signature
+            <button class="signBtn" v-if="signed" @click="unsignPetition">
+                Remove Signature
+            </button>
+            <button class="signBtn" v-else @click="signPetition">
+              <font-awesome-icon 
+                class="icons"
+                icon="fa-solid fa-pencil"
+              />
+                Sign
             </button>
 
-            <button v-else @click="signPetition">
-                ❤️ Sign
-            </button>
           </p>
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
@@ -62,7 +66,7 @@
         </button> -->
         <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
         <p class = "roundTable">
-          <button @click="toggleScheduling">
+          <button class = "roundTableBtn" @click="toggleScheduling">
             Schedule RoundTable
           </button>
         </p>
@@ -330,6 +334,24 @@ export default {
 /* naomi */
 .roundTable{
 border-radius: 15px;
+}
+
+.roundTableBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
+}
+
+.signBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
 }
 .signature{
 border-radius: 15px;
