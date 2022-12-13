@@ -24,7 +24,6 @@ router.get(
   async (req: Request, res: Response) => {
     const allLikes = await LikeCollection.findAllByItemId(req.params.itemId);
     const response = allLikes.map(util.constructLikeResponse);
-    console.log(response);
     res.status(200).json(response);
   }
 );
