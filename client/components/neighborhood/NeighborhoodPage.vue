@@ -3,19 +3,19 @@
     <div class="example">
 
       <img v-if="neighborhood._id == cityId" src="https://www.cambridgema.gov/-/media/Images/citymanagersoffice/COVID19/cityhallbannerkyleklein.jpg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCam.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef4be35a5b0cd779e43b2'" src="../../public/neighborhoodImgs/eastCambridge.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef3c735a5b0cd779e43b0'" src="../../public/neighborhoodImgs/area2MIT.jpeg" class="neighborhoodImg">
       <img v-else-if="neighborhood._id == '637ef42135a5b0cd779e43b1'" src="../../public/neighborhoodImgs/well-harr.jpeg" class="neighborhoodImg">
       <img v-else-if="neighborhood._id == '637da8b92cc172c4569f7a9b'" src="../../public/neighborhoodImgs/thePortPage.jpg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgeportPage.jpg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637da9752cc172c4569f7aa0'" src="../../public/neighborhoodImgs/cambridgePort1.jpeg" class="neighborhoodImg">
       <img v-else-if="neighborhood._id == '637ef52035a5b0cd779e43b3'" src="../../public/neighborhoodImgs/midCam.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef53f35a5b0cd779e43b4'" src="../../public/neighborhoodImgs/riverside1.jpeg" class="neighborhoodImg">
       <img v-else-if="neighborhood._id == '637ef56335a5b0cd779e43b5'" src="../../public/neighborhoodImgs/baldwin.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neigh9.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCam.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCam.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHigh.jpeg" class="neighborhoodImg">
-      <img v-else-if="neighborhood._id == '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawberryHill.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef59c35a5b0cd779e43b6'" src="../../public/neighborhoodImgs/neighNine.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef61d35a5b0cd779e43b7'" src="../../public/neighborhoodImgs/westCambridge.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef65135a5b0cd779e43b8'" src="../../public/neighborhoodImgs/northCambridge.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef67535a5b0cd779e43b9'" src="../../public/neighborhoodImgs/camHighlands.jpeg" class="neighborhoodImg">
+      <img v-else-if="neighborhood._id == '637ef69935a5b0cd779e43ba'" src="../../public/neighborhoodImgs/strawHill.jpeg" class="neighborhoodImg">
       <img v-else src="../../public/neighborhoodImgs/defaultNeighborhood.png" class="neighborhoodImg">
 
       <div class="img_overlay" />
@@ -312,5 +312,9 @@
 }
 .x-icon:hover{
   cursor: pointer;
+}
+
+.neighborhoodImg{
+  object-fit: cover;
 }
 </style>
