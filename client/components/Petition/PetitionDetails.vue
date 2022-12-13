@@ -74,7 +74,7 @@
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
-      
+
       <button class="showSignatures" @click="toggleSignatures" v-if="!showingSignatures">
             Show Signatures: {{signatures.length}}
       </button>
@@ -82,9 +82,9 @@
         <button class="hideSignatures"  @click="toggleSignatures" v-if="showingSignatures">
             Hide Signatures
         </button>
-    
 
-   
+
+
   </div>
     <p
       v-if="showingSignatures"
@@ -113,7 +113,7 @@
           <p>Start Date: {{roundtable.startDate}} </p>
           <p>End Date: {{roundtable.endDate}} </p>
           <p class="meetingLink">
-              Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)"> {{ roundtable.zoomLink }}</a>
+              Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)" target="_blank"> {{ roundtable.zoomLink }}</a>
             </p>
       </div>
       </div>
