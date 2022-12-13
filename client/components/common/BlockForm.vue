@@ -371,6 +371,11 @@ textarea {
    border-radius: 5px;
 }
 
+input {
+  margin-bottom: 25px;
+  border-radius: 5px;
+}
+
 .attachment {
   display: flex;
   flex-direction: row;
