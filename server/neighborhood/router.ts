@@ -65,7 +65,7 @@ router.post(
     neighborhoodValidator.isNeighborhoodNameNotExists
   ],
   async (req: Request, res: Response) => {
-    const neighborhood = await NeighborhoodCollection.addOne(req.body.name, req.body.description);
+    const neighborhood = await NeighborhoodCollection.addOne(req.body.name, '');
     const response = util.constructNeighborhoodResponse(neighborhood);
     res.status(200).json(response);
   }
@@ -90,10 +90,11 @@ router.delete(
     const neighborhoodUsers = await (UserCollection.findAllByNeighborhoodId(req.params.neighborhoodId));
     const cityId = '638ce78e88e91521eb0338c0';
     await NeighborhoodCollection.deleteOne(req.params.neighborhoodId);
-    // reeassign users to city ID
-    for (const user of neighborhoodUsers){
-      UserCollection.updateOne(user._id, {neighborhood: cityId})
+    // Reeassign users to city ID
+    for (const user of neighborhoodUsers) {
+      UserCollection.updateOne(user._id, {neighborhood: cityId});
     }
+
     res.status(200).json({
       message: 'Your neighborhood was deleted successfully.'
     });
