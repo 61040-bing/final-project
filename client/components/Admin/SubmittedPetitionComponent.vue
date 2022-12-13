@@ -11,7 +11,7 @@
         <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
       </div>
 
-  <header class="petitionHeader">
+  <div class="petitionHeader">
 
       <div class="mainInfo">
 
@@ -27,7 +27,7 @@
           Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
         </p>
       </div>
-  </header>
+    </div>
 
   <div class="content">
       <div class="petContent" v-if="showingDescription">
@@ -175,7 +175,6 @@ export default {
     margin: 10px;
     max-width: 100%;
     box-shadow: 0px 2px 5px rgb(141, 156, 160);
-    border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -183,7 +182,6 @@ export default {
   display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 18%;
     text-align: left;
 }
 
@@ -208,7 +206,11 @@ export default {
 
 .pending{
   color: white;
-  font-size: small;
+  background-color: black;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 .accepted {
