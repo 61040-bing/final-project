@@ -1,39 +1,67 @@
 <template>
   <section class="dumm">
     <button class="flex">
-      <span v-if="!editing">{{ neighborhood.name }} </span> 
+      <span v-if="!editing">{{ neighborhood.name }} </span>
       <input
         v-if="editing"
         :value="draft"
         @input="draft = $event.target.value"
       >
       <div>
-        <font-awesome-icon 
+        <font-awesome-icon
           v-if="!editing"
           class="icons"
           icon="fa-solid fa-pencil"
-          @click="startEditing" 
+          @click="startEditing"
         />
 
-        <font-awesome-icon 
+        <font-awesome-icon
           v-if="editing"
           class="icons"
           icon="fa-solid fa-check"
-          @click="submitEdit" 
+          @click="submitEdit"
         />
 
-        <font-awesome-icon 
+        <font-awesome-icon
           v-if="editing"
           class="icons"
           icon="fa-solid fa-xmark"
           @click="stopEditing"
         />
 
-        <font-awesome-icon 
+        <font-awesome-icon
           class="icons"
           icon="fa-solid fa-trash"
-          @click="deleteNeighborhood"
+          @click="showDeletionModal"
         />
+
+
+
+        <modal
+            :name="'deletionModal' + this._uid"
+            :width="400"
+            :height="250"
+            :adaptive="true"
+        >
+          <div style="margin: 8px">
+            <p
+              class="x-icon"
+              @click="hideDeletionModal"
+          >
+            <font-awesome-icon icon="fa-solid fa-x" />
+          </p>
+          <div class="modalText">
+            Deleting a neighborhood is a permanent action, erasing all forum, petition and roundtable history. Are you sure you want to proceed?
+          </div>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+            <div @click="deleteNeighborhood" class = "modal-accept"> Accept</div> <div @click="hideDeletionModal" class = "modal-deny">deny</div>
+
+          </div>
+          </div>
+        </modal>
+
+
+
       </div>
     </button>
     <section
@@ -50,7 +78,7 @@
     </section>
   </section>
 </template>
-        
+
 <script>
     export default {
         name: 'NeighborhoodContainer',
@@ -69,6 +97,12 @@
             }
         },
         methods: {
+          showDeletionModal(){
+            this.$modal.show('deletionModal' + this._uid);
+          },
+          hideDeletionModal(){
+            this.$modal.hide('deletionModal' + this._uid);
+          },
             startEditing(){
                 this.editing = true;
                 this.draft = this.neighborhood.name;
@@ -118,6 +152,7 @@
                     this.editing = false;
                     const successMessage = `successfully deleted ${this.neighborhood.name} neighborhood`
                     this.$set(this.alerts, successMessage, 'success');
+                    this.hideDeletionModal();
                     setTimeout(() => this.$delete(this.alerts, successMessage), 10000);
                 } catch (e) {
                     this.$set(this.alerts, e, 'error');
@@ -127,7 +162,7 @@
         }
     };
 </script>
-        
+
 <style scoped>
 .dumm {
   display: flex;
@@ -167,4 +202,58 @@
   cursor: pointer;
  }
 
+
+.modal-accept{
+   font-family: Arial, Helvetica, sans-serif;
+   display: flex;
+   flex-direction: row;
+   /*width: 400px;*/
+   justify-content: center;
+   padding: 10px;
+   border-radius: 5px;
+   /*gap: 20px;*/
+   /*background-color: rgb(170, 85, 64);*/
+  font-size: 18px;
+
+  border: 1px solid  rgb(170, 85, 64);
+  /*background-color: rgb(170, 85, 64);*/
+  /*color: #fff;*/
+  color: rgb(170, 85, 64);
+ }
+
+ .modal-accept:hover{
+   cursor: pointer;
+ }
+
+.modal-deny{
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  /*width: 400px;*/
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  /*gap: 20px;*/
+  background-color: rgb(170, 85, 64);
+  color: #fff;
+  font-size: 18px;
+
+}
+.modal-deny:hover{
+  cursor: pointer;
+}
+
+.x-icon{
+  font-weight: bold;
+  text-align: right;
+  margin-top: 24px;
+  margin-right: 24px;
+  font-size: 24px;
+}
+.x-icon:hover{
+  cursor: pointer;
+}
+.modalText{
+  font-size: 18px;
+}
 </style>

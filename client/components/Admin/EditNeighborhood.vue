@@ -45,8 +45,8 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-    
-    
+
+
     <h3 class="header">
       Modify Neighborhoods
     </h3>
@@ -62,7 +62,7 @@
     Forbidden Access
   </section>
 </template>
-      
+
     <script>
     import NeighborhoodContainer from './NeighborhoodContainer.vue';
       export default {
@@ -110,7 +110,7 @@
         }
       };
       </script>
-      
+
 <style scoped>
 .container {
     display: flex;
@@ -184,6 +184,9 @@
     background-color: rgb(170, 85, 64);
     color: #fff
   }
+  .button:hover{
+    cursor: pointer;
+  }
 
   .flex:hover, .button:hover {
     cursor: pointer;
@@ -198,7 +201,9 @@
     text-align: center
   }
 
-
+  button:hover{
+    cursor: pointer;
+  }
 
 
     </style>
