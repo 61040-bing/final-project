@@ -6,35 +6,47 @@
     class="petition"
   >
   <header class="petitionHeader">
-      <div class="credentials">
 
-      <div class="accepted" v-if="(petition.accepted === 'true')">
-        <h3> Accepted </h3>
+    <div>
+        <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
+        <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
+        <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
       </div>
 
-      <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
-
       <div class="mainInfo">
-      <p class="title">
-        {{( petition.title)}}
-      </p>
 
-      <p class="neighborhood">
-        Neighborhood: {{petition.neighborhoodId.name}}
-      </p>
-    </div>
-    </div>
-      <p class="author">
-        Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
-      </p>
+        <div class="row">
+          <div class="title">
+            {{( petition.title)}}
+          </div>
+          <div class="neighborhood">
+            Neighborhood: {{petition.neighborhoodId.name}}
+          </div>
+        </div>
+        <p class="author">
+          Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
+        </p>
+      </div>
   </header>
 
   <div class="content">
-    <p
-      class="petContent"
-    >
+    <div class="petContent" v-if="showingDescription">
       {{ petition.content }}
-    </p>
+    </div>
+
+    <a
+    v-if="showingDescription"
+    @click="toggleDescp"
+    class="toggle">
+    Hide Description
+    </a>
+
+    <a
+    v-else
+    @click="toggleDescp"
+    class="toggle">
+    See Description
+    </a>
 
     <div class="signatures">
       .
@@ -94,11 +106,15 @@ export default {
   data() {
     return {
       signed: false,
+      showingDescription: false,
       schedulingRoundTable: false,
       alerts: {} // Displays success/error messages encountered during freet modification
     };
   },
   methods: {
+    toggleDescp() {
+      this.showingDescription = !this.showingDescription;
+    },
     acceptPetition() {
       /**
        * Updates freet to have the submitted draft content.
@@ -166,38 +182,22 @@ export default {
 <style scoped>
 
 .petition {
-    border: 0.5px solid rgb(228, 228, 228);
-    padding: 5%;
+  border: 1px solid rgb(228, 228, 228);
+    padding: 24px;
     position: relative;
-    border-radius: 3px;
-    margin: 5%;
-    font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
+    margin: 10px;
+    max-width: 100%;
     box-shadow: 0px 2px 5px rgb(141, 156, 160);
+    border-radius: 25px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .petitionHeader {
-  margin-bottom: 20%;
-}
-
-.expand:link {
-  color:deepskyblue;
-  text-decoration: none;
-}
-
-.expand:visited{
-  color:deepskyblue;
-  text-decoration: none;
-}
-
-.authorLink:link {
-  color:black;
-  text-decoration: none;
-}
-
-.authorLink:visited{
-  color:black;
-  text-decoration: none;
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15%;
+    text-align: left;
 }
 
 .sign{
@@ -216,6 +216,12 @@ export default {
   width: 100%;
   border-radius: 20px;
   color: green;
+  margin-top: 5%;
+}
+
+.pending{
+  color: white;
+  font-size: small;
 }
 
 .accepted {
@@ -234,6 +240,7 @@ export default {
   width: fit-content;
   padding-left: 2%;
   padding-right: 2%;
+  border: 1px;
 }
 
 .denyBtn{
@@ -244,6 +251,9 @@ export default {
   width: fit-content;
   padding-left: 2%;
   padding-right: 2%;
+  font-size: large;
+  font-weight: bold;
+  margin-right: 5%;
 }
 
 .acceptBtn{
@@ -254,13 +264,26 @@ export default {
   width: fit-content;
   padding-left: 2%;
   padding-right: 2%;
+  font-size: large;
+  font-weight: bold;
 }
 
-.title {
-  font-size: 150%;
+.toggle {
+  color: rgb(0, 166, 255);
+  font-size: medium;
+}
+
+.title{
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 16px;
+    font-weight: bold;
 }
 .author {
-  font-size: medium;
+  font-size: 12px;
+    color: rgb(190, 186, 186);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 16px;
 }
 
 .content {
@@ -272,101 +295,10 @@ export default {
   margin-top: 5%;
 }
 
-.mainInfo {
+/* .mainInfo {
   display: flex;
   justify-content: space-between;
-}
-
-.freetHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 90%;
-    text-align: left;
-    
-  }
- /* old */
-.freet { 
-    border: 1px solid rgb(228, 228, 228);
-    padding: 24px;
-    position: relative;
-    margin: 3px;
-    max-width: 100%;
-    /* height: 250px; */
-    box-shadow: 0px 2px 5px rgb(141, 156, 160);
-    border-radius: 25px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-/* naomi */
-.row{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    /* column-gap: 300px; */
-}
-.roundtableAndSignatureRow{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-
-/* naomi */
-.roundTable{
-border-radius: 15px;
-}
-.signature{
-border-radius: 15px;
-}
-.deleteAction button {
-  padding-left:5px;
-  padding-right:5px;
-}
-/* naomi */
-.author {
-    font-size: 10px;
-    color: rgb(190, 186, 186);
-    font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 16px;
-    
-}
-/* naomi */
-.title{
-    font-size: 25px;
-    color: rgb(0, 0, 0);
-    margin-bottom: 16px;
-    font-weight: bold;
-}
-.content{
-  text-align: left;
-}
-.accepted {
-  color: green;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
-}
-
-.denied {
-  color: red;
-}
-
-.scheduleTab{
-  z-index: 1;
-  background-color: white;
-}
-.linkedPetition{
-    color: rgb(69, 150, 231);
-    text-align: left;
-  }
-.linkedPetition:hover{
-    cursor: pointer;
-  }
-
-
+} */
 
 
 </style>
