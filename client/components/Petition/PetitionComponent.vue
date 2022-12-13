@@ -31,7 +31,7 @@
       Active
     </h3>
 
-    <header class="freetHeader">
+    <div class="freetHeader">
       <div class="mainInfo">
         <div class="row">
           <div class="title">
@@ -54,7 +54,7 @@
           Created by {{ ( petition.author.firstName + " " + petition.author.lastName) }} on {{ petition.dateCreated }}
         </p>
       </div>
-    </header>
+    </div>
     <!-- <p
       class="content"
     >
@@ -334,7 +334,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 10%;
     text-align: left;
 
   }
