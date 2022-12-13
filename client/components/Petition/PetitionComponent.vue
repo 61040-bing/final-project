@@ -250,6 +250,7 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
+          this.$store.commit('refreshPetitions', this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
@@ -271,6 +272,7 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
+          this.$store.commit('refreshPetitions', this.$route.params.id);
           await this.getSignatures();
 
           params.callback();
