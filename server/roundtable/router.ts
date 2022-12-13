@@ -75,7 +75,7 @@ router.get(
   async (req: Request, res: Response) => {
    
     const petitionRoundTables = await RoundTableCollection.findAllbyPetitionId(req.query.petition as string);
-    res.status(200).json(petitionRoundTables);
+    res.status(200).json(petitionRoundTables.map(util.constructRoundTableResponse));
   }
 );
 

@@ -109,7 +109,7 @@
     data() {
     return {
       alerts: {}, // Displays success/error messages encountered during freet modification,
-      viewingTab : this.$route.params.tab === "petition" ? "petition" : "forum",
+      viewingTab : this.$route.params.tab === "petition" ? "petition" : this.$route.params.tab === "roundtable" ? "roundtable" : "forum",
       neighborhood: {},
       loaded: false,
       cityId: '638ce78e88e91521eb0338c0'
