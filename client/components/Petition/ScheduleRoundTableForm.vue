@@ -48,6 +48,7 @@
       <p>{{ content }}</p>
     </article>
     <button
+    class = "rtSubmitButton"
       type="submit"
     >
       {{ title }}
@@ -113,3 +114,4 @@ export default {
   }
 };
 </script>
+

@@ -50,6 +50,16 @@ main {
   padding: 0 5em 5em;
 }
 
+.rtSubmitButton{
+  /* max-width: fit-content;
+  min-width: fit-content; */
+  padding: 7px;
+  background-color: rgb(170, 85, 64);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;;
+}
 .alerts {
     position: absolute;
     z-index: 99;
