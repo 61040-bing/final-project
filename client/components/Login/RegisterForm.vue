@@ -152,12 +152,25 @@ export default {
       }
     },
     async canMove(){
-      const r = await  fetch(`/api/users/${this.fields[2].value}`, {method: 'GET', headers: {'Content-Type': 'application/json'}});
-      if (r.status !== 200){
-        alert("This email has already been taken");
-      } else {
-        this.selectingNeighborhood = !this.selectingNeighborhood
-      }
+      if (!this.fields[0].value.match(/^\w+$/i)) {
+          alert("Must provide a valid First Name");
+
+        } else if (!this.fields[1].value.match(/^\w+$/i)) {
+          alert("Must provide a valid Last Name");
+
+        } else if (!this.fields[2].value.match(/^[\w+.\-]{0,25}@(\w+)(\.)(\w+)$/i)) {
+          alert("Must provide a valid email address");
+
+        } else if (!this.fields[3].value.match(/^\S+$/i)) {
+          alert("Must provide a valid password");
+        } else {
+          const r = await  fetch(`/api/users/${this.fields[2].value}`, {method: 'GET', headers: {'Content-Type': 'application/json'}});
+          if (r.status !== 200){
+            alert("This email has already been taken");
+          } else {
+            this.selectingNeighborhood = !this.selectingNeighborhood
+          }
+        }
     }
   },
   data() {
