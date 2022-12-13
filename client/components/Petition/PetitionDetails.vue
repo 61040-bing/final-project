@@ -39,7 +39,10 @@
   >
     {{ petition.content }}
   </p>
-
+  <progress class="signProgress brown" :max="petition.targetSignatures" :value="signatures.length"> </progress>
+  <p class="signatureProgress">
+    {{signatures.length}} / {{petition.targetSignatures}} Signatures
+  </p>
   <div class="detailsActions">
     <div class="signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id === '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
@@ -471,5 +474,28 @@ export default {
 .scheduleTab{
   z-index: 1;
   background-color: white;
+}
+.signProgress{
+  float: left;
+  width: 70%;
+  appearance: none;
+  border-radius: 5px;
+  margin-top: 16px;
+  margin-right: 16px;
+}
+.signProgress::-webkit-progress-bar {
+  background: rgb(202, 196, 196);
+  border-radius: 5px;
+  
+}
+progress::-webkit-progress-value {
+  background-color: rgb(170, 85, 64);
+  border-radius: 5px;
+}
+.signatureProgress{
+  font-size: 16px;
+  max-width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
 }
 </style>
