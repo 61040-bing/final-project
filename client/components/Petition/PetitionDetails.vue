@@ -10,14 +10,12 @@
     @click="$router.go(-1)">
     Back
   </button>
-  
+    <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+
+    <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
   <header class="freetHeader">
       <div class="mainInfo">
-
-        <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
-
-        <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
-
+         
         <div class="row">
           <p class="title">
             {{( petition.title)}}
@@ -95,9 +93,9 @@
    
       <!-- {{formatDate(roundTable.startDate)}} -->
       <RoundTableComponent
-        v-for="roundTable in roundTables"
-        :key="roundTable.id"
-        :roundTable="roundTable"
+        v-for="roundtable in roundTables"
+        :key="roundtable.id"
+        :roundtable="roundtable"
       />
     </section>
     <article
@@ -422,6 +420,12 @@ export default {
 /* figure out why petition fills whole page even when styling is done */
 .accepted {
   color: green;
+    color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    text-align: left;
 }
 
 .denied {

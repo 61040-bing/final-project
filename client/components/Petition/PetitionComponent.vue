@@ -6,12 +6,12 @@
     class="freet"
     v-if="$store.state.userObject !== null"
   >
+    <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
+
+    <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+
     <header class="freetHeader">
       <div class="mainInfo">
-
-        <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
-
-        <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
 
         <div class="row">
           <div class="title">
@@ -355,7 +355,9 @@ border-radius: 15px;
     margin-bottom: 16px;
     text-align: left;
 }
-
+.mainInfo{
+  width: 100%;
+}
 .denied {
   color: red;
 }
