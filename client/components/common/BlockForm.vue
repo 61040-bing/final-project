@@ -22,6 +22,22 @@
           :placeholder="getPlaceholder(field.label)"
           @input="field.value = $event.target.value"
         />
+
+        <input v-else-if="field.id === 'startDate' || field.id === 'endDate'"
+          type="date" 
+          :name="field.id"
+          :value="field.value"
+          min="2022-12-04" max="2025-12-31"
+          @input="field.value = $event.target.value">
+  
+
+        <input v-else-if="field.id === 'startTime' || field.id === 'endTime'"
+          type="time"
+          :name="field.id"
+          :value="field.value"
+          min="2022-12-04" max="2025-12-31"
+          @input="field.value = $event.target.value">
+        
         <input
           v-else
           :type="field.id === 'password' ? 'password' : (field.id === 'targetSignatures' ? 'number' : 'text')"
@@ -35,7 +51,7 @@
     <article v-else>
       <p>{{ content }}</p>
     </article>
-    <section v-if="fetchPetition">
+    <section v-if="fetchPetition || fetchAuthorPetition">
       <div class="attachment">
         <div
           class="button"
@@ -110,6 +126,7 @@ export default {
       neighborhoodId: null,
       petitionId: null,
       fetchPetition: false,
+      fetchAuthorPetition: false,
       refreshComments: false,
       refreshPosts: false,
       setUser: false,
@@ -120,6 +137,9 @@ export default {
   mounted(){
     if (this.fetchPetition){
       this.fetchPetitions();
+    }
+    if (this.fetchAuthorPetition){
+      this.fetchAuthorPetitions();
     }
   },
   methods: {
@@ -157,6 +177,31 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('updatePetitions', res);
+      } catch (e) {
+        this.$set(this.alerts, e, 'error');
+        setTimeout(() => this.$delete(this.alerts, e), 3000);
+      }
+    },
+    async fetchAuthorPetitions(){
+      const url = `/api/petitions`;
+      try {
+        const r = await fetch(url);
+        const res = await r.json();
+        if (!r.ok) {
+          throw new Error(res.error);
+        }
+        console.log("beginning filter in block form")
+        // const authorPetitions = res.filter(petition => (petition.authorId._id === this.$store.state.userObject._id));
+        const authorPetitions = [];
+        console.log("authorpetitions before filter", res);
+        for (const petition of res){
+          console.log("petition", petition)
+          if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true'){
+            authorPetitions.push(petition)
+          }
+        }
+        console.log("block form author petitions", authorPetitions)
+        this.$store.commit('updatePetitions', authorPetitions);
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
