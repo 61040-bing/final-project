@@ -27,8 +27,8 @@ const isRoundTableExists = async (req: Request, res: Response, next: NextFunctio
  */
 const isAlreadyMaxRoundTables = async (req: Request, res: Response, next: NextFunction) => {
     const petition = await PetitionCollection.findOne(req.body.petitionId);
-    const roundTablesOnPetition = await RoundTableCollection.findAllbyPetitionId(petition._id);
-    
+    let roundTablesOnPetition = await RoundTableCollection.findAllbyPetitionId(petition._id);
+    roundTablesOnPetition = roundTablesOnPetition.filter(roundtable => roundtable.endDate >= new Date())
     if (roundTablesOnPetition.length === 3){
       res.status(400).json({
         error: 'user is not allowed to add more than 3 roundTables to a petition'
