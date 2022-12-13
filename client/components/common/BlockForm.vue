@@ -374,6 +374,7 @@ textarea {
 input {
   margin-bottom: 25px;
   border-radius: 5px;
+  border: 1.5px solid rgb(228, 228, 228);
 }
 
 .attachment {
