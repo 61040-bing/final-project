@@ -101,20 +101,24 @@
           🗑️ Delete
         </button> -->
         <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
-        <p class="roundTable">
-          <button
-            class="roundTableBtn"
-            @click="toggleScheduling"
-          >
+
+        <p class = "roundTable">
+          <button class = "roundTableBtn" @click="showModal">
             Schedule RoundTable
           </button>
         </p>
 
-        <ScheduleRoundTableForm
-          v-if="schedulingRoundTable"
-          class="scheduleTab"
-          :petition="petition"
-        />
+        <modal :name="'createRtModal' + this._uid"
+               :width="500"
+               :height="600"
+               :adaptive="true">
+          <p class = "x-icon" @click="hideModal">
+            <font-awesome-icon icon="fa-solid fa-x" />
+          </p>
+          <ScheduleRoundTableForm class="scheduleTab"
+                                  @hide="hideModal"
+                                  :petition="petition"/>
+        </modal>
       </div>
     </div>
 
@@ -170,6 +174,12 @@ export default {
     }
   },
   methods: {
+    showModal(){
+      this.$modal.show("createRtModal" + this._uid);
+    },
+    hideModal(){
+      this.$modal.hide("createRtModal" + this._uid);
+    },
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
     },
@@ -375,6 +385,9 @@ border-radius: 15px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
 }
+.roundTableBtn:hover{
+  cursor: pointer;
+}
 
 .signBtn {
   background-color: rgb(170, 85, 64);
@@ -395,6 +408,9 @@ border-radius: 15px;
   padding-right:5px;
   /* color: red; */
   color: black;
+}
+.trash:hover{
+  cursor: pointer;
 }
 /* naomi */
 .author {

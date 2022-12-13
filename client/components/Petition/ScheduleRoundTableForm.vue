@@ -21,12 +21,12 @@
         />
 
         <input v-else-if="field.id === 'startDate' || field.id === 'endDate'"
-          type="date" 
+          type="date"
           :name="field.id"
           :value="field.value"
           min="2022-12-04" max="2025-12-31"
           @input="field.value = $event.target.value">
-  
+
 
         <input v-else-if="field.id === 'startTime' || field.id === 'endTime'"
           type="time"
@@ -100,9 +100,16 @@ export default {
         this.$store.commit('refreshNeighborhoodRoundTables', neighborhood);
         const message = 'Successfully created a round table!';
         this.$set(this.alerts, message, 'success');
-        setTimeout(() => this.$delete(this.alerts, message), 3000);
+        setTimeout(() => this.hideModalWithTimeout(message), 3000);
+        // this.$emit('hide');
       }
     };
+  },
+  methods: {
+    hideModalWithTimeout(message){
+      this.$delete(this.alerts, message);
+      this.$emit('hide');
+    },
   }
 };
 </script>

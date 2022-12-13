@@ -6,9 +6,19 @@
     class="roundtable"
   >
 
-    <button @click="deleteRoundTable" v-if="$store.state.userObject._id === roundtable.authorId._id">
-      🗑️ Delete
-    </button>
+
+    <div style="width: 100%;  text-align: right">
+
+
+      <font-awesome-icon
+          v-if="$store.state.userObject._id === roundtable.authorId._id"
+          class="trash"
+          icon="fa-solid fa-trash"
+          @click="deleteRoundTable"
+      />
+    </div>
+
+
     <h2>
       Roundtable on  {{ roundtable.roundTableName }}
     </h2>
@@ -207,5 +217,12 @@ export default {
   /*background-color: #4CAF50;*/
   /*width: 40%;*/
   /*text-align: left;*/
+}
+
+.trash {
+  color: red;
+}
+.trash:hover{
+  cursor: pointer;
 }
 </style>
