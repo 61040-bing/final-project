@@ -114,7 +114,7 @@ class SignatureCollection {
    */
   static async findAllbyPetitionId(petitionId: Types.ObjectId | string): Promise<Array<HydratedDocument<Signature>>>{
     const petition = await PetitionCollection.findOne(petitionId);
-    return SignatureModel.find({petitionId: petition._id}).populate('_id').populate('authorId');
+    return SignatureModel.find({petitionId: petition._id}).populate('authorId');
   }
 
   /**
