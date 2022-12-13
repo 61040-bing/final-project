@@ -2,11 +2,11 @@
   <section class="dumm">
     <button class="flex">
       <span v-if="!editing">{{ neighborhood.name }} </span> 
-      <textarea
+      <input
         v-if="editing"
         :value="draft"
         @input="draft = $event.target.value"
-      />
+      >
       <div>
         <font-awesome-icon 
           v-if="!editing"
@@ -152,12 +152,6 @@
     border-radius: 10px;
     padding: 20px;
     min-width: 500px;
-  }
-
-  img {
-    height: 20px;
-    width: 20px;
-    margin-left: 20px;
   }
 
   .flex{
