@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div style="width: 100%; text-align: center; margin-top: 16px;" @click="showModal" >
+    <div style="width: 100%; text-align: center; margin-top: 16px;" @click="expand" >
       Associated Petition
       <div class="petition_container">
       <font-awesome-icon icon="fa-solid fa-file" />
@@ -56,7 +56,7 @@
     </div>
 
 
-      <modal :name="'rtModal' + this._uid"
+      <!-- <modal :name="'rtModal' + this._uid"
              :width="500"
              :height="600"
              :adaptive="true">
@@ -64,7 +64,7 @@
           <font-awesome-icon icon="fa-solid fa-x" />
         </p>
         <PetitionComponent :petitionId="roundtable.petitionId._id"/>
-      </modal>
+      </modal> -->
 
 
 
@@ -112,7 +112,9 @@ export default {
     console.log(this.roundtable);
   },
   methods: {
-
+    expand() {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.roundtable.petitionId._id}`, params: {petitionId: this.roundtable.petitionId._id, prevTab: 'roundtable'}});
+      },
     showModal(){
       this.$modal.show("rtModal" + this._uid);
     },
@@ -182,7 +184,6 @@ export default {
 .linkedPetitionButton{
   text-decoration: underline;
   color: blue;
-
 }
 .linkedPetitionButton:hover{
   cursor: pointer;

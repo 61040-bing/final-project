@@ -109,10 +109,10 @@
 
       <div v-for="roundtable in roundTables">
 
-        <div class="rountTable" v-if="roundtable.startDate < date">
+        <div class="rountTable">
           <h1 class="roundTableTitle">{{roundtable.roundTableName}}</h1>
-          <p>Start Date: {{formatDate(roundtable.startDate)}} </p>
-          <p>End Date: {{formatDate(roundtable.endDate)}} </p>
+          <p>Start Date: {{roundtable.startDate}} </p>
+          <p>End Date: {{roundtable.endDate}} </p>
           <p class="meetingLink">
               Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)"> {{ roundtable.zoomLink }}</a>
             </p>
@@ -204,18 +204,6 @@ export default {
       };
       this.request(params);
     },
-    formatDate(date) {
-
-      const months = ['JAN','FEB','MAR','April','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-
-      const dateSep = date.split('-');
-
-      const day = dateSep[2];
-      const month = dateSep[1];
-      const year = dateSep[0];
-
-      return months[parseInt(month)-1] + " " + day[0] +  day[1]  + ", " + year;
-      },
     signPetition() {
       /**
        * Updates freet to have the submitted draft content.
