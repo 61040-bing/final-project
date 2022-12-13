@@ -7,7 +7,7 @@
   <article v-if="(petition !== null)"
     class="freet"
   >
-   <span class="back" @click="$router.go(-1)">
+   <span class="back" @click="goBack">
       <font-awesome-icon
         icon="fa-solid fa-arrow-left"
       />
@@ -182,6 +182,14 @@ export default {
     },
     futureDate() {
       this.showingSignatures = !this.showingSignatures;
+    },
+    goBack() {
+      if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
+        this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
+      } else {
+        this.$router.push({name: 'Neighborhood', path: `/neighborhood/${this.petition.neighborhood._id}`, params: {id: this.petition.neighborhood._id, tab: this.$route.params.prevTab}});
+      }
+      console.log(this.$router);
     },
     deletePetition() {
       /**

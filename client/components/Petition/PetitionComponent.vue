@@ -118,14 +118,10 @@
       </div>
     </div>
 
-
-    <router-link
-      class="linkedPetition"
-      :to="`/petition/${petition._id}`"
-    >
+    <span class="linkedPetition" @click="expand">
       <font-awesome-icon icon="fa-solid fa-file" />
       Open Petition
-    </router-link>
+    </span>
 
     <section class="alerts">
       <article
@@ -178,6 +174,10 @@ export default {
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
       console.log(this.petition.neighborhoodId);
+    },
+    expand() {
+      this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
+      console.log(this.$router);
     },
     deletePetition() {
       /**

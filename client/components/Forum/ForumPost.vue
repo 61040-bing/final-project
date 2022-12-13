@@ -49,13 +49,18 @@
         /> View replies
       </router-link>
       <section v-if="forum.petitionId">
-        
-      <router-link
+
+      <span class="linkedPetitionButton" @click="expand">
+        <font-awesome-icon icon="fa-solid fa-file" />
+        Linked Petition
+      </span>
+
+      <!-- <router-link
         class="linkedPetitionButton"
         :to="`/petition/${forum.petitionId}`">
         <font-awesome-icon icon="fa-solid fa-file" />
         Linked Petition
-      </router-link>
+      </router-link> -->
 
         <!-- <div
           class="linkedPetitionButton"
@@ -206,6 +211,9 @@
         if (!this.isMagnified){
           this.$emit('refresh');
         }
+      },
+      expand() {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forum'}});
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);

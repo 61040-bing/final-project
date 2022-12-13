@@ -106,13 +106,10 @@
   export default {
     name: 'NeighborhoodPage',
     components: {ForumPage, PetitionsPage, RoundTablePage},
-    props: {
-
-    },
     data() {
     return {
       alerts: {}, // Displays success/error messages encountered during freet modification,
-      viewingTab : "forum",
+      viewingTab : this.$route.params.tab === "petition" ? "petition" : "forum",
       neighborhood: {},
       loaded: false,
       cityId: '638ce78e88e91521eb0338c0'
