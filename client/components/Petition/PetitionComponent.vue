@@ -120,7 +120,7 @@
 
     <span class="linkedPetition" @click="expand">
       <font-awesome-icon icon="fa-solid fa-file" />
-      Open Petition
+      View More...
     </span>
 
     <section class="alerts">
@@ -393,7 +393,8 @@ border-radius: 15px;
 .trash {
   padding-left:15px;
   padding-right:5px;
-  color: red;
+  /* color: red; */
+  color: black;
 }
 /* naomi */
 .author {
