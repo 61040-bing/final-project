@@ -23,20 +23,22 @@
           @input="field.value = $event.target.value"
         />
 
-        <input v-else-if="field.id === 'startDate' || field.id === 'endDate'"
+        <input
+          v-else-if="field.id === 'startDate' || field.id === 'endDate'"
           type="date" 
           :name="field.id"
           :value="field.value"
-          min="2022-12-04" max="2025-12-31"
-          @input="field.value = $event.target.value">
+          @input="field.value = $event.target.value"
+        >
   
 
-        <input v-else-if="field.id === 'startTime' || field.id === 'endTime'"
+        <input
+          v-else-if="field.id === 'startTime' || field.id === 'endTime'"
           type="time"
           :name="field.id"
           :value="field.value"
-          min="2022-12-04" max="2025-12-31"
-          @input="field.value = $event.target.value">
+          @input="field.value = $event.target.value"
+        >
         
         <input
           v-else
@@ -67,7 +69,10 @@
             icon="fa-solid fa-caret-up"
           />
         </div>
-        <div class="petitionPreview" v-if="petition">
+        <div
+          v-if="petition"
+          class="petitionPreview"
+        >
           {{ petition.title }}
           <font-awesome-icon
             style="color: rgb(170, 85, 64);"
@@ -277,12 +282,9 @@ export default {
           req_fields.push({id: 'petitionId', value: this.petition._id });
         }
 
-        
-
         options.body = JSON.stringify(Object.fromEntries(
           req_fields.map(field => {
             const {id, value} = field;
-            field.value = '';
             return [id, value];
           })
         ));
@@ -300,6 +302,9 @@ export default {
 
         const text = await r.text();
         this.petition = null;
+        this.fields.map(field => {
+            field.value = '';
+        });
         
         if (this.setUser){
           const res = text ? JSON.parse(text) : {user: null};
