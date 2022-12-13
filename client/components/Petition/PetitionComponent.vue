@@ -66,9 +66,9 @@
       :max="petition.targetSignatures"
       :value="signatures.length"
     />
-    <p class="signatureProgress">
+    <span class="signatureProgress">
       {{ signatures.length }} / {{ petition.targetSignatures }} Signatures
-    </p>
+    </span>
     <div class="allActions">
       <p
         v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"
@@ -469,8 +469,6 @@ border-radius: 15px;
   width: 50%;
   appearance: none;
   border-radius: 5px;
-  margin-top: 16px;
-  margin-right: 16px;
 }
 .signProgress::-webkit-progress-bar {
   background: rgb(202, 196, 196);
