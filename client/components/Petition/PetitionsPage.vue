@@ -3,7 +3,7 @@
 <template>
   <section>
     <div v-if="$store.state.userObject && ($route.params.id === $store.state.userObject.neighborhood._id || $route.params.id === undefined)" class="freetButton">
-    <button class="freetPost" @click="showModal"> Create a New Petition </button>
+    <button class="createBtn" @click="showModal"> Create a New Petition </button>
   </div>
 
   <section class="page" v-if="$store.state.userObject && $store.state.userObject.neighborhood">
@@ -112,5 +112,14 @@ section {
 }
 .x-icon:hover{
   cursor: pointer;
+}
+
+.createBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
 }
 </style>

@@ -47,13 +47,17 @@
     <div class="allActions">
           <p class = "signature" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)">
 
-            <button class="removeSignature" v-if="signed" @click="unsignPetition">
-                💔 Remove Signature
+            <button class="signBtn" v-if="signed" @click="unsignPetition">
+                Remove Signature
+            </button>
+            <button class="signBtn" v-else @click="signPetition">
+              <font-awesome-icon 
+                class="icons"
+                icon="fa-solid fa-pencil"
+              />
+                Sign
             </button>
 
-            <button v-else @click="signPetition">
-                ❤️ Sign
-            </button>
           </p>
       <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
@@ -62,7 +66,7 @@
         </button> -->
         <!-- <p class="info" v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"> -->
         <p class = "roundTable">
-          <button @click="toggleScheduling">
+          <button class = "roundTableBtn" @click="toggleScheduling">
             Schedule RoundTable
           </button>
         </p>
@@ -298,7 +302,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15%;
+    margin-bottom: 10%;
     text-align: left;
     
   }
@@ -331,6 +335,24 @@ export default {
 .roundTable{
 border-radius: 15px;
 }
+
+.roundTableBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
+}
+
+.signBtn {
+  background-color: rgb(170, 85, 64);
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  border-color: rgb(170, 85, 64);
+  font-size: medium;
+}
 .signature{
 border-radius: 15px;
 }
@@ -351,34 +373,43 @@ border-radius: 15px;
 .title{
     font-size: 25px;
     color: rgb(0, 0, 0);
-    margin-bottom: 16px;
+    margin-bottom: 1px;
     font-weight: bold;
 }
+
 .content{
   text-align: left;
-}
-.accepted {
-  color: green;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
 }
 .mainInfo{
   width: 100%;
 }
+.accepted {
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 .denied {
-  color: red;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
+  color: white;
+  background-color: red;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
 }
 
 .pending {
-  color: gray;
+  color: white;
+  background-color: gray;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
 }
 
 .active {
@@ -421,5 +452,7 @@ progress::-webkit-progress-value {
   max-width: 100%;
   margin-top: 16px;
   padding-top: 16px;
+  color: rgb(170, 85, 64);
+  font-weight: bold;
 }
 </style>
