@@ -588,7 +588,8 @@ progress::-webkit-progress-value {
 .trash {
   padding-left:15px;
   padding-right:5px;
-  color: red;
+  /* color: red; */
+  color:black;
 }
 .outerWrapper{
   width: 100%;

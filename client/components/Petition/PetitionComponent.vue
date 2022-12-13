@@ -31,7 +31,7 @@
       Active
     </h3>
 
-    <header class="freetHeader">
+    <div class="freetHeader">
       <div class="mainInfo">
         <div class="row">
           <div class="title">
@@ -54,7 +54,7 @@
           Created by {{ ( petition.author.firstName + " " + petition.author.lastName) }} on {{ petition.dateCreated }}
         </p>
       </div>
-    </header>
+    </div>
     <!-- <p
       class="content"
     >
@@ -66,9 +66,9 @@
       :max="petition.targetSignatures"
       :value="signatures.length"
     />
-    <p class="signatureProgress">
+    <span class="signatureProgress">
       {{ signatures.length }} / {{ petition.targetSignatures }} Signatures
-    </p>
+    </span>
     <div class="allActions">
       <p
         v-if="!(petition.submitted === 'true') && (petition.neighborhoodId._id == '638ce78e88e91521eb0338c0'|| $store.state.userObject.neighborhood._id === petition.neighborhoodId._id)"
@@ -124,7 +124,7 @@
 
     <span class="linkedPetition" @click="expand">
       <font-awesome-icon icon="fa-solid fa-file" />
-      Open Petition
+      View More...
     </span>
 
     <section class="alerts">
@@ -344,7 +344,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 10%;
     text-align: left;
 
   }
@@ -407,7 +406,8 @@ border-radius: 15px;
 .trash {
   padding-left:15px;
   padding-right:5px;
-  color: red;
+  /* color: red; */
+  color: black;
 }
 .trash:hover{
   cursor: pointer;
@@ -486,8 +486,6 @@ border-radius: 15px;
   width: 50%;
   appearance: none;
   border-radius: 5px;
-  margin-top: 16px;
-  margin-right: 16px;
 }
 .signProgress::-webkit-progress-bar {
   background: rgb(202, 196, 196);

@@ -8,13 +8,6 @@ import BlockForm from '@/components/common/BlockForm.vue';
 export default {
   name: 'CreateRoundTableLinkedPetition',
   mixins: [BlockForm],
-  props: {
-    // Data from the stored freet
-    petition: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
       url: '/api/roundtables',
