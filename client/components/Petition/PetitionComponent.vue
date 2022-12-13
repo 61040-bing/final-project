@@ -163,9 +163,9 @@ export default {
     };
   },
   async mounted() {
-    await this.getSignatures();
 
     this.neighborhood = this.$route.params.id;
+    this.signatures = this.petition.signatures;
 
     for (const signature of this.signatures) {
       if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
@@ -305,7 +305,6 @@ export default {
             throw new Error(res.error);
           }
           this.$store.commit('refreshPetitions', this.$route.params.id);
-          await this.getSignatures();
 
           params.callback();
         } catch (e) {
@@ -325,7 +324,6 @@ export default {
           throw new Error(res.error);
           }
           this.$store.commit('refreshPetitions', this.$route.params.id);
-          await this.getSignatures();
 
           params.callback();
         } catch (e) {

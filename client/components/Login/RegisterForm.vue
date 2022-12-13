@@ -1,9 +1,7 @@
 <!-- Form for registering an account (block style) -->
 
 <template>
-
-
-  <form @submit.prevent="submit">
+  <form class="form" @submit.prevent="submit">
 
     <header v-if="!selectingNeighborhood">
       <h2 >Welcome to Participate!</h2>
@@ -11,6 +9,7 @@
 
     <article
       v-if="!selectingNeighborhood"
+      class="infoSection"
     >
 
     <h3>Register</h3>
@@ -28,17 +27,16 @@
         @input="field.value = $event.target.value"
       >
     </div>
-    </article>
 
-    <button v-if="!selectingNeighborhood" type="button" @click="canMove">
+    <button v-if="!selectingNeighborhood" class="nextBtn" type="button" @click="canMove">
       Next
     </button>
+
+    </article>
 
     <article
       v-if="selectingNeighborhood"
     >
-
-
 
       <div @click="selectingNeighborhood = !selectingNeighborhood" class="back-button">
         <font-awesome-icon
@@ -47,7 +45,8 @@
         Back
       </div>
 
-    <h3 style="margin-top: 40px; margin-bottom: 40px; text-align: center">Select your neighborhood </h3>
+    <h3 style="font-family: Arial, Helvetica, sans-serif; margin-top: 40px; margin-bottom: 40px; text-align: center">Select your neighborhood </h3>
+    <p style="font-family: Arial, Helvetica, sans-serif; text-align: center">If you are unsure of which neighborhood you are in, check out Cambridge's official neighborhood maps <a href="https://www.cambridgema.gov/cdd/factsandmaps/mapgalleries/neighborhood" target="_blank">here</a>.</p>
 
       <div class="neighborhood-container">
         <section v-for="neighborhood in $store.state.neighborhoods" @click="selectNeighborhood(neighborhood); fields[4].value = neighborhood._id">
@@ -153,12 +152,25 @@ export default {
       }
     },
     async canMove(){
-      const r = await  fetch(`/api/users/${this.fields[2].value}`, {method: 'GET', headers: {'Content-Type': 'application/json'}});
-      if (r.status !== 200){
-        alert("This email has already been taken");
-      } else {
-        this.selectingNeighborhood = !this.selectingNeighborhood
-      }
+      if (!this.fields[0].value.match(/^\w+$/i)) {
+          alert("Must provide a valid First Name");
+
+        } else if (!this.fields[1].value.match(/^\w+$/i)) {
+          alert("Must provide a valid Last Name");
+
+        } else if (!this.fields[2].value.match(/^[\w+.\-]{0,25}@(\w+)(\.)(\w+)$/i)) {
+          alert("Must provide a valid email address");
+
+        } else if (!this.fields[3].value.match(/^\S+$/i)) {
+          alert("Must provide a valid password");
+        } else {
+          const r = await  fetch(`/api/users/${this.fields[2].value}`, {method: 'GET', headers: {'Content-Type': 'application/json'}});
+          if (r.status !== 200){
+            alert("This email has already been taken");
+          } else {
+            this.selectingNeighborhood = !this.selectingNeighborhood
+          }
+        }
     }
   },
   data() {
@@ -231,6 +243,13 @@ export default {
   box-shadow: 0px 2px 5px rgb(141, 156, 160);
   transition: all 0.3s;
 }
+
+.infoSection {
+  border-radius:8px;
+  box-shadow: 0px 2px 5px rgb(141, 156, 160);
+  padding: 3%;
+}
+
 form {
   /*border: 1px solid #111;*/
   padding: 0.5rem;
@@ -244,6 +263,7 @@ form {
 .info-container {
   display: flex;
   flex-direction: column;
+  margin-top: 1%;
 }
 
 
@@ -280,14 +300,38 @@ form h3 {
   font-weight: 800;
   font-size: 24px;
   color: white;
-  font-family: Roboto;
+  font-family: Arial, Helvetica, sans-serif;
   transition: all 0.3s;
   border-color: transparent;
 }
 .submit-button:hover{
   cursor: pointer;
   transform: scale(1.03);
+}
 
+.nextBtn{
+  background-color:  rgb(170, 85, 64);
+  width: 33.33%;
+  margin-left: 33.33%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-top: 3%;
+  text-align: center;
+  border-radius: 32px;
+  font-weight: 800;
+  font-size: 24px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: all 0.3s;
+  border-color: transparent;
+}
+.nextBtn:hover{
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.form {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 </style>

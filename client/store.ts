@@ -80,11 +80,6 @@ const store = new Vuex.Store({
       if (neighborhoodId !== undefined){
         const url = `/api/forum?neighborhoodId=${neighborhoodId}`;
         const res = await fetch(url).then(async r => r.json());
-        for (const comment of res){
-          const url = `/api/likes/${comment._id}`;
-          const response = await fetch(url).then(async r => r.json());
-          comment.likes = response.map(liker => liker.author.email);
-        }
         state.forumPosts = res;
       }
     },
@@ -95,11 +90,6 @@ const store = new Vuex.Store({
       if (this.state.userObject !== undefined){
         const url = `/api/forum?fetchAuthor=true`;
         const res = await fetch(url).then(async r => r.json());
-        for (const comment of res){
-          const url = `/api/likes/${comment._id}`;
-          const response = await fetch(url).then(async r => r.json());
-          comment.likes = response.map(liker => liker.author.email);
-        }
         state.userPosts = res;
       }
     },

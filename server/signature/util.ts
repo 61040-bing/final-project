@@ -4,7 +4,7 @@ import type {Signature, PopulatedSignature} from '../signature/model';
 import {User} from "../user/model";
 
 // Update this if you add a property to the Signature type!
-type SignatureResponse = {
+export type SignatureResponse = {
   _id: string;
   author: User;
   petition: string;

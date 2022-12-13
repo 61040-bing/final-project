@@ -36,7 +36,7 @@ router.get(
     }
 
     const allPosts = await ForumCollection.findAll();
-    const response = allPosts.map(util.constructForumResponse);
+    const response = await Promise.all(allPosts.map(util.constructForumResponse));
     res.status(200).json(response);
   },
   [
@@ -49,7 +49,7 @@ router.get(
     }
 
     const authorPosts = await ForumCollection.findAllByNeighborhoodId(req.query.neighborhoodId as string);
-    const response = authorPosts.map(util.constructForumResponse);
+    const response = await Promise.all(authorPosts.map(util.constructForumResponse));
     res.status(200).json(response);
   },
   [
@@ -57,7 +57,7 @@ router.get(
   ],
   async (req: Request, res: Response) => {
     const authorPosts = await ForumCollection.findAllByAuthorId(req.session.userId as string);
-    const response = authorPosts.map(util.constructForumResponse);
+    const response = await Promise.all(authorPosts.map(util.constructForumResponse));
     res.status(200).json(response);
   }
 );
@@ -68,7 +68,7 @@ router.get(
     const post = await ForumCollection.findOne(req.params.id);
     res.status(200).json({
       message: 'Your post was retrieved successfully.',
-      forum: util.constructForumResponse(post)
+      forum: await util.constructForumResponse(post)
     });
   }
 );
@@ -99,7 +99,7 @@ router.post(
 
     res.status(201).json({
       message: 'Your Forum was created successfully.',
-      Forum: util.constructForumResponse(post)
+      Forum: await util.constructForumResponse(post)
     });
   }
 );
@@ -153,7 +153,7 @@ router.patch(
     const post = await ForumCollection.updateOne(req.params.postId, req.body.content);
     res.status(200).json({
       message: 'Your post was updated successfully.',
-      Forum: util.constructForumResponse(post)
+      Forum: await util.constructForumResponse(post)
     });
   }
 );

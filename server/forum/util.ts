@@ -1,8 +1,10 @@
 import type {HydratedDocument} from 'mongoose';
 import moment from 'moment';
 import type {Forum, PopulatedForum} from './model';
-import {User} from "../user/model";
-import {Neighborhood} from "../neighborhood/model";
+import type {User} from '../user/model';
+import type {Neighborhood} from '../neighborhood/model';
+import LikeCollection from '../likes/collection';
+import {constructLikeResponse} from '../likes/util';
 
 // Update this if you add a property to the Forum type!
 type ForumResponse = {
@@ -15,6 +17,7 @@ type ForumResponse = {
   neighborhood: Neighborhood;
   qna: boolean;
   petitionId: string;
+  likes: string[];
 };
 
 /**
@@ -32,7 +35,7 @@ const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:
  * @param {HydratedDocument<Forum>} Forum - A Forum
  * @returns {ForumResponse} - The Forum object formatted for the frontend
  */
-const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse => {
+const constructForumResponse = async (Forum: HydratedDocument<Forum>): Promise<ForumResponse> => {
   const ForumCopy: PopulatedForum = {
     ...Forum.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
@@ -41,6 +44,8 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
   const author = ForumCopy.authorId;
   delete ForumCopy.authorId;
   const neighborhood = ForumCopy.neighborhoodId;
+  const likesRaw = await LikeCollection.findAllByItemId(ForumCopy._id.toString());
+  const likes = likesRaw.map(constructLikeResponse).map(liker => liker.author.email);
   delete ForumCopy.neighborhoodId;
   return {
     ...ForumCopy,
@@ -50,7 +55,8 @@ const constructForumResponse = (Forum: HydratedDocument<Forum>): ForumResponse =
     dateCreated: formatDate(Forum.dateCreated),
     dateModified: formatDate(Forum.dateModified),
     expiryDate: formatDate(Forum.expiryDate),
-    petitionId: Forum.linkedPetition ? Forum.linkedPetition.toString() : ""
+    petitionId: Forum.linkedPetition ? Forum.linkedPetition.toString() : '',
+    likes
   };
 };
 
