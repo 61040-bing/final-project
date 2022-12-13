@@ -298,7 +298,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15%;
+    margin-bottom: 10%;
     text-align: left;
     
   }
@@ -351,34 +351,43 @@ border-radius: 15px;
 .title{
     font-size: 25px;
     color: rgb(0, 0, 0);
-    margin-bottom: 16px;
+    margin-bottom: 1px;
     font-weight: bold;
 }
+
 .content{
   text-align: left;
-}
-.accepted {
-  color: green;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
 }
 .mainInfo{
   width: 100%;
 }
+.accepted {
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 .denied {
-  color: red;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
+  color: white;
+  background-color: red;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
 }
 
 .pending {
-  color: gray;
+  color: white;
+  background-color: gray;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
 }
 
 .active {
@@ -421,5 +430,7 @@ progress::-webkit-progress-value {
   max-width: 100%;
   margin-top: 16px;
   padding-top: 16px;
+  color: rgb(170, 85, 64);
+  font-weight: bold;
 }
 </style>

@@ -11,9 +11,11 @@
       />
       Back
     </span>
-    <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
 
+    <h3 class="accepted" v-if="(petition.accepted === 'true')"> Accepted </h3>
     <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
+    <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
+    
   <header class="freetHeader">
       <div class="mainInfo">
          
@@ -97,13 +99,21 @@
       </article>
     </section>
     <section v-if="roundTables.length">
-   
-      <!-- {{formatDate(roundTable.startDate)}} -->
-      <RoundTableComponent
-        v-for="roundtable in roundTables"
-        :key="roundtable.id"
-        :roundtable="roundtable"
-      />
+
+      <h3>Upcoming RoundTables</h3>
+  
+      <div v-for="roundtable in roundTables">
+
+        <div class="rountTable" v-if="roundtable.startDate < date">
+          <h1 class="roundTableTitle">{{roundtable.roundTableName}}</h1>
+          <p>Start Date: {{formatDate(roundtable.startDate)}} </p>
+          <p>End Date: {{formatDate(roundtable.endDate)}} </p>
+          <p class="meetingLink">
+              Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)"> {{ roundtable.zoomLink }}</a>
+            </p>
+      </div>
+      </div>
+
     </section>
     <article
     v-else
@@ -133,6 +143,8 @@ export default {
     await this.getPetition();
     await this.getSignatures();
     await this.getRoundTables();
+    this.date = new Date();
+    console.log(this.date);
 
     for (const signature of this.signatures) {
       if (signature.authorId._id.toString() === this.$store.state.userObject._id.toString()) {
@@ -144,6 +156,7 @@ export default {
     return {
       petition: null,
       signed: false,
+      date: null,
       signatures: [],
       roundTables: [],
       showingSignatures: false,
@@ -152,10 +165,16 @@ export default {
     };
   },
   methods: {
+    meetingLink(zoomLink) {
+      return zoomLink.includes("//") ? zoomLink : '//'+ zoomLink;
+    },
     toggleScheduling() {
       this.schedulingRoundTable = !this.schedulingRoundTable;
     },
     toggleSignatures() {
+      this.showingSignatures = !this.showingSignatures;
+    },
+    futureDate() {
       this.showingSignatures = !this.showingSignatures;
     },
     deletePetition() {
@@ -410,6 +429,18 @@ export default {
     border-radius: 25px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.rountTable {
+  border: 1px solid rgb(228, 228, 228);
+    padding: 20px;
+    position: relative;
+    margin: 10px;
+    width: 75%;
+    max-width: 100%;
+    box-shadow: 0px 2px 5px rgb(141, 156, 160);
+    border-radius: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+}
 .freetHeader {
     display: flex;
     flex-direction: column;
@@ -432,32 +463,56 @@ export default {
 /* format this page once petition component is fixed */
 /* figure out why petition fills whole page even when styling is done */
 .accepted {
-  color: green;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    text-align: left;
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 .denied {
-  color: red;
+  color: white;
+  background-color: red;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
 }
+
+.pending {
+  color: white;
+  background-color: gray;
+  border-radius: 20px;
+  width: fit-content;
+  padding-left: 2%;
+  padding-right: 2%;
+  border: 1px;
+}
+
 .author {
     font-size: 10px;
     color: rgb(190, 186, 186);
-    font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 16px;
-    
+    font-family: Arial, Helvetica, sans-serif; 
 }
 .content{
   width: 100%;
+  padding-top: 5%;
 }
 /* naomi */
 .title{
     font-size: 25px;
     color: rgb(0, 0, 0);
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    font-weight: bold;
+}
+
+.roundTableTitle {
+  font-size: 20px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
     margin-right: 30px;
     font-weight: bold;
 }
@@ -500,6 +555,8 @@ progress::-webkit-progress-value {
   max-width: 100%;
   margin-top: 16px;
   padding-top: 16px;
+  color: rgb(170, 85, 64);
+  font-weight: bold;
 }
 .trash {
   padding-left:15px;

@@ -5,13 +5,13 @@
   <article
     class="petition"
   >
-  <header class="petitionHeader">
-
-    <div>
+  <div>
         <h3 class="accepted" v-if="(petition.accepted === 'true') && (petition.denied === 'false')"> Accepted </h3>
         <h3 class="denied" v-if="(petition.denied === 'true') && (petition.accepted === 'false')"> Denied </h3>
         <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
       </div>
+
+  <header class="petitionHeader">
 
       <div class="mainInfo">
 
@@ -30,11 +30,11 @@
   </header>
 
   <div class="content">
-    <div class="petContent" v-if="showingDescription">
-      {{ petition.content }}
+      <div class="petContent" v-if="showingDescription">
+        {{ petition.content }}
     </div>
 
-    <a
+  <a
     v-if="showingDescription"
     @click="toggleDescp"
     class="toggle">
@@ -47,24 +47,13 @@
     class="toggle">
     See Description
     </a>
+  </div>
 
-    <div class="signatures">
-      .
-    </div>
-
-    <div class="signatureInfo">
-      <div class="sign">
-        0
-      </div>
-
-      <div class="sign" v-if="petition.targetSignatures === '1'">
-        {{petition.targetSignatures}} total signature
-      </div>
-
-      <div class="sign" v-else>
-        {{petition.targetSignatures}} total signatures 
-      </div>
-    </div>
+  <div>
+    <progress class="signProgress brown" :max="petition.targetSignatures" :value="petition.targetSignatures"> </progress>
+    <p class="signatureProgress">
+      {{petition.targetSignatures}} / {{petition.targetSignatures}} Signatures
+    </p>
 
     <p class="info" v-if="petition.accepted !== 'true' && petition.denied !== 'true' ">
 
@@ -196,7 +185,7 @@ export default {
   display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15%;
+    margin-bottom: 8%;
     text-align: left;
 }
 
@@ -293,6 +282,32 @@ export default {
 .neighborhood{
   font-size: 100%;
   margin-top: 5%;
+}
+
+.signProgress{
+  float: left;
+  width: 50%;
+  appearance: none;
+  border-radius: 5px;
+  margin-top: 16px;
+  margin-right: 16px;
+}
+.signProgress::-webkit-progress-bar {
+  background: rgb(202, 196, 196);
+  border-radius: 5px;
+  
+}
+progress::-webkit-progress-value {
+  background-color: rgb(170, 85, 64);
+  border-radius: 5px;
+}
+.signatureProgress{
+  font-size: 16px;
+  max-width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
+  color: rgb(170, 85, 64);
+  font-weight: bold;
 }
 
 /* .mainInfo {
