@@ -288,9 +288,9 @@ export default {
         ));
       }
       try {
-        if (this.url ==='/api/roundtables' && options.method === 'POST' && !options.body.petitionId ){
-          throw new Error ("You need to pick a specific petition that the roundtable concerns")
-        }
+        // if (this.url ==='/api/roundtables' && options.method === 'POST' && !options.body.petitionId ){
+        //   throw new Error ("You need to pick a specific petition that the roundtable concerns")
+        // }
         const r = await fetch(this.url, options);
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
