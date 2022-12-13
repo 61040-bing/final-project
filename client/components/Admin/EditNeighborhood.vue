@@ -5,17 +5,20 @@
       class="add"
       style="gap:20px"
     >
-      Add Neighborhood
+      <div
+        class="flex"
+        @click="clickHide"
+      >
+        Add Neighborhood
+        <font-awesome-icon
+          icon="fa-solid fa-minus"
+        />
+      </div>
       <input
         v-model="name"
         placeholder="Neighborhood Name"
         type="text"
       >
-      <textarea
-        v-model="description"
-        placeholder="Neighborhood Description"
-        type="text"
-      />
       <button @click="submitNeighborhood">
         Add
       </button>
@@ -25,13 +28,15 @@
       class="button"
       @click="clickAdd"
     >
-      <span style="margin-left: 90px">Add Neighborhood</span>
-      <img
-        class=""
-        src="../../public/plus.png"
-      >
+      <span>Add Neighborhood</span>
+      <font-awesome-icon
+        icon="fa-solid fa-plus"
+      />
     </div>
-    <section style="position:relative;" class="alerts">
+    <section
+      style="position:relative;"
+      class="alerts"
+    >
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -66,7 +71,6 @@
         data() {
             return {
                 name: '',
-                description: '',
                 clicked: false,
                 alerts: {}
             }
@@ -75,15 +79,18 @@
           clickAdd(){
             this.clicked = true
           },
+          clickHide(){
+            this.clicked = false
+          },
             async submitNeighborhood(){
-              if (this.name === '' || this.description === ''){
-                const e = "Error: Name and description must be nonempty"
+              if (this.name === ''){
+                const e = "Error: Neighborhood name must be nonempty"
                 this.$set(this.alerts, e, 'error');
                 setTimeout(() => this.$delete(this.alerts, e), 3000);
                 return;
               }
                 try {
-                    const fields = {name: this.name, description: this.description};
+                    const fields = {name: this.name};
                     const r = await  fetch(`/api/neighborhood/`, {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}});
                     if (!r.ok) {
                         const res = await r.json();
@@ -154,6 +161,14 @@
     border-radius: 5px;
     font-weight: bold;
   }
+
+  .flex {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width:100%;
+    justify-content: center;
+  }
   .button {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
@@ -161,7 +176,7 @@
     margin: auto;
     width: 400px;
     border-radius: 3px;
-    align-items: center;
+    justify-content: center;
     padding: 10px;
     margin-top: 50px;
     border-radius: 5px;
@@ -170,7 +185,7 @@
     color: #fff
   }
 
-  .button:hover {
+  .flex:hover, .button:hover {
     cursor: pointer;
   }
 
@@ -183,11 +198,7 @@
     text-align: center
   }
 
-  img {
-    height: 20px;
-    width: 20px;
-    margin-left: 20px;
-  }
+
 
 
     </style>

@@ -132,7 +132,6 @@
 .dumm {
   display: flex;
     flex-direction: column;
-    justify-content: center; 
 }
 .container {
     display: flex;
@@ -168,6 +167,10 @@
   }
  .icons {
   margin-right: 12px;
+ }
+
+ .icons:hover {
+  cursor: pointer;
  }
 
 </style>

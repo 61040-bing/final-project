@@ -12,7 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faHeart as faHeartSolid, faArrowLeft, faTrash, faX, faCircleInfo, faCaretDown, faCaretUp, faXmark, faFile, faCheck, faPencil, faArrowUp, faScroll, faFilePen} from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartSolid, faArrowLeft, faTrash, faX, faCircleInfo, faCaretDown, faCaretUp, faXmark, faFile, faCheck, faPencil, faArrowUp, faScroll, faFilePen, faMinus, faPlus} from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular, faCommentDots} from '@fortawesome/free-regular-svg-icons'
 
 library.add(faHeartSolid)
@@ -32,6 +32,8 @@ library.add(faPencil);
 library.add(faArrowUp);
 library.add(faScroll);
 library.add(faFilePen);
+library.add(faMinus);
+library.add(faPlus);
 
 
 Vue.config.productionTip = false;
