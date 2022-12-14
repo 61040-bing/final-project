@@ -157,6 +157,7 @@ export default {
         body: JSON.stringify({accept: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
+          this.hideAcceptModal();
           setTimeout(() => this.$delete(this.alerts, params.message), 3000);
         }
       };
@@ -172,6 +173,7 @@ export default {
         body: JSON.stringify({deny: true}),
         callback: () => {
           this.$set(this.alerts, params.message, 'success');
+          this.hideAcceptModal();
           setTimeout(() => this.$delete(this.alerts, params.message), 3000);
         }
       };
