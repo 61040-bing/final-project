@@ -479,6 +479,7 @@ border-radius: 15px;
 }
 .signatureProgress{
   text-align: left;
+  margin-left: 16px;
 }
 .scheduleTab{
   z-index: 1;

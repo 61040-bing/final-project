@@ -18,7 +18,7 @@
     <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
     <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
 
-  <header class="freetHeader">
+  <div class="freetHeader">
       <div class="mainInfo">
 
         <div class="row">
@@ -39,7 +39,7 @@
           Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
         </p>
       </div>
-  </header>
+    </div>
 
   <p
     class="content"
@@ -67,7 +67,7 @@
     <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
 
-      <button @click="toggleScheduling">
+      <button class="signBtn" @click="toggleScheduling">
         Schedule RoundTable
       </button>
 
@@ -446,7 +446,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 40px;
     text-align: left;
     /* width: 100%; */
 
@@ -520,7 +519,6 @@ export default {
 }
 .content{
   width: 100%;
-  padding-top: 5%;
 }
 /* naomi */
 .title{
@@ -553,6 +551,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .hideSignatures{
   background-color: rgb(170, 85, 64);
@@ -561,6 +560,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .scheduleTab{
   z-index: 1;
@@ -603,5 +603,12 @@ progress::-webkit-progress-value {
   flex-direction: row;
   justify-content: center;
   margin-top: 100px;
+}
+
+button{
+
+}
+button:hover{
+  cursor: pointer;
 }
 </style>
