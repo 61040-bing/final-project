@@ -196,8 +196,10 @@ export default {
         }
         // const authorPetitions = res.filter(petition => (petition.authorId._id === this.$store.state.userObject._id));
         const authorPetitions = [];
+        const neighborhoodId = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
         for (const petition of res){
-          if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true'){
+          if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true'
+          &&petition.neighborhood._id === neighborhoodId){
             authorPetitions.push(petition)
           }
         }
