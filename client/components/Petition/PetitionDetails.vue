@@ -67,7 +67,7 @@
     <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
 
-      <button @click="toggleScheduling">
+      <button class="signBtn" @click="toggleScheduling">
         Schedule RoundTable
       </button>
 
