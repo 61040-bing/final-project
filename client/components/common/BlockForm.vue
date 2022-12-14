@@ -237,7 +237,7 @@ export default {
             }
           }
           let startHour = parseInt(startTime.value[0] + startTime.value[1]);
-          startHour += 5;
+          //startHour += 5;
           if (startHour >= 24) {
             startHour -= 24;
           }
@@ -245,7 +245,7 @@ export default {
           const finalStartDate = startDate.value + "T" + newStartHour + startTime.value[2] + startTime.value[3] + startTime.value[4] + ":00Z";
           req_fields.push({id: 'startDate', value: finalStartDate });
           let endHour = parseInt(endTime.value[0] + endTime.value[1]);
-          endHour += 5;
+          //endHour += 5;
           if (endHour >= 24) {
             endHour -= 24;
           }
