@@ -213,7 +213,11 @@
         }
       },
       expand() {
-        this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forum'}});
+        if (this.$router.currentRoute.name === "Forum Post") {
+          this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forumPost', prevPostPath: this.forum._id}});
+        } else {
+          this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forum'}});
+        }
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);

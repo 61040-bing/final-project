@@ -185,7 +185,10 @@ export default {
     },
     goBack() {
       if (this.$route.params.prevTab === 'profile') {
-          this.$router.push({name: 'Profile', path: '/profile', params: {tab: 'petitions'}});
+        this.$router.push({name: 'Profile', path: '/profile', params: {tab: 'petitions'}});
+      } else if (this.$route.params.prevTab === 'forumPost') {
+        console.log(this.$route.params.prevPostPath);
+        this.$router.push({name: 'Forum Post', path: `/forum/${this.$route.params.prevPostPath}`,  params: {postId: this.$route.params.prevPostPath}});
       } else {
         if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
           this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
