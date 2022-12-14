@@ -197,7 +197,7 @@ export default {
         // const authorPetitions = res.filter(petition => (petition.authorId._id === this.$store.state.userObject._id));
         const authorPetitions = [];
         for (const petition of res){
-          if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true'){
+          if (petition.author._id === this.$store.state.userObject._id && petition.submitted !== 'true' && petition.neighborhoodId._id === this.neighborhoodId){
             authorPetitions.push(petition)
           }
         }
