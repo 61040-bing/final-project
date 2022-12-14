@@ -51,11 +51,17 @@
       >
         Profile
       </router-link>
+      
       <router-link
         v-else
         to="/login"
       >
         Login
+      </router-link>
+      <router-link
+        to="/guide"
+      >
+        Guide
       </router-link>
     </div>
     <section class="alerts">

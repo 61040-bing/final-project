@@ -10,6 +10,7 @@ import EditNeighborhood from './components/Admin/EditNeighborhood.vue';
 import MagnifiedForumPost from './components/Forum/MagnifiedForumPost.vue';
 import SubmittedPetitionsPage from './components/Admin/SubmittedPetitionsPage.vue';
 import PetitionDetails from './components/Petition/PetitionDetails.vue';
+import GuidePage from './components/Guide/GuidePage.vue';
 
 
 Vue.use(VueRouter);
@@ -25,8 +26,8 @@ const routes = [
   {path: '/admin/editneighborhood', name: 'Edit Neighborhood', component: EditNeighborhood},
   {path: '/admin/submittedpetitions', name: 'View Submitted Petitions', component: SubmittedPetitionsPage},
   {path: '/forum/:postId', name: 'Forum Post', component: MagnifiedForumPost},
-  {path: '/petition/:petitionId', name: 'Petition Details', component: PetitionDetails} 
-
+  {path: '/petition/:petitionId', name: 'Petition Details', component: PetitionDetails}, 
+  {path: '/guide', name: 'Guide', component: GuidePage},
 ];
 
 const router = new VueRouter({routes});

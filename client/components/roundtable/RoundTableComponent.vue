@@ -219,10 +219,6 @@ export default {
   /*width: 40%;*/
   /*text-align: left;*/
 }
-
-.trash {
-  color: red;
-}
 .trash:hover{
   cursor: pointer;
 }

@@ -193,7 +193,7 @@ export default {
       ],
       callback: () => {
         const message = 'Successfully created an account!';
-        this.$router.push({name: 'Home'});
+        this.$router.push({name: 'Guide'});
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }
