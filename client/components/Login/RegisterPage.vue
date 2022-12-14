@@ -22,5 +22,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.page {
+  font-family: Arial, Helvetica, sans-serif;
+  width:60%;
+  margin: auto;
+}
 </style>

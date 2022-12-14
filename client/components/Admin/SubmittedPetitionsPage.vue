@@ -29,26 +29,27 @@
       </div>
 
       <div class="right">
-          <GetAllPetitionsForm
-            ref="getAllPetitionsForm"/>
-        </div>
+        <GetAllPetitionsForm
+          ref="getAllPetitionsForm"
+        />
+      </div>
 
       <section class="content">
         <section
           v-if="viewingTab === 'pending'"
         >
-        <section
+          <section
             v-if="$store.state.petitions.length"
           >
             <h4>Pending Petitions</h4>
             <SubmittedPetitionComponent
-              v-for="petition in $store.state.petitions" v-if="((petition.submitted === 'true') && !(petition.accepted === 'true') && !(petition.denied === 'true'))"
+              v-for="petition in pendingPetitions"
               :key="petition.id"
               :petition="petition"
-              />
-        </section>
-        <section
-            v-else
+            />
+          </section>
+          <section
+            v-if="!pendingPetitions.length"
           >
             <h3>No petitions found.</h3>
           </section>
@@ -59,35 +60,35 @@
           >
             <h4>Accepted Petitions</h4>
             <SubmittedPetitionComponent
-              v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true' && petition.accepted === 'true')"
+              v-for="petition in acceptedPetitions"
               :key="petition.id"
               :petition="petition"
             />
           </section>
           <article
-            v-else
+            v-if="!acceptedPetitions.length"
           >
             <h3>No petitions found.</h3>
           </article>
-      </section>
-      <section v-if="viewingTab === 'denied'">
-        <section
+        </section>
+        <section v-if="viewingTab === 'denied'">
+          <section
             v-if="$store.state.petitions.length"
           >
             <h4>Denied Petitions</h4>
             <SubmittedPetitionComponent
-              v-for="petition in $store.state.petitions" v-if="(petition.submitted === 'true' && petition.denied === 'true')"
-                :key="petition.id"
-                :petition="petition"
-              />
-        </section>
-        <article
-            v-else
+              v-for="petition in deniedPetitions"
+              :key="petition.id"
+              :petition="petition"
+            />
+          </section>
+          <article
+            v-if="!deniedPetitions.length"
           >
             <h3>No petitions found.</h3>
           </article>
+        </section>
       </section>
-    </section>
     </article>
   </main>
 </template>
@@ -99,18 +100,35 @@ import GetAllPetitionsForm from '@/components/Admin/GetAllPetitionsForm.vue';
 export default {
   name: 'SubmittedPetitionsPage',
   components: {SubmittedPetitionComponent, GetAllPetitionsForm},
+  data() {
+    return {
+      posting: false,
+      viewingTab : "pending"
+    }
+  },
+  computed: {
+    pendingPetitions(){
+      return this.$store.state.petitions.filter((petition)=> {
+          return ((petition.submitted === 'true') && !(petition.accepted === 'true') && !(petition.denied === 'true'));
+        })
+    },
+    acceptedPetitions(){
+      return this.$store.state.petitions.filter((petition)=> {
+          return (petition.submitted === 'true' && petition.accepted === 'true');
+        })
+    },
+    deniedPetitions(){
+      return this.$store.state.petitions.filter((petition)=> {
+          return (petition.submitted === 'true' && petition.denied === 'true');
+        })
+    }
+  },
   mounted() {
     this.$refs.getAllPetitionsForm.submit();
     for (const petition of this.$store.state.petitions) {
       if ((petition.submitted === 'true') && !(petition.accepted === 'true') && !(petition.denied === 'true')) {
         console.log(petition);
       }
-    }
-  },
-  data() {
-    return {
-      posting: false,
-      viewingTab : "pending"
     }
   },
   methods : {

@@ -206,7 +206,7 @@ const isValidZoomlink = async(req: Request, res: Response, next: NextFunction) =
   //const linkRegex = /https:\/\/[\w-]*\.?zoom.us\/(j|my)\/[\d\w?=-]+/i;
   if (!req.body.zoomLink || !req.body.zoomLink.match(linkRegex)){
     res.status(400).json({
-      error: "Please enter a valid zoom link."
+      error: "Please enter a valid link for the video meeting."
     })
     return;
   }

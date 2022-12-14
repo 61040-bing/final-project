@@ -57,14 +57,41 @@
 
     <p class="info" v-if="petition.accepted !== 'true' && petition.denied !== 'true' ">
 
-      <button class="denyBtn" @click="denyPetition">
+      <button class="denyBtn" @click="showAcceptModal(false)">
         Deny
       </button>
 
-      <button class="acceptBtn" @click="acceptPetition">
+      <button class="acceptBtn" @click="showAcceptModal(true)">
         Accept
       </button>
     </p>
+
+    <modal
+        :name="'acceptModal' + this._uid"
+        :width="400"
+        :height="250"
+        :adaptive="true"
+    >
+      <div style="margin: 8px">
+        <p
+            class="x-icon"
+            @click="hideAcceptModal"
+        >
+          <font-awesome-icon icon="fa-solid fa-x" />
+        </p>
+        <div class="modalText">
+          {{this.accepting===false? "Denying ": "Accepting "}} this petition is an irreversible action. Users
+          will be able to see that the petition is {{this.accepting===false? "denied. ": "accepted. "}}
+          Are you sure you want to proceed?
+        </div>
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+          <div @click="submitDecision" class = "modal-accept"> Confirm </div> <div @click="hideAcceptModal" class = "modal-deny"> Cancel </div>
+
+        </div>
+      </div>
+    </modal>
+
+
   </div>
 
     <section class="alerts">
@@ -97,12 +124,28 @@ export default {
       signed: false,
       showingDescription: false,
       schedulingRoundTable: false,
-      alerts: {} // Displays success/error messages encountered during freet modification
+      alerts: {}, // Displays success/error messages encountered during freet modification
+      accepting: false,
     };
   },
   methods: {
+    showAcceptModal(mode){
+      this.accepting = mode
+      this.$modal.show('acceptModal' + this._uid);
+    },
+    hideAcceptModal(){
+      this.$modal.hide('acceptModal' + this._uid);
+    },
     toggleDescp() {
       this.showingDescription = !this.showingDescription;
+    },
+
+    submitDecision(){
+      if (this.accepting){
+        this.acceptPetition();
+      } else{
+        this.denyPetition();
+      }
     },
     acceptPetition() {
       /**
@@ -206,7 +249,7 @@ export default {
 
 .pending{
   color: white;
-  background-color: black;
+  background-color: gray;
   border-radius: 20px;
   width: fit-content;
   padding-left: 2%;
@@ -324,5 +367,58 @@ button:hover{
 } */
 
 
+.modal-accept{
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  /*width: 400px;*/
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  /*gap: 20px;*/
+  /*background-color: rgb(170, 85, 64);*/
+  font-size: 18px;
+
+  border: 1px solid  rgb(170, 85, 64);
+  /*background-color: rgb(170, 85, 64);*/
+  /*color: #fff;*/
+  color: rgb(170, 85, 64);
+}
+
+.modal-accept:hover{
+  cursor: pointer;
+}
+
+.modal-deny{
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  /*width: 400px;*/
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  /*gap: 20px;*/
+  background-color: rgb(170, 85, 64);
+  color: #fff;
+  font-size: 18px;
+
+}
+.modal-deny:hover{
+  cursor: pointer;
+}
+
+.x-icon{
+  font-weight: bold;
+  text-align: right;
+  margin-top: 24px;
+  margin-right: 24px;
+  font-size: 24px;
+}
+.x-icon:hover{
+  cursor: pointer;
+}
+.modalText{
+  font-size: 18px;
+}
 
 </style>

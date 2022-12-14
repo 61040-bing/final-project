@@ -15,7 +15,7 @@ export default {
       hasBody: true,
       fields: [
         {id: 'roundTableName', label: 'Title', value: ''},
-        {id: 'zoomLink', label: 'Zoom Link', value: ''},
+        {id: 'zoomLink', label: 'Video Meeting Link', value: ''},
         {id: 'startDate', label: 'Start Date', value: ''},
         {id: 'startTime', label: 'Start Time', value: ''},
         {id: 'endDate', label: 'End Date', value: ''},

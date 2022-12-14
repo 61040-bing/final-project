@@ -151,7 +151,7 @@
         } else {
           neighborhood = this.forum.neighborhood;
         }
-        return this.$store.state.userObject && (this.$store.state.userObject.neighborhood._id === this.forum.neighborhood || neighborhood === '638ce78e88e91521eb0338c0');
+        return this.$store.state.userObject && (this.$store.state.userObject.neighborhood._id === neighborhood || neighborhood === '638ce78e88e91521eb0338c0');
       },
       path(){
         return `/forum/${this.forum._id}`;
@@ -174,9 +174,6 @@
      likes() {
       return this.forum.likes.length;
      }
-    },
-    mounted(){
-      this.fetchResponse();
     },
     methods: {
       async deletePost(){
@@ -213,20 +210,19 @@
         }
       },
       expand() {
-        this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forum'}});
+        if (this.$router.currentRoute.name === "Forum Post") {
+          this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forumPost', prevPostPath: this.forum._id}});
+        } else if (this.$router.currentRoute.name === "Profile") {
+          this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'profileForum'}});
+        } else {
+          this.$router.push({name: 'Petition Details', path: `/petition/${this.forum.petitionId}`, params: {petitionId: this.forum.petitionId, prevTab: 'forum'}});
+        }
       },
       showModal(){
         this.$modal.show('forumModal' + this._uid);
       },
       hideModal(){
         this.$modal.hide('forumModal' + this._uid);
-      },
-      async fetchResponse(){
-        if (this.forum.parentId){
-          const url = `/api/comments/subcomments/${this.forum._id}`;
-          const res = await fetch(url).then(async r => r.json());
-          this.response = res[0]
-        }
       },
       async likeRequest() {
         try {

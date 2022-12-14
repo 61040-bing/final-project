@@ -5,29 +5,26 @@
   <article
     class="roundtable"
   >
-
-
-    <div style="width: 100%;  text-align: right">
-
-
+    <div style="width: 100%;  display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+      <h2>
+        Roundtable on  {{ roundtable.roundTableName }}
+      </h2>
       <font-awesome-icon
-          v-if="$store.state.userObject._id === roundtable.authorId._id"
-          class="trash"
-          icon="fa-solid fa-trash"
-          @click="deleteRoundTable"
+        v-if="$store.state.userObject._id === roundtable.authorId._id"
+        class="trash"
+        icon="fa-solid fa-trash"
+        @click="deleteRoundTable"
       />
     </div>
 
 
-    <h2>
-      Roundtable on  {{ roundtable.roundTableName }}
-    </h2>
+    
 
 
-      <div class="rt-info">
-         <div>Host:</div>
-        <div>{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}</div>
-      </div>
+    <div class="rt-info">
+      <div>Host:</div>
+      <div>{{ roundtable.authorId.firstName + " " + roundtable.authorId.lastName }}</div>
+    </div>
 
     <div class="rt-info">
       <div>
@@ -36,7 +33,6 @@
       <div>
         {{ roundtable.startDate }}
       </div>
-
     </div>
     <div class="rt-info">
       <div>
@@ -47,16 +43,19 @@
       </div>
     </div>
 
-    <div style="width: 100%; text-align: center; margin-top: 16px;" @click="expand" >
+    <div
+      style="width: 100%; text-align: center; margin-top: 16px;"
+      @click="expand"
+    >
       Associated Petition
       <div class="petition_container">
-      <font-awesome-icon icon="fa-solid fa-file" />
+        <font-awesome-icon icon="fa-solid fa-file" />
         {{ roundtable.petitionId.title }}
-    </div>
+      </div>
     </div>
 
 
-      <!-- <modal :name="'rtModal' + this._uid"
+    <!-- <modal :name="'rtModal' + this._uid"
              :width="500"
              :height="600"
              :adaptive="true">
@@ -69,7 +68,10 @@
 
 
     <p class="meetingLink">
-      Video Meeting Link: <a :href="meetingLink"> {{ roundtable.zoomLink }}</a>
+      Video Meeting Link: <a
+        :href="meetingLink"
+        target="_blank"
+      > {{ roundtable.zoomLink }}</a>
     </p>
     <section class="alerts">
       <article
@@ -218,10 +220,6 @@ export default {
   /*background-color: #4CAF50;*/
   /*width: 40%;*/
   /*text-align: left;*/
-}
-
-.trash {
-  color: red;
 }
 .trash:hover{
   cursor: pointer;

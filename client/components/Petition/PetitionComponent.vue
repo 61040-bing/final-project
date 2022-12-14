@@ -127,13 +127,13 @@
       </div>
     </div>
 
-    <span
+    <div
       class="linkedPetition"
       @click="expand"
     >
       <font-awesome-icon icon="fa-solid fa-file" />
       View More...
-    </span>
+    </div>
 
     <section class="alerts" >
       <article
@@ -182,9 +182,8 @@ export default {
     }
   },
   async mounted() {
-
     this.neighborhood = this.$route.params.id;
-   
+
   },
   methods: {
     showModal(){
@@ -197,8 +196,11 @@ export default {
       this.schedulingRoundTable = !this.schedulingRoundTable;
     },
     expand() {
-      this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
-      console.log(this.$router);
+      if (this.$router.currentRoute.name === "Profile") {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'profile'}});
+      } else {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
+      }
     },
     deletePetition() {
       /**
@@ -316,7 +318,8 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions', this.$route.params.id);
+          const neighborhoodId = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
+          this.$store.commit('refreshPetitions', neighborhoodId);
 
           params.callback();
         } catch (e) {
@@ -334,7 +337,9 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions', this.$route.params.id);
+
+          const neighborhoodId = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
+          this.$store.commit('refreshPetitions', neighborhoodId);
 
           params.callback();
         } catch (e) {
@@ -477,6 +482,7 @@ border-radius: 15px;
 }
 .signatureProgress{
   text-align: left;
+  margin-left: 16px;
 }
 .scheduleTab{
   z-index: 1;
@@ -484,7 +490,8 @@ border-radius: 15px;
 }
 .linkedPetition{
     color: rgb(69, 150, 231);
-    text-align: left;
+    text-align: center;
+    margin-top: 28px;
   }
 .linkedPetition:hover{
     cursor: pointer;

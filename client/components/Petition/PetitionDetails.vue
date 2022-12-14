@@ -18,7 +18,7 @@
     <h3 class="denied" v-if="(petition.denied === 'true')"> Denied </h3>
     <h3 class="pending" v-if="(petition.submitted === 'true') && (petition.denied === 'false') && (petition.accepted === 'false')"> Pending </h3>
 
-  <header class="freetHeader">
+  <div class="freetHeader">
       <div class="mainInfo">
 
         <div class="row">
@@ -39,7 +39,7 @@
           Created by {{( petition.author.firstName + " " +  petition.author.lastName)}} on {{ petition.dateCreated}}
         </p>
       </div>
-  </header>
+    </div>
 
   <p
     class="content"
@@ -67,14 +67,14 @@
     <div v-if="!(petition.submitted === 'true') && ($store.state.userObject.email === petition.author.email)"
         class="actions">
 
-      <button @click="toggleScheduling">
+      <button class="signBtn" @click="toggleScheduling">
         Schedule RoundTable
       </button>
 
       <ScheduleRoundTableForm class="scheduleTab" v-if="schedulingRoundTable"
       :petition="petition"/>
       </div>
-      
+
       <button class="showSignatures" @click="toggleSignatures" v-if="!showingSignatures">
             Show Signatures: {{signatures.length}}
       </button>
@@ -82,9 +82,9 @@
         <button class="hideSignatures"  @click="toggleSignatures" v-if="showingSignatures">
             Hide Signatures
         </button>
-    
 
-   
+
+
   </div>
     <p
       v-if="showingSignatures"
@@ -102,7 +102,7 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-    <section v-if="roundTables.length">
+    <section v-if="roundTables.length && $store.state.userObject.neighborhood._id === petition.neighborhood._id">
 
       <h3>RoundTables</h3>
 
@@ -113,7 +113,7 @@
           <p>Start Date: {{roundtable.startDate}} </p>
           <p>End Date: {{roundtable.endDate}} </p>
           <p class="meetingLink">
-              Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)"> {{ roundtable.zoomLink }}</a>
+              Video Meeting Link: <a :href="meetingLink(roundtable.zoomLink)" target="_blank"> {{ roundtable.zoomLink }}</a>
             </p>
       </div>
       </div>
@@ -184,12 +184,20 @@ export default {
       this.showingSignatures = !this.showingSignatures;
     },
     goBack() {
-      if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
-        this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
+      if (this.$route.params.prevTab === 'profile') {
+        this.$router.push({name: 'Profile', path: '/profile', params: {tab: 'petitions'}});
+      } else if (this.$route.params.prevTab === 'profileForum') {
+        this.$router.push({name: 'Profile', path: '/profile', params: {tab: 'posts'}});
+      } else if (this.$route.params.prevTab === 'forumPost') {
+        console.log(this.$route.params.prevPostPath);
+        this.$router.push({name: 'Forum Post', path: `/forum/${this.$route.params.prevPostPath}`,  params: {postId: this.$route.params.prevPostPath}});
       } else {
-        this.$router.push({name: 'Neighborhood', path: `/neighborhood/${this.petition.neighborhood._id}`, params: {id: this.petition.neighborhood._id, tab: this.$route.params.prevTab}});
+        if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
+          this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
+        } else {
+          this.$router.push({name: 'Neighborhood', path: `/neighborhood/${this.petition.neighborhood._id}`, params: {id: this.petition.neighborhood._id, tab: this.$route.params.prevTab}});
+        }
       }
-      console.log(this.$router);
     },
     deletePetition() {
       /**
@@ -440,7 +448,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 40px;
     text-align: left;
     /* width: 100%; */
 
@@ -514,7 +521,6 @@ export default {
 }
 .content{
   width: 100%;
-  padding-top: 5%;
 }
 /* naomi */
 .title{
@@ -547,6 +553,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .hideSignatures{
   background-color: rgb(170, 85, 64);
@@ -555,6 +562,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .scheduleTab{
   z-index: 1;
@@ -597,5 +605,12 @@ progress::-webkit-progress-value {
   flex-direction: row;
   justify-content: center;
   margin-top: 100px;
+}
+
+button{
+
+}
+button:hover{
+  cursor: pointer;
 }
 </style>

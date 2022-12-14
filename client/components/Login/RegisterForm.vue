@@ -193,7 +193,7 @@ export default {
       ],
       callback: () => {
         const message = 'Successfully created an account!';
-        this.$router.push({name: 'Home'});
+        this.$router.push({name: 'Guide'});
         this.$set(this.alerts, message, 'success');
         setTimeout(() => this.$delete(this.alerts, message), 3000);
       }
@@ -245,20 +245,10 @@ export default {
 }
 
 .infoSection {
-  border-radius:8px;
   box-shadow: 0px 2px 5px rgb(141, 156, 160);
-  padding: 3%;
+  padding: 15px;
 }
 
-form {
-  /*border: 1px solid #111;*/
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  position: relative;
-}
 
 .info-container {
   display: flex;
@@ -266,15 +256,6 @@ form {
   margin-top: 1%;
 }
 
-
-form h3,
-form > * {
-  margin: 0.3em 0;
-}
-
-form h3 {
-  margin-top: 0;
-}
 
 .neighborhood-name{
   margin-left: 8px;
@@ -288,6 +269,16 @@ form h3 {
 }
 .back-button:hover{
   cursor: pointer;
+}
+
+h3 {
+  color:  rgb(170, 85, 64);
+}
+
+input {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1.5px solid rgb(187, 187, 187);
 }
 
 .submit-button{

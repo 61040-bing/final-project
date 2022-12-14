@@ -19,7 +19,7 @@
           v-if="editing"
           class="icons"
           icon="fa-solid fa-check"
-          @click="submitEdit"
+          @click="showEditModal"
         />
 
         <font-awesome-icon
@@ -53,10 +53,33 @@
           <div class="modalText">
             Deleting a neighborhood is a permanent action, erasing all forum, petition and roundtable history. Are you sure you want to proceed?
           </div>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 32px; margin-left: 8px; margin-right: 8px">
-            <div @click="deleteNeighborhood" class = "modal-accept"> Accept</div> <div @click="hideDeletionModal" class = "modal-deny">deny</div>
+          <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+            <div @click="deleteNeighborhood" class = "modal-accept"> Yes</div> <div @click="hideDeletionModal" class = "modal-deny">No</div>
 
+            </div>
           </div>
+        </modal>
+
+        <modal
+            :name="'editModal' + this._uid"
+            :width="400"
+            :height="250"
+            :adaptive="true"
+        >
+          <div style="margin: 8px">
+            <p
+                class="x-icon"
+                @click="hideEditModal"
+            >
+              <font-awesome-icon icon="fa-solid fa-x" />
+            </p>
+            <div class="modalText">
+              Editing this name will change the neighborhood's name for all users of Participate. Are you sure you want to proceed?
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+              <div @click="submitEdit" class = "modal-accept"> Accept</div> <div @click="hideEditModal" class = "modal-deny">deny</div>
+
+            </div>
           </div>
         </modal>
 
@@ -97,6 +120,13 @@
             }
         },
         methods: {
+
+          showEditModal(){
+            this.$modal.show('editModal' + this._uid);
+          },
+          hideEditModal(){
+            this.$modal.hide('editModal' + this._uid);
+          },
           showDeletionModal(){
             this.$modal.show('deletionModal' + this._uid);
           },
@@ -135,6 +165,7 @@
                     this.editing = false;
                     const successMessage = `successfully edited neighborhood from ${this.neighborhood.name} to ${this.draft}`
                     this.$set(this.alerts, successMessage, 'success');
+                    this.hideEditModal();
                     setTimeout(() => this.$delete(this.alerts, successMessage), 3000);
                 } catch (e) {
                     this.$set(this.alerts, e, 'error');

@@ -14,8 +14,8 @@
       </h1>
     </div>
     <div class="right">
-      <div class="nav-item">
-        <span @click="navigateTo('/')">Home/City</span>
+      <div class="nav-item"  @click="navigateTo('/')">
+        <span>Home/City</span>
       </div>
       <div
         v-if="$store.state.userObject !== null && $store.state.userObject.email"
@@ -44,18 +44,24 @@
           </ul>
         </div>
       </div>
-     
+
       <router-link
         v-if="$store.state.userObject !== null && $store.state.userObject.email"
         to="/profile"
       >
         Profile
       </router-link>
+
       <router-link
         v-else
         to="/login"
       >
         Login
+      </router-link>
+      <router-link
+        to="/guide"
+      >
+        Guide
       </router-link>
     </div>
     <section class="alerts">
