@@ -127,13 +127,13 @@
       </div>
     </div>
 
-    <span
+    <div
       class="linkedPetition"
       @click="expand"
     >
       <font-awesome-icon icon="fa-solid fa-file" />
       View More...
-    </span>
+    </div>
 
     <section class="alerts" >
       <article
@@ -183,7 +183,7 @@ export default {
   },
   async mounted() {
     this.neighborhood = this.$route.params.id;
-   
+
   },
   methods: {
     showModal(){
@@ -486,7 +486,8 @@ border-radius: 15px;
 }
 .linkedPetition{
     color: rgb(69, 150, 231);
-    text-align: left;
+    text-align: center;
+    margin-top: 28px;
   }
 .linkedPetition:hover{
     cursor: pointer;
