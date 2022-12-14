@@ -550,6 +550,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .hideSignatures{
   background-color: rgb(170, 85, 64);
@@ -558,6 +559,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .scheduleTab{
   z-index: 1;
@@ -600,5 +602,12 @@ progress::-webkit-progress-value {
   flex-direction: row;
   justify-content: center;
   margin-top: 100px;
+}
+
+button{
+
+}
+button:hover{
+  cursor: pointer;
 }
 </style>
