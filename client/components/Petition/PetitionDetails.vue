@@ -102,7 +102,7 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-    <section v-if="roundTables.length">
+    <section v-if="roundTables.length && $store.state.userObject.neighborhood._id === petition.neighborhood._id">
 
       <h3>RoundTables</h3>
 
