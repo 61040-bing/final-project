@@ -182,7 +182,6 @@ export default {
     }
   },
   async mounted() {
-
     this.neighborhood = this.$route.params.id;
    
   },
@@ -197,8 +196,11 @@ export default {
       this.schedulingRoundTable = !this.schedulingRoundTable;
     },
     expand() {
-      this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
-      console.log(this.$router);
+      if (this.$router.currentRoute.name === "Profile") {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'profile'}});
+      } else {
+        this.$router.push({name: 'Petition Details', path: `/petition/${this.petition._id}`, params: {petitionId: this.petition._id, prevTab: 'petition'}});
+      }
     },
     deletePetition() {
       /**
