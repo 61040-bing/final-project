@@ -345,7 +345,7 @@ textarea {
 }
 
 input {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   border-radius: 5px;
   border: 1.5px solid rgb(187, 187, 187);
 }

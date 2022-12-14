@@ -53,8 +53,8 @@
           <div class="modalText">
             Deleting a neighborhood is a permanent action, erasing all forum, petition and roundtable history. Are you sure you want to proceed?
           </div>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 32px; margin-left: 8px; margin-right: 8px">
-            <div @click="deleteNeighborhood" class = "modal-accept"> Accept</div> <div @click="hideDeletionModal" class = "modal-deny">deny</div>
+          <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+            <div @click="deleteNeighborhood" class = "modal-accept"> Yes</div> <div @click="hideDeletionModal" class = "modal-deny">No</div>
 
           </div>
           </div>
@@ -76,7 +76,7 @@
             <div class="modalText">
               Editing this name will change the neighborhood's name for all users of Participate. Are you sure you want to proceed?
             </div>
-            <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 32px; margin-left: 8px; margin-right: 8px">
+            <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
               <div @click="submitEdit" class = "modal-accept"> Accept</div> <div @click="hideEditModal" class = "modal-deny">deny</div>
 
             </div>

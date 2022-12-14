@@ -35,5 +35,7 @@ export default {
 
 .page {
   font-family: Arial, Helvetica, sans-serif;
+  width:60%;
+  margin: auto;
 }
 </style>
