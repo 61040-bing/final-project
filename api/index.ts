@@ -48,7 +48,7 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 
 // Log requests in the terminal
-app.use(logger('combined'));
+app.use(logger('dev'));
 
 // Parse incoming requests with JSON payloads ('content-type: application/json' in header)
 app.use(express.json());
