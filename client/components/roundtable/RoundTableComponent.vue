@@ -69,7 +69,7 @@
 
 
     <p class="meetingLink">
-      Video Meeting Link: <a :href="meetingLink"> {{ roundtable.zoomLink }}</a>
+      Video Meeting Link: <a :href="meetingLink" target="_blank"> {{ roundtable.zoomLink }}</a>
     </p>
     <section class="alerts">
       <article
