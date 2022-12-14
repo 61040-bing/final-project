@@ -318,7 +318,8 @@ export default {
             const res = await r.json();
             throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions', this.$route.params.id);
+          const neighborhoodId = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
+          this.$store.commit('refreshPetitions', neighborhoodId);
 
           params.callback();
         } catch (e) {
@@ -336,7 +337,9 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
           }
-          this.$store.commit('refreshPetitions', this.$route.params.id);
+
+          const neighborhoodId = this.$route.params.id === undefined ? '638ce78e88e91521eb0338c0': this.$route.params.id;
+          this.$store.commit('refreshPetitions', neighborhoodId);
 
           params.callback();
         } catch (e) {
