@@ -108,7 +108,7 @@
     },
     data(){
       return {
-        viewingTab : this.$route.params.tab === 'petitions'? 'petitions' : "settings",
+        viewingTab : this.$route.params.tab === 'petitions'? 'petitions' : 'posts'? 'posts' : "settings",
         alerts: {}
       }
     },
