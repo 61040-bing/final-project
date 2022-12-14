@@ -56,7 +56,7 @@
           <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 32px; margin-left: 8px; margin-right: 8px">
             <div @click="deleteNeighborhood" class = "modal-accept"> Yes</div> <div @click="hideDeletionModal" class = "modal-deny">No</div>
 
-          </div>
+            </div>
           </div>
         </modal>
 

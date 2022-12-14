@@ -33,13 +33,6 @@ const isValidCommentContent = (req: Request, res: Response, next: NextFunction) 
     return;
   }
 
-  if (content.length > 140) {
-    res.status(413).json({
-      error: 'Comment content must be no more than 140 characters.'
-    });
-    return;
-  }
-
   next();
 };
 

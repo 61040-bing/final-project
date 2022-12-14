@@ -184,12 +184,15 @@ export default {
       this.showingSignatures = !this.showingSignatures;
     },
     goBack() {
-      if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
-        this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
+      if (this.$route.params.prevTab === 'profile') {
+          this.$router.push({name: 'Profile', path: '/profile', params: {tab: 'petitions'}});
       } else {
-        this.$router.push({name: 'Neighborhood', path: `/neighborhood/${this.petition.neighborhood._id}`, params: {id: this.petition.neighborhood._id, tab: this.$route.params.prevTab}});
+        if (this.petition.neighborhood._id === "638ce78e88e91521eb0338c0") {
+          this.$router.push({name: 'Home', path: '/', params: {tab: this.$route.params.prevTab}});
+        } else {
+          this.$router.push({name: 'Neighborhood', path: `/neighborhood/${this.petition.neighborhood._id}`, params: {id: this.petition.neighborhood._id, tab: this.$route.params.prevTab}});
+        }
       }
-      console.log(this.$router);
     },
     deletePetition() {
       /**
@@ -547,6 +550,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .hideSignatures{
   background-color: rgb(170, 85, 64);
@@ -555,6 +559,7 @@ export default {
   border-radius: 10px;
   border-color: rgb(170, 85, 64);
   font-size: medium;
+  height: fit-content;
 }
 .scheduleTab{
   z-index: 1;
@@ -597,5 +602,12 @@ progress::-webkit-progress-value {
   flex-direction: row;
   justify-content: center;
   margin-top: 100px;
+}
+
+button{
+
+}
+button:hover{
+  cursor: pointer;
 }
 </style>
