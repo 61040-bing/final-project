@@ -53,7 +53,7 @@ class CommentCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Comment>>> {
     // Retrieves Forums and sorts them from most to least recent
-    return CommentModel.find({}).sort({dateModified: -1}).populate('authorId').populate("parentId");
+    return CommentModel.find({}).sort({dateModified: 1}).populate('authorId').populate("parentId");
   }
 
   /**
@@ -63,7 +63,7 @@ class CommentCollection {
    */
   static async findCommentsByForumPost(parentId: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
     // Retrieves Forums and sorts them from most to least recent
-    return CommentModel.find({parentId: parentId }).sort({dateModified: -1}).populate('authorId').populate("parentId");
+    return CommentModel.find({parentId: parentId }).sort({dateModified: 1}).populate('authorId').populate("parentId");
   }
 
 
@@ -74,7 +74,7 @@ class CommentCollection {
    */
   static async findCommentsByParentCommentId(commentId: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
     // Retrieves Forums and sorts them from most to least recent
-    return CommentModel.find({parentCommentId: commentId }).sort({dateModified: -1}).populate('authorId').populate("parentCommentId");
+    return CommentModel.find({parentCommentId: commentId }).sort({dateModified: 1}).populate('authorId').populate("parentCommentId");
   }
 
   /**
