@@ -249,7 +249,7 @@ export default {
 
 .pending{
   color: white;
-  background-color: black;
+  background-color: gray;
   border-radius: 20px;
   width: fit-content;
   padding-left: 2%;

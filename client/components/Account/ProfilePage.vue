@@ -108,7 +108,7 @@
     },
     data(){
       return {
-        viewingTab : "settings",
+        viewingTab : this.$route.params.tab === 'petitions'? 'petitions' : "settings",
         alerts: {}
       }
     },
